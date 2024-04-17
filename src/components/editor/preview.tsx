@@ -1,11 +1,12 @@
 import { useAtom } from 'jotai'
 import { useState, useCallback } from 'react'
 import { Document, Page } from 'react-pdf'
+import { pdfjs } from 'react-pdf';
 import type { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api'
 import styled from 'styled-components'
-import { pdfAtom } from '../../atoms/pdfAtom'
 
-import { pdfjs } from 'react-pdf';
+import latex from '../../latex'
+import { pdfAtom } from '../../atoms/pdfAtom'
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/build/pdf.worker.min.js',
@@ -43,8 +44,21 @@ const PdfPage = styled(Page)`
   }
 `
 
+async function generatePDF() {
+    const docstring = [
+        "\\documentclass[conference]{IEEEtran}",
+        "\\begin{document}",
+        "Hello world",
+        "\\end{document}",
+    ].join('\n');
+    const opts = {
+        cmd: 'xelatex'
+    }
+    return latex(docstring, opts);
+}
+
 export default function Preview() {
-  const [pdf] = useAtom(pdfAtom)
+  const [pdf, setPDF] = useAtom(pdfAtom)
   const [, setPageCount] = useState(1)
   const [pageNumber] = useState(1)
   const [scale] = useState(document.body.clientWidth > 1440 ? 1.75 : 1)
@@ -53,33 +67,45 @@ export default function Preview() {
     setPageCount(pdf.numPages)
   }, [])
 
+  async function renderPDF() {
+        setPDF({ ...pdf, isLoading: true })
+        try {
+        const newPDFUrl = await generatePDF()
+        setPDF({ ...pdf, url: newPDFUrl, isLoading: false })
+        } catch (error) {
+        console.error(error)
+        setPDF({ ...pdf, isError: true, isLoading: false })
+        }
+    }
+
   return (
     <Output>
-      <button onClick={() => window.open(pdf.url)}>export as pdf</button>
-      <hr/>
-      <PdfContainer>
-        {/* <div>
-            <Document file={pdf.url || '/blank.pdf'} onLoadSuccess={onDocumentLoadSuccess}>
-                <Page pageNumber={pageNumber} />
-            </Document>
-            <p>
-                Page {pageNumber} of {numPages}
-            </p>
-        </div> */}
-        <PdfDocument
-          file={pdf.url || '/blank.pdf'}
-          onLoadSuccess={handleDocumentLoadSuccess}
-          loading=""
-        >
-          <PdfPage
-            pageNumber={pageNumber}
-            scale={scale}
-            renderAnnotationLayer={false}
-            renderTextLayer={false}
+        <button onClick={renderPDF}>Click to compile</button>
+        <button onClick={() => window.open(pdf.url)}>export as pdf</button>
+        <hr/>
+        <PdfContainer>
+            {/* <div>
+                <Document file={pdf.url || '/blank.pdf'} onLoadSuccess={onDocumentLoadSuccess}>
+                    <Page pageNumber={pageNumber} />
+                </Document>
+                <p>
+                    Page {pageNumber} of {numPages}
+                </p>
+            </div> */}
+            <PdfDocument
+            file={pdf.url || '/blank.pdf'}
+            onLoadSuccess={handleDocumentLoadSuccess}
             loading=""
-          />
-        </PdfDocument>
-      </PdfContainer>
+            >
+            <PdfPage
+                pageNumber={pageNumber}
+                scale={scale}
+                renderAnnotationLayer={false}
+                renderTextLayer={false}
+                loading=""
+            />
+            </PdfDocument>
+        </PdfContainer>
     </Output>
   )
 }

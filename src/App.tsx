@@ -1,13 +1,8 @@
-import { useState } from 'react'
-
-import UpdateElectron from '@/components/update'
-import logoVite from './assets/logo-vite.svg'
-import logoElectron from './assets/logo-electron.svg'
 import MainPage from './pages/main'
 
 function App() {
   return (
-    <div className='App'>
+    <div className='App' style={{width: "100vw", height: "100vh"}}>
         <MainPage />
 
       {/* <UpdateElectron /> */}

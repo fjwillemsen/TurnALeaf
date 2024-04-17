@@ -1,52 +1,55 @@
-import styled from 'styled-components'
-import { useAtom } from 'jotai'
-import { lazy } from 'react'
-import latex from '../latex'
-import { pdfAtom } from '../atoms/pdfAtom'
+import { lazy, Component } from 'react'
+import { Responsive, WidthProvider} from 'react-grid-layout'
+
+import '../../node_modules/react-grid-layout/css/styles.css'
+import '../../node_modules/react-resizable/css/styles.css'
 
 const Preview = lazy(()=> import('../components/editor/preview'))
 
-const Main = styled.main`
-  display: grid;
-  grid-template-columns: 0.3fr 0.7fr 1fr;
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    'header header header'
-    'sidebar form preview';
-  height: 100vh;
-`
+const FullGridLayout = WidthProvider(Responsive);
 
-async function generatePDF() {
-    const docstring = [
-        "\\documentclass[conference]{IEEEtran}",
-        "\\begin{document}",
-        "Hello world",
-        "\\end{document}",
-    ].join('\n');
-    const opts = {
-        cmd: 'xelatex'
-    }
-    return latex(docstring, opts);
+class Grid extends Component {
+  render() {
+    // layout is an array of objects, see the demo for more complete usage
+    const layouts = {
+        lg: [
+            { i: "files", x: 0, y: 0, w: 2, h: 1, static: true },
+            { i: "editor", x: 2, y: 0, w: 5, h: 1, minW: 2, maxW: 10 },
+            { i: "pdf", x: 7, y: 0, w: 5, h: 1 }
+        ],
+        xxs: [
+            { i: "files", x: 0, y: 0, w: 2, h: 1, static: true },
+            { i: "editor", x: 2, y: 0, w: 5, h: 1, minW: 2, maxW: 10 },
+            { i: "pdf", x: 7, y: 0, w: 5, h: 1 }
+        ]
+    };
+    return (
+      <FullGridLayout
+        className="layout"
+        layouts={layouts}
+        cols={{lg: 12, md: 12, sm: 12, xs: 12, xxs: 12}}
+        margin={[20, 20]}
+      >
+        <div key="files">
+            <ul>
+                <li>file</li>
+                <li>goes</li>
+                <li>here</li>
+            </ul>
+        </div>
+        <div key="editor" style={{backgroundColor: 'red'}}>
+            <p>Hello world</p>
+        </div>
+        <div key="pdf">
+            <Preview />
+        </div>
+      </FullGridLayout>
+    );
+  }
 }
 
 export default function MainPage() {
-    const [pdf, setPDF] = useAtom(pdfAtom)
-    async function renderPDF() {
-        setPDF({ ...pdf, isLoading: true })
-        try {
-        const newPDFUrl = await generatePDF()
-        setPDF({ ...pdf, url: newPDFUrl, isLoading: false })
-        } catch (error) {
-        console.error(error)
-        setPDF({ ...pdf, isError: true, isLoading: false })
-        }
-    }
     return (
-        <Main>
-            <button onClick={renderPDF}>
-                Click to compile
-            </button>
-            <Preview />
-        </Main>
+        <Grid/>
     )
 }
