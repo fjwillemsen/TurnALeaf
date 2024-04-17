@@ -1,55 +1,71 @@
-import { lazy, Component } from 'react'
-import { Responsive, WidthProvider } from 'react-grid-layout'
-
-import '../../node_modules/react-grid-layout/css/styles.css'
-import '../../node_modules/react-resizable/css/styles.css'
+import { lazy, useState } from 'react'
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import styles from './main.module.css'
+import { useAtom } from 'jotai';
 
 const Preview = lazy(()=> import('../components/editor/preview'))
 
-const FullGridLayout = WidthProvider(Responsive);
-
-class Grid extends Component {
-  render() {
-    // layout is an array of objects, see the demo for more complete usage
-    const layout = [
-        { i: "files", x: 0, y: 0, w: 2, h: 1, static: true },
-        { i: "editor", x: 2, y: 0, w: 5, h: 1, minW: 2, maxW: 10, minH: 1, maxH: 1 },
-        { i: "pdf", x: 7, y: 0, w: 5, h: 1, minH: 1, maxH: 1 }
-    ]
-    const layouts = {
-        lg: layout,
-        xxs: layout
-    };
+function PanelResizeCollapseHandle({
+    collapsepanel,
+    className = "",
+    id
+  }: {
+    collapsepanel: number
+    className?: string;
+    id?: string;
+  }) {
+    const clicked = function(element: Element) {
+        const icon = element.nativeEvent.target
+        if (icon.getAttribute("transform") != null) {
+            // the panel is collapsed
+            icon.removeAttribute("transform")
+        } else {
+            // the panel is open
+            icon.setAttribute("transform", "rotate(180)");
+        }
+    }
     return (
-      <FullGridLayout
-        className="layout"
-        layouts={layouts}
-        rowHeight={document.body.clientHeight}
-        maxRows={1}
-        compactType={'horizontal'}
-        cols={{lg: 12, md: 12, sm: 12, xs: 12, xxs: 12}}
-        margin={[20, 20]}
+      <PanelResizeHandle
+        className={[styles.ResizeHandleOuter, className].join(" ")}
+        id={id}
+        onClick={clicked}
       >
-        <div key="files" style={{border: "1px solid green"}}>
-            <ul>
-                <li>file</li>
-                <li>goes</li>
-                <li>here</li>
-            </ul>
+        <div className={styles.ResizeHandleInner}>
+          <svg className={styles.Icon} viewBox="0 0 32 32">
+            <path 
+                fill="currentColor"
+                d="M14.19 16.005l7.869 7.868-2.129 2.129-9.996-9.997L19.937 6.002l2.127 2.129z"
+            />
+          </svg>
         </div>
-        <div key="editor" style={{border: "1px solid red"}}>
-            <p>Hello world</p>
-        </div>
-        <div key="pdf" style={{border: "1px solid blue"}}>
-            <Preview />
-        </div>
-      </FullGridLayout>
+      </PanelResizeHandle>
     );
   }
-}
 
 export default function MainPage() {
     return (
-        <Grid/>
+        <PanelGroup autoSaveId="MainPagePanels" direction="horizontal">
+            <Panel order={1} defaultSize={20} collapsible={true}>
+                <div key="files" style={{border: "1px solid green"}}>
+                    <ul>
+                        <li>file</li>
+                        <li>goes</li>
+                        <li>here</li>
+                    </ul>
+                </div>
+            </Panel>
+            <PanelResizeCollapseHandle collapsepanel={1} />
+            <Panel order={2} defaultSize={40} collapsible={true}>
+                <div key="editor" style={{border: "1px solid red", height: "100vh"}}>
+                    <p>Hello world</p>
+                </div>
+            </Panel>
+            <PanelResizeCollapseHandle collapsepanel={3} />
+            <Panel order={3} defaultSize={40} collapsible={true}>
+                <div key="pdf" style={{border: "1px solid blue", height: "100vh"}}>
+                    <Preview />
+                </div>
+            </Panel>
+        </PanelGroup>
     )
 }
