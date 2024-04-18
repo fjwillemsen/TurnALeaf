@@ -27,6 +27,6 @@
     top: calc(50% - 0.5rem);
     transform: rotate(0deg);
 }
-.Icon[right='true'] {
+.Icon[right="true"] {
     transform: rotate(180deg);
 }
