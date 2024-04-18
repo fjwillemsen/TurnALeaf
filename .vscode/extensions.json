@@ -1,7 +1,10 @@
 {
-  // See http://go.microsoft.com/fwlink/?LinkId=827846
-  // for the documentation about the extensions.json format
-  "recommendations": [
-    "mrmlnc.vscode-json5"
-  ]
+    // See http://go.microsoft.com/fwlink/?LinkId=827846
+    // for the documentation about the extensions.json format
+    "recommendations": [
+        "mrmlnc.vscode-json5",
+        "tomoki1207.pdf",
+        "bradlc.vscode-tailwindcss",
+        "vunguyentuan.vscode-postcss"
+    ]
 }

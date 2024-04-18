@@ -1,13 +1,25 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.tsc.autoDetect": "off",
-  "json.schemas": [
-    {
-      "fileMatch": [
-        "/*electron-builder.json5",
-        "/*electron-builder.json"
-      ],
-      "url": "https://json.schemastore.org/electron-builder"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.tsc.autoDetect": "off",
+    "editor.formatOnSave": true,
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/*electron-builder.json5",
+                "/*electron-builder.json"
+            ],
+            "url": "https://json.schemastore.org/electron-builder"
+        }
+    ],
+    "cssVariables.lookupFiles": [
+        "**/*.css",
+        "**/*.scss",
+        "**/*.sass",
+        "**/*.less",
+        "node_modules/@mantine/core/styles.css"
+    ],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
-  ]
 }
