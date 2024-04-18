@@ -1,13 +1,13 @@
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
+
+import { MantineProvider } from '@mantine/core';
 import MainPage from './pages/main'
 
-function App() {
-  return (
-    <div className='App' style={{width: "100vw", height: "100vh"}}>
-        <MainPage />
-
-      {/* <UpdateElectron /> */}
-    </div>
-  )
+export default function App() {
+    return (
+        <MantineProvider>
+            <MainPage/>
+        </MantineProvider>);
 }
-
-export default App

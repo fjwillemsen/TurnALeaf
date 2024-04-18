@@ -45,7 +45,7 @@ function PanelResizeCollapseHandle({
 
 export default function MainPage() {
     return (
-        <PanelGroup autoSaveId="MainPagePanels" direction="horizontal">
+        <PanelGroup autoSaveId="MainPagePanels" direction="horizontal" style={{width: "100vw", height: "100vh"}}>
             <Panel ref={panelRefs[0]} order={1} defaultSize={20} collapsible={true} minSize={2}>
                 <div key="files" style={{border: "1px solid green", height: "100%"}}>
                     <ul>

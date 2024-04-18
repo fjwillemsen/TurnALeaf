@@ -36,7 +36,8 @@ When you're ready to go back online for collaborating, the "go online" button wi
 One of the most difficult choices was in picking between Electron and a more native approach, Tauri being the most popular. 
 On the one hand, the small bundle size, performance, self-updater and tight embedding in the OS provided by Tauri was very appealing. 
 On the other, Electron remains massively popular, well-documented and, most importantly, provides a consistent experience across platforms because of the bundled browser. 
-As this is one of the reasons the previous project [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf) was hard to maintain, Electron was chosen. Vite is used as a bundler (for hot-reload speed), React as the interface library (for desktop-like UI elements), and Sass as the styling language (for convenience), based on the [electron-vite-react template](https://github.com/electron-vite/electron-vite-react). 
+As this is one of the reasons the previous project [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf) was hard to maintain, Electron was chosen. Vite is used as a bundler (for hot-reload speed), React as the interface library, and PostCSS / Tailwind as the styling language (for convenience), based on the [electron-vite-react template](https://github.com/electron-vite/electron-vite-react). 
+Mantine is used as the UI component library. 
 
 ### Ideas, questions, contributions?
 Please use the [GitHub discussions page](https://github.com/fjwillemsen/TurnALeaf/issues) for this project. This allows others to read and chime in as well. 
