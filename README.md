@@ -2,6 +2,48 @@
 
 ### _It's time to turn over a new leaf_
 
+## Roadmap
+
+The following roadmap outlines what will be released after which features are implemented.
+
+1. Basic functionality (0.0.1 / alpha release)
+    - [x] Base system
+        - [x] Framework (Electron)
+        - [x] Bundling (Vite)
+        - [x] Interface library (React)
+        - [x] Styling language (PostCSS / Tailwind)
+        - [x] Component library (Mantine)
+    - [ ] Base functionality
+        - [x] PDF rendering
+        - [ ] Editor
+        - [ ] File navigator
+        - [ ] Git support
+        - [ ] Overleaf integration
+    - [ ] Distribution
+        - [ ] Downloadable
+        - [ ] Installable
+        - [ ] Updatable
+    - [ ] Icon
+    - [x] Documentation for early testers
+2. Extra features & non-functional requirements (0.1.0 / beta release)
+    - [ ] Landing page
+    - [ ] Projects overview
+    - [ ] Settings menu
+    - [ ] Tests
+    - [ ] CI/CD pipeline
+    - [ ] Auto-updates
+    - [ ] Documentation
+3. Polishing (1.0.0 / stable release)
+    - [ ] System features
+        - [ ] Dark Mode / Light Mode switching
+        - [ ] Themes
+        - [ ] Native look & feel
+    - [ ] Beta testing on a variety of systems
+    - [ ] Known issues have been resolved or marked as future / not planned
+4. Future
+    - [ ] Distribution selection
+    - [ ] Overleaf notifications
+
 ## Installation
 
 Installation is as simple as `brew install turnaleaf` on Mac, or by [downloading the latest release](https://github.com/fjwillemsen/TurnALeaf/releases/latest) for Linux, Windows and Mac.
