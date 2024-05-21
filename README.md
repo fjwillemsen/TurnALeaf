@@ -1,12 +1,16 @@
 # TurnALeaf: a fully offline, native Overleaf with seamless switching
 
-### _It's time to turn over a new leaf_
+<h3 align="center">
+  <img style="width: 200px" src="assets/logo/logo_cut_icon.png" />
+  </br>
+  <i>It's time to turn over a new leaf.</i>
+</h3>
 
 ## Roadmap
 
 The following roadmap outlines what will be released after which features are implemented.
 
-1. Basic functionality (0.0.1 / alpha release)
+1. Basic functionality (0.0.1 / alpha release | 56%) <!-- 9/16 -->
     - [x] Base system
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -14,18 +18,19 @@ The following roadmap outlines what will be released after which features are im
         - [x] Styling language (PostCSS / Tailwind)
         - [x] Component library (Mantine)
     - [ ] Base functionality
+        - [x] Modular interface
         - [x] PDF rendering
+        - [ ] Git integration
         - [ ] Editor
         - [ ] File navigator
-        - [ ] Git support
         - [ ] Overleaf integration
     - [ ] Distribution
         - [ ] Downloadable
         - [ ] Installable
         - [ ] Updatable
-    - [ ] Icon
-    - [x] Documentation for early testers
-2. Extra features & non-functional requirements (0.1.0 / beta release)
+    - [x] Icon
+    - [x] Documentation for early testers / contributers
+2. Extra features & non-functional requirements (0.1.0 / beta release | 0%) <!-- 0/6 -->
     - [ ] Landing page
     - [ ] Projects overview
     - [ ] Settings menu
@@ -33,7 +38,7 @@ The following roadmap outlines what will be released after which features are im
     - [ ] CI/CD pipeline
     - [ ] Auto-updates
     - [ ] Documentation
-3. Polishing (1.0.0 / stable release)
+3. Polishing (1.0.0 / stable release | 0%) <!-- 0/5 -->
     - [ ] System features
         - [ ] Dark Mode / Light Mode switching
         - [ ] Themes
@@ -41,8 +46,11 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Beta testing on a variety of systems
     - [ ] Known issues have been resolved or marked as future / not planned
 4. Future
-    - [ ] Distribution selection
     - [ ] Overleaf notifications
+    - [ ] TeX Distribution selection
+    - [ ] Help pages
+    - [ ] Onboarding
+    - [ ] Multi-language support
 
 ## Installation
 
