@@ -30,7 +30,6 @@ function PanelResizeCollapseHandle({
             }
         }
     };
-    console.log(collapsePanel + ": " + isright);
     return (
         <PanelResizeHandle className={[styles.ResizeHandleOuter, className].join(" ")} onClick={handleClick}>
             <div className={styles.ResizeHandleInner}>
