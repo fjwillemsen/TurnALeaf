@@ -6,6 +6,7 @@ import type { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
 import styled from "styled-components";
 
 import latex from "../../latex";
+import { LaTeXOpts } from "../../latex";
 import { pdfAtom } from "../../atoms/pdfAtom";
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -51,7 +52,7 @@ async function generatePDF() {
         "Hello world",
         "\\end{document}",
     ].join("\n");
-    const opts = {
+    const opts: LaTeXOpts = {
         cmd: "xelatex",
     };
     return latex(docstring, opts);

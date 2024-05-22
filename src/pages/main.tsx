@@ -4,7 +4,7 @@ import styles from "./main.module.css";
 
 const Preview = lazy(() => import("../components/editor/preview"));
 
-var panelRefs: RefObject<Panel>[] = [createRef(), createRef(), createRef()];
+const panelRefs: RefObject<Panel>[] = [createRef(), createRef(), createRef()];
 
 function PanelResizeCollapseHandle({
     collapsePanel,
