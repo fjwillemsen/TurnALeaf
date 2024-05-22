@@ -1,6 +1,6 @@
 {
     "name": "TurnALeaf",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "main": "dist-electron/main/index.js",
     "description": "A fully offline, completely local Overleaf alternative that can switch to online Overleaf in the blink of an eye.",
     "author": "Floris-Jan Willemsen",
