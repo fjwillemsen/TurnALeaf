@@ -64,9 +64,9 @@ export default function Preview() {
     const [pageNumber] = useState(1);
     const [scale] = useState(document.body.clientWidth > 1440 ? 1.75 : 1);
 
-    // const handleDocumentLoadSuccess = useCallback((pdf: PDFDocumentProxy) => {
-    //     setPageCount(pdf.numPages);
-    // }, []);
+    const handleDocumentLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
+        setPageCount(numPages);
+    }, []);
 
     async function renderPDF() {
         setPDF({ ...pdf, isLoading: true });
@@ -93,7 +93,7 @@ export default function Preview() {
                     Page {pageNumber} of {numPages}
                 </p>
             </div> */}
-                <PdfDocument file={pdf.url || "/blank.pdf"} loading="">
+                <PdfDocument file={pdf.url || "/blank.pdf"} onLoadSuccess={handleDocumentLoadSuccess} loading="">
                     <PdfPage
                         pageNumber={pageNumber}
                         scale={scale}
