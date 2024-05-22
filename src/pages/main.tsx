@@ -1,10 +1,10 @@
 import { lazy, useState, createRef, RefObject } from "react";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { ImperativePanelHandle, Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import styles from "./main.module.css";
 
 const Preview = lazy(() => import("../components/editor/preview"));
 
-const panelRefs: RefObject<Panel>[] = [createRef(), createRef(), createRef()];
+const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3).fill(null).map(() => createRef());
 
 function PanelResizeCollapseHandle({
     collapsePanel,
@@ -19,11 +19,15 @@ function PanelResizeCollapseHandle({
     const [isright, setIsRight] = useState(right);
     const handleClick = () => {
         const panel = panelRefs[collapsePanel].current;
-        setIsRight(right ? panel.isCollapsed : panel.isExpanded);
-        if (panel.isExpanded()) {
-            panel.collapse();
+        if (panel == null) {
+            console.error("Panel reference not defined");
         } else {
-            panel.expand();
+            setIsRight(right ? panel.isCollapsed : panel.isExpanded);
+            if (panel.isExpanded()) {
+                panel.collapse();
+            } else {
+                panel.expand();
+            }
         }
     };
     return (
