@@ -30,10 +30,15 @@ function PanelResizeCollapseHandle({
             }
         }
     };
+    console.log(collapsePanel + ": " + isright);
     return (
         <PanelResizeHandle className={[styles.ResizeHandleOuter, className].join(" ")} onClick={handleClick}>
             <div className={styles.ResizeHandleInner}>
-                <svg className={styles.Icon} viewBox="0 0 32 32" right={isright.toString()}>
+                <svg
+                    className={styles.Icon}
+                    style={{ transform: isright ? "rotate(180deg)" : "rotate(0deg)" }}
+                    viewBox="0 0 32 32"
+                >
                     <path
                         fill="currentColor"
                         d="M14.19 16.005l7.869 7.868-2.129 2.129-9.996-9.997L19.937 6.002l2.127 2.129z"
