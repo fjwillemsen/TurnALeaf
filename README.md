@@ -44,13 +44,14 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Themes
         - [ ] Native look & feel
     - [ ] Beta testing on a variety of systems
-    - [ ] Known issues have been resolved or marked as future / not planned
+    - [ ] Known issues have been resolved or marked
 4. Future
     - [ ] Overleaf notifications
     - [ ] TeX Distribution selection
     - [ ] Help pages
     - [ ] Onboarding
     - [ ] Multi-language support
+    - [ ] Plugin support
 
 ## Installation
 
@@ -86,7 +87,8 @@ One of the most difficult choices was in picking between Electron and a more nat
 On the one hand, the small bundle size, performance, self-updater and tight embedding in the OS provided by Tauri was very appealing.
 On the other, Electron remains massively popular, well-documented and, most importantly, provides a consistent experience across platforms because of the bundled browser.
 As this is one of the reasons the previous project [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf) was hard to maintain, Electron was chosen. Vite is used as a bundler (for hot-reload speed), React as the interface library, and PostCSS / Tailwind as the styling language (for convenience), based on the [electron-vite-react template](https://github.com/electron-vite/electron-vite-react).
-Mantine is used as the UI component library.
+[Mantine](https://mantine.dev/) is used as the UI component library.
+To provide a standalone, Node-compatible git implementation, [isomorphic git](https://www.npmjs.com/package/isomorphic-git) is used.
 
 ### Ideas, questions, contributions?
 
