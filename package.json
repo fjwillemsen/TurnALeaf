@@ -17,6 +17,7 @@
         "build": "tsc && vite build && electron-builder",
         "lint": "eslint src",
         "format": "eslint src --fix",
+        "test": "eslint src --quiet",
         "preview": "vite preview",
         "pree2e": "vite build --mode=test",
         "e2e": "playwright test",
