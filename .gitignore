@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Modules
 node_modules
 dist
 dist-ssr
@@ -24,10 +25,7 @@ release
 *.sln
 *.sw?
 
-#lockfile
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
+# Tests
 /test-results/
 /playwright-report/
 /playwright/.cache/
