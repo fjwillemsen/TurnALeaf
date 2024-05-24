@@ -1,41 +1,53 @@
-import { lazy, useState, createRef, RefObject } from "react";
-import { ImperativePanelHandle, Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import styles from "./main.module.css";
+import { lazy, useState, createRef, RefObject } from 'react'
+import {
+    ImperativePanelHandle,
+    Panel,
+    PanelGroup,
+    PanelResizeHandle,
+} from 'react-resizable-panels'
+import styles from './main.module.css'
 
-const Preview = lazy(() => import("../components/editor/preview"));
+const Preview = lazy(() => import('../components/editor/preview'))
 
-const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3).fill(null).map(() => createRef());
+const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
+    .fill(null)
+    .map(() => createRef())
 
 function PanelResizeCollapseHandle({
     collapsePanel,
     right = false,
-    className = "",
+    className = '',
 }: {
-    collapsePanel: number;
-    right?: boolean;
-    className?: string;
-    id?: string;
+    collapsePanel: number
+    right?: boolean
+    className?: string
+    id?: string
 }) {
-    const [isright, setIsRight] = useState(right);
+    const [isright, setIsRight] = useState(right)
     const handleClick = () => {
-        const panel = panelRefs[collapsePanel].current;
+        const panel = panelRefs[collapsePanel].current
         if (panel == null) {
-            console.error("Panel reference not defined");
+            console.error('Panel reference not defined')
         } else {
-            setIsRight(right ? panel.isCollapsed : panel.isExpanded);
+            setIsRight(right ? panel.isCollapsed : panel.isExpanded)
             if (panel.isExpanded()) {
-                panel.collapse();
+                panel.collapse()
             } else {
-                panel.expand();
+                panel.expand()
             }
         }
-    };
+    }
     return (
-        <PanelResizeHandle className={[styles.ResizeHandleOuter, className].join(" ")} onClick={handleClick}>
+        <PanelResizeHandle
+            className={[styles.ResizeHandleOuter, className].join(' ')}
+            onClick={handleClick}
+        >
             <div className={styles.ResizeHandleInner}>
                 <svg
                     className={styles.Icon}
-                    style={{ transform: isright ? "rotate(180deg)" : "rotate(0deg)" }}
+                    style={{
+                        transform: isright ? 'rotate(180deg)' : 'rotate(0deg)',
+                    }}
                     viewBox="0 0 32 32"
                 >
                     <path
@@ -45,14 +57,27 @@ function PanelResizeCollapseHandle({
                 </svg>
             </div>
         </PanelResizeHandle>
-    );
+    )
 }
 
 export default function MainPage() {
     return (
-        <PanelGroup autoSaveId="MainPagePanels" direction="horizontal" style={{ width: "100vw", height: "100vh" }}>
-            <Panel ref={panelRefs[0]} order={1} defaultSize={20} collapsible={true} minSize={2}>
-                <div key="files" style={{ border: "1px solid green", height: "100%" }}>
+        <PanelGroup
+            autoSaveId="MainPagePanels"
+            direction="horizontal"
+            style={{ width: '100vw', height: '100vh' }}
+        >
+            <Panel
+                ref={panelRefs[0]}
+                order={1}
+                defaultSize={20}
+                collapsible={true}
+                minSize={2}
+            >
+                <div
+                    key="files"
+                    style={{ border: '1px solid green', height: '100%' }}
+                >
                     <ul>
                         <li>file</li>
                         <li>goes</li>
@@ -61,17 +86,35 @@ export default function MainPage() {
                 </div>
             </Panel>
             <PanelResizeCollapseHandle collapsePanel={0} />
-            <Panel ref={panelRefs[1]} order={2} defaultSize={40} collapsible={false} minSize={2}>
-                <div key="editor" style={{ border: "1px solid red", height: "100%" }}>
+            <Panel
+                ref={panelRefs[1]}
+                order={2}
+                defaultSize={40}
+                collapsible={false}
+                minSize={2}
+            >
+                <div
+                    key="editor"
+                    style={{ border: '1px solid red', height: '100%' }}
+                >
                     <p>Hello world</p>
                 </div>
             </Panel>
             <PanelResizeCollapseHandle collapsePanel={2} right={true} />
-            <Panel ref={panelRefs[2]} order={3} defaultSize={40} collapsible={true} minSize={2}>
-                <div key="pdf" style={{ border: "1px solid blue", height: "100%" }}>
+            <Panel
+                ref={panelRefs[2]}
+                order={3}
+                defaultSize={40}
+                collapsible={true}
+                minSize={2}
+            >
+                <div
+                    key="pdf"
+                    style={{ border: '1px solid blue', height: '100%' }}
+                >
                     <Preview />
                 </div>
             </Panel>
         </PanelGroup>
-    );
+    )
 }

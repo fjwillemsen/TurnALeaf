@@ -1,37 +1,37 @@
-import { useAtom } from "jotai";
-import { useState, useCallback } from "react";
-import { Document, Page } from "react-pdf";
-import { pdfjs } from "react-pdf";
-import type { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
-import styled from "styled-components";
+import { useAtom } from 'jotai'
+import { useState, useCallback } from 'react'
+import { Document, Page } from 'react-pdf'
+import { pdfjs } from 'react-pdf'
+import type { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api'
+import styled from 'styled-components'
 
-import latex from "../../latex";
-import { LaTeXOpts } from "../../latex";
-import { pdfAtom } from "../../atoms/pdfAtom";
+import latex from '../../latex'
+import { LaTeXOpts } from '../../latex'
+import { pdfAtom } from '../../atoms/pdfAtom'
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/build/pdf.worker.min.js',
 //   import.meta.url,
 // ).toString();
 
-const workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
+const workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
+pdfjs.GlobalWorkerOptions.workerSrc = workerSrc
 
 const Output = styled.output`
     grid-area: preview;
     background: ${(props) => props.theme.lightBlack};
     overflow-y: auto;
     border-left: 1px solid black;
-`;
+`
 
 const PdfContainer = styled.article`
     width: 100%;
     height: 100%;
-`;
+`
 
 const PdfDocument = styled(Document)`
     width: 100%;
-`;
+`
 
 const PdfPage = styled(Page)`
     display: flex;
@@ -43,39 +43,42 @@ const PdfPage = styled(Page)`
         max-width: 95% !important;
         height: auto !important;
     }
-`;
+`
 
 async function generatePDF() {
     const docstring = [
-        "\\documentclass[conference]{IEEEtran}",
-        "\\begin{document}",
-        "Hello world",
-        "\\end{document}",
-    ].join("\n");
+        '\\documentclass[conference]{IEEEtran}',
+        '\\begin{document}',
+        'Hello world',
+        '\\end{document}',
+    ].join('\n')
     const opts: LaTeXOpts = {
-        cmd: "xelatex",
-    };
-    return latex(docstring, opts);
+        cmd: 'xelatex',
+    }
+    return latex(docstring, opts)
 }
 
 export default function Preview() {
-    const [pdf, setPDF] = useAtom(pdfAtom);
-    const [, setPageCount] = useState(1);
-    const [pageNumber] = useState(1);
-    const [scale] = useState(document.body.clientWidth > 1440 ? 1.75 : 1);
+    const [pdf, setPDF] = useAtom(pdfAtom)
+    const [, setPageCount] = useState(1)
+    const [pageNumber] = useState(1)
+    const [scale] = useState(document.body.clientWidth > 1440 ? 1.75 : 1)
 
-    const handleDocumentLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
-        setPageCount(numPages);
-    }, []);
+    const handleDocumentLoadSuccess = useCallback(
+        ({ numPages }: { numPages: number }) => {
+            setPageCount(numPages)
+        },
+        []
+    )
 
     async function renderPDF() {
-        setPDF({ ...pdf, isLoading: true });
+        setPDF({ ...pdf, isLoading: true })
         try {
-            const newPDFUrl = await generatePDF();
-            setPDF({ ...pdf, url: newPDFUrl, isLoading: false });
+            const newPDFUrl = await generatePDF()
+            setPDF({ ...pdf, url: newPDFUrl, isLoading: false })
         } catch (error) {
-            console.error(error);
-            setPDF({ ...pdf, isError: true, isLoading: false });
+            console.error(error)
+            setPDF({ ...pdf, isError: true, isLoading: false })
         }
     }
 
@@ -93,7 +96,11 @@ export default function Preview() {
                     Page {pageNumber} of {numPages}
                 </p>
             </div> */}
-                <PdfDocument file={pdf.url || "/blank.pdf"} onLoadSuccess={handleDocumentLoadSuccess} loading="">
+                <PdfDocument
+                    file={pdf.url || '/blank.pdf'}
+                    onLoadSuccess={handleDocumentLoadSuccess}
+                    loading=""
+                >
                     <PdfPage
                         pageNumber={pageNumber}
                         scale={scale}
@@ -104,5 +111,5 @@ export default function Preview() {
                 </PdfDocument>
             </PdfContainer>
         </Output>
-    );
+    )
 }

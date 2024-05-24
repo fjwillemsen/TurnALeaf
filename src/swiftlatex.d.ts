@@ -1,2 +1,2 @@
 // swiftlatex.d.ts
-declare module "swiftlatex";
+declare module 'swiftlatex'

@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Aside = styled.aside`
     grid-area: sidebar;
     border-right: 1px solid grey;
     padding: 24px 36px;
-`;
+`
 
 const Nav = styled.nav`
     display: flex;
@@ -17,4 +17,4 @@ const Nav = styled.nav`
     button {
         cursor: grab;
     }
-`;
+`
