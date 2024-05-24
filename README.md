@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed. 
 
-1. Basic functionality (0.0.1 / alpha release | 56%) <!-- 10/18 -->
+1. Basic functionality (0.0.1 / alpha release | 59%) <!-- 10/17 -->
     - [x] Base system
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -23,7 +23,6 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Git integration
         - [ ] Editor
         - [ ] File navigator
-        - [ ] Overleaf integration
     - [ ] Distribution
         - [ ] Downloadable
         - [ ] Installable
@@ -32,24 +31,27 @@ The following roadmap outlines what will be released after which features are im
     - [x] Formatting
     - [ ] Code annotation
     - [x] Documentation for early testers / contributers
-2. Extra features & non-functional requirements (0.1.0 / beta release | 0%) <!-- 0/9 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 17%) <!-- 2/12 -->
+    - [ ] Alpha release tested
     - [ ] Landing page
     - [ ] Projects overview
     - [ ] Settings menu
     - [ ] Test coverage 60%
     - [ ] CI/CD pipeline
       - [ ] Tests
-      - [ ] Build
-      - [ ] Linting
+      - [x] Build
+      - [x] Linting
     - [ ] Auto-updates
+    - [ ] Issue templates
+    - [ ] GitHub discussion
     - [ ] Documentation
 3. Polishing (1.0.0 / stable release | 0%) <!-- 0/6 -->
+    - [ ] Beta release tested on a variety of systems
     - [ ] System features
         - [ ] Dark Mode / Light Mode switching
         - [ ] Themes
         - [ ] Native look & feel
     - [ ] Test coverage 80%
-    - [ ] Beta testing on a variety of systems
     - [ ] Known issues have been resolved or marked
 4. Future
     - [ ] Overleaf notifications
