@@ -1,7 +1,6 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.tsc.autoDetect": "off",
-    "editor.formatOnSave": true,
     "json.schemas": [
         {
             "fileMatch": [
@@ -18,8 +17,12 @@
         "**/*.less",
         "node_modules/@mantine/core/styles.css"
     ],
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "editor.codeActionsOnSave": [
+        "source.fixAll"
+    ],
 }

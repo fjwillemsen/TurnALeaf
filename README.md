@@ -8,9 +8,9 @@
 
 ## Roadmap
 
-The following roadmap outlines what will be released after which features are implemented.
+The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed. 
 
-1. Basic functionality (0.0.1 / alpha release | 56%) <!-- 9/16 -->
+1. Basic functionality (0.0.1 / alpha release | 56%) <!-- 10/18 -->
     - [x] Base system
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -29,27 +29,33 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Installable
         - [ ] Updatable
     - [x] Icon
+    - [x] Formatting
+    - [ ] Code annotation
     - [x] Documentation for early testers / contributers
-2. Extra features & non-functional requirements (0.1.0 / beta release | 0%) <!-- 0/6 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 0%) <!-- 0/9 -->
     - [ ] Landing page
     - [ ] Projects overview
     - [ ] Settings menu
-    - [ ] Tests
+    - [ ] Test coverage 60%
     - [ ] CI/CD pipeline
+      - [ ] Tests
+      - [ ] Build
+      - [ ] Linting
     - [ ] Auto-updates
     - [ ] Documentation
-3. Polishing (1.0.0 / stable release | 0%) <!-- 0/5 -->
+3. Polishing (1.0.0 / stable release | 0%) <!-- 0/6 -->
     - [ ] System features
         - [ ] Dark Mode / Light Mode switching
         - [ ] Themes
         - [ ] Native look & feel
+    - [ ] Test coverage 80%
     - [ ] Beta testing on a variety of systems
     - [ ] Known issues have been resolved or marked
 4. Future
     - [ ] Overleaf notifications
     - [ ] TeX Distribution selection
     - [ ] Help pages
-    - [ ] Onboarding
+    - [ ] Onboarding tutorial
     - [ ] Multi-language support
     - [ ] Plugin support
 

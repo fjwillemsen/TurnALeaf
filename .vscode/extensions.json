@@ -5,6 +5,8 @@
         "mrmlnc.vscode-json5",
         "tomoki1207.pdf",
         "bradlc.vscode-tailwindcss",
-        "vunguyentuan.vscode-postcss"
+        "vunguyentuan.vscode-postcss",
+        "rvest.vs-code-prettier-eslint",
+        "dbaeumer.vscode-eslint"
     ]
 }
