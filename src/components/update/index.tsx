@@ -73,7 +73,7 @@ const Update = () => {
 
     const onUpdateDownloaded = useCallback(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        (_event: Electron.IpcRendererEvent, ...args) => {
+        (_event: Electron.IpcRendererEvent, ...args: unknown[]) => {
             setProgressInfo({ percent: 100 })
             setModalBtn((state) => ({
                 ...state,
