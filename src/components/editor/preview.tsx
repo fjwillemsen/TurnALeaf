@@ -64,12 +64,9 @@ export default function Preview() {
     const [pageNumber] = useState(1)
     const [scale] = useState(document.body.clientWidth > 1440 ? 1.75 : 1)
 
-    const handleDocumentLoadSuccess = useCallback(
-        ({ numPages }: { numPages: number }) => {
-            setPageCount(numPages)
-        },
-        []
-    )
+    const handleDocumentLoadSuccess = useCallback((pdf: PDFDocumentProxy) => {
+        setPageCount(pdf.numPages)
+    }, [])
 
     async function renderPDF() {
         setPDF({ ...pdf, isLoading: true })

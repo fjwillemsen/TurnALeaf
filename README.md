@@ -29,10 +29,11 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Updatable
     - [x] Icon
     - [x] Formatting
-    - [ ] Code annotation
+    - [ ] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-2. Extra features & non-functional requirements (0.1.0 / beta release | 17%) <!-- 2/12 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 15%) <!-- 2/13 -->
     - [ ] Alpha release tested
+    - [ ] Sections panel
     - [ ] Landing page
     - [ ] Projects overview
     - [ ] Settings menu
