@@ -24,7 +24,7 @@ const Update = () => {
     const checkUpdate = async () => {
         setChecking(true)
         /**
-         * @type {import('electron-updater').UpdateCheckResult | null | { message: string, error: Error }}
+         * \@type \{import('electron-updater').UpdateCheckResult | null | \{ message: string, error: Error \}\}
          */
         const result = await window.ipcRenderer.invoke('check-update')
         setProgressInfo({ percent: 0 })

@@ -25,4 +25,6 @@
     "editor.codeActionsOnSave": [
         "source.fixAll"
     ],
+    "jsdoc-generator.includeAsync": false,
+    "jsdoc-generator.includeExport": false,
 }

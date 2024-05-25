@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed. 
 
-1. Basic functionality (0.0.1 / alpha release | 59%) <!-- 10/17 -->
+1. Basic functionality (0.0.1 / alpha release | 65%) <!-- 11/17 -->
     - [x] Base system
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -29,9 +29,9 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Updatable
     - [x] Icon
     - [x] Formatting
-    - [ ] Code annotation & docstrings
+    - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-2. Extra features & non-functional requirements (0.1.0 / beta release | 15%) <!-- 2/13 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 14%) <!-- 2/14 -->
     - [ ] Alpha release tested
     - [ ] Sections panel
     - [ ] Landing page
@@ -42,6 +42,7 @@ The following roadmap outlines what will be released after which features are im
       - [ ] Tests
       - [x] Build
       - [x] Linting
+      - [ ] Release
     - [ ] Auto-updates
     - [ ] Issue templates
     - [ ] GitHub discussion
