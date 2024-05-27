@@ -3,34 +3,59 @@ import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
 import * as fs from 'fs'
 import type { Dirent } from 'fs'
+import Store from 'electron-store'
+import { createHash } from 'crypto'
 
-const baseurl = new URL('https://git.overleaf.com/')
+type ProjectStoreType = {
+    projects: Map<string, Project>
+}
+
+const projectstore = new Store<ProjectStoreType>({
+    defaults: {
+        projects: new Map<string, Project>(),
+    },
+})
+
+function get_projects(): Map<string, Project> {
+    return projectstore.get('projects')
+}
+
+const hasher = createHash('md5')
 
 /**
- * The Project class, exposing functions relating to the handling of projects on the filesystem and git.
+ * The Project ID class, provides an interface for identifying projects
  */
-export class Project {
-    id: string
+class ProjectID {
+    readonly url: URL
+    readonly hash: string
 
     /**
-     * Creates an instance of Project.
+     * Creates an instance of ProjectID.
      *
-     * @param id - the id hash of the project
+     * @param url - the URL to the project
      */
-    constructor(id: string) {
-        if (!this.id_exists(id)) {
-            this.import_project()
-        }
-        this.id = id
+    constructor(url: URL) {
+        this.url = url
+        this.hash = this.make_hash(url)
     }
 
     /**
-     * Gets the directory where all projects reside.
+     * Makes a hash out of the URL
      *
-     * @returns absolute path
+     * @param url - the URL to hash
+     * @returns hash string
      */
-    private get_projects_dir(): string {
-        return path.join(process.cwd(), 'projects')
+    private make_hash(url: URL): string {
+        return hasher.update(url.toString()).digest('hex')
+    }
+
+    /**
+     * Checks whether the project ID exists locally.
+     *
+     * @returns boolean, whether the project ID exists locally.
+     */
+    exists_locally(): boolean {
+        return get_projects().has(this.hash)
     }
 
     /**
@@ -38,30 +63,8 @@ export class Project {
      *
      * @returns absolute path
      */
-    private get_project_dir(): string {
-        return path.join(this.get_projects_dir(), this.id)
-    }
-
-    /**
-     * Gets a list of all project IDs
-     *
-     * @returns list of strings
-     */
-    private get_projects_list(): string[] {
-        return fs
-            .readdirSync(this.get_projects_dir(), { withFileTypes: true })
-            .filter((dir_ent: Dirent) => dir_ent.isDirectory())
-            .map((dir_ent: Dirent) => dir_ent.name)
-    }
-
-    /**
-     * Checks whether the project ID exists locally.
-     *
-     * @param id - the project ID to check
-     * @returns boolean, whether the project ID exists locally.
-     */
-    private id_exists(id: string): boolean {
-        return this.get_projects_list().indexOf(id) > -1
+    get_project_dir(): string {
+        return path.join(get_projects_dir(), this.hash)
     }
 
     /**
@@ -69,21 +72,70 @@ export class Project {
      *
      * @returns URL
      */
-    private get_project_url(): URL {
-        return new URL(this.id, baseurl)
+    get_project_url(): URL {
+        return this.url
     }
+}
 
-    /**
-     * Clones the project locally.
-     *
-     */
-    async import_project() {
+/**
+ * Gets the directory where all projects reside.
+ *
+ * @returns absolute path
+ */
+function get_projects_dir(): string {
+    return path.join(process.cwd(), 'projects')
+}
+
+/**
+ * Gets a list of all project folder names
+ *
+ * @returns list of strings
+ */
+function get_projects_folders_list(): string[] {
+    return fs
+        .readdirSync(get_projects_dir(), { withFileTypes: true })
+        .filter((dir_ent: Dirent) => dir_ent.isDirectory())
+        .map((dir_ent: Dirent) => dir_ent.name)
+}
+
+export function import_project(url: URL): [Project, boolean] {
+    const id = new ProjectID(url)
+    if (id.exists_locally()) {
+        return [get_projects().get(id.hash)!, false]
+    } else {
         git.clone({
             fs,
             http,
-            dir: this.get_project_dir(),
-            url: this.get_project_url().toString(),
+            dir: id.get_project_dir(),
+            url: id.get_project_url().toString(),
         }).then(console.log)
+        return [new Project(id), true]
+    }
+}
+
+/**
+ * The Project class, exposing functions relating to the handling of locally existing projects.
+ */
+export class Project {
+    readonly id: ProjectID
+    private _name: string
+
+    /**
+     * Creates an instance of Project.
+     *
+     * @param id - the ProjectID
+     */
+    constructor(id: ProjectID) {
+        this.id = id
+        this._name = id.hash
+    }
+
+    public get name(): string {
+        return this._name
+    }
+
+    public set name(v: string) {
+        this._name = v
     }
 
     /**
