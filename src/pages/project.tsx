@@ -62,10 +62,10 @@ function PanelResizeCollapseHandle({
     )
 }
 
-export default function MainPage() {
+export default function ProjectPage() {
     return (
         <PanelGroup
-            autoSaveId="MainPagePanels"
+            autoSaveId="ProjectPagePanels"
             direction="horizontal"
             style={{ width: '100vw', height: '100vh' }}
         >
