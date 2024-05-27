@@ -8,9 +8,9 @@
 
 ## Roadmap
 
-The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed. 
+The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 65%) <!-- 11/17 -->
+1. Basic functionality (0.0.1 / alpha release | 61%) <!-- 11/18 -->
     - [x] Base system
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -21,8 +21,9 @@ The following roadmap outlines what will be released after which features are im
         - [x] Modular interface
         - [x] PDF rendering
         - [ ] Git integration
-        - [ ] Editor
+        - [ ] Projects overview
         - [ ] File navigator
+        - [ ] Editor
     - [ ] Distribution
         - [ ] Downloadable
         - [ ] Installable
@@ -31,24 +32,24 @@ The following roadmap outlines what will be released after which features are im
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-2. Extra features & non-functional requirements (0.1.0 / beta release | 14%) <!-- 2/14 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 15%) <!-- 2/13 -->
     - [ ] Alpha release tested
     - [ ] Sections panel
     - [ ] Landing page
-    - [ ] Projects overview
     - [ ] Settings menu
     - [ ] Test coverage 60%
     - [ ] CI/CD pipeline
-      - [ ] Tests
-      - [x] Build
-      - [x] Linting
-      - [ ] Release
+        - [ ] Tests
+        - [x] Build
+        - [x] Linting
+        - [ ] Release
     - [ ] Auto-updates
     - [ ] Issue templates
     - [ ] GitHub discussion
     - [ ] Documentation
-3. Polishing (1.0.0 / stable release | 0%) <!-- 0/6 -->
+3. Polishing (1.0.0 / stable release | 0%) <!-- 0/7 -->
     - [ ] Beta release tested on a variety of systems
+    - [ ] Auto-completion
     - [ ] System features
         - [ ] Dark Mode / Light Mode switching
         - [ ] Themes
@@ -117,6 +118,7 @@ If you're looking to contribute, please make sure to check the issues and discus
 2. Recursively clone this repository (to include the submodules) with `git clone --recurse-submodules https://github.com/fjwillemsen/TurnALeaf.git`.
 3. Run `npm install` to install the dependencies.
 4. Run `npm run dev` to run the development server.
+5. Make sure to run `npm test` and `npm run e2e` before submitting a pull request. Linting and formatting are automatically checked, pull requests not compliant are rejected. Make sure to provide and update documentation and docstrings where necessary. The TSDoc format is used.
 
 ### Directory structure
 
