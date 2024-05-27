@@ -6,7 +6,7 @@ import {
     PanelResizeHandle,
 } from 'react-resizable-panels'
 import styles from './main.module.css'
-// import { Project } from '@/filehandler'
+// import { Project } from '@/projecthandler'
 
 const Preview = lazy(() => import('../components/editor/preview'))
 // const currentProject: Project = null

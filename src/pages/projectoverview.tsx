@@ -1,4 +1,4 @@
-import { get_project_names } from '@/filehandler'
+import { get_project_names } from '@/projecthandler'
 
 function list_of_projects() {
     return get_project_names().map((project) => <li>{project}</li>)
