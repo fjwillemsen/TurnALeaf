@@ -2,7 +2,7 @@ import path from 'path'
 import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
 import * as fs from 'fs'
-import type { Dirent } from 'fs'
+// import type { Dirent } from 'fs'
 import Store from 'electron-store'
 import { createHash } from 'crypto'
 
@@ -86,16 +86,29 @@ function get_projects_dir(): string {
     return path.join(process.cwd(), 'projects')
 }
 
+// /**
+//  * Gets a list of all project folder names
+//  *
+//  * @returns list of strings
+//  */
+// function get_projects_folders_list(): string[] {
+//     return fs
+//         .readdirSync(get_projects_dir(), { withFileTypes: true })
+//         .filter((dir_ent: Dirent) => dir_ent.isDirectory())
+//         .map((dir_ent: Dirent) => dir_ent.name)
+// }
+
+// function validate_projects() {
+//     get_projects()
+// }
+
 /**
- * Gets a list of all project folder names
+ * Function to get the names of the projects
  *
- * @returns list of strings
+ * @returns array of strings
  */
-function get_projects_folders_list(): string[] {
-    return fs
-        .readdirSync(get_projects_dir(), { withFileTypes: true })
-        .filter((dir_ent: Dirent) => dir_ent.isDirectory())
-        .map((dir_ent: Dirent) => dir_ent.name)
+export function get_project_names(): string[] {
+    return []
 }
 
 export function import_project(url: URL): [Project, boolean] {

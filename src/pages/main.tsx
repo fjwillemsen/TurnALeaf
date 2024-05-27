@@ -6,10 +6,10 @@ import {
     PanelResizeHandle,
 } from 'react-resizable-panels'
 import styles from './main.module.css'
-import { Project } from '@/filehandler'
+// import { Project } from '@/filehandler'
 
 const Preview = lazy(() => import('../components/editor/preview'))
-const currentProject: Project = null
+// const currentProject: Project = null
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
     .fill(null)

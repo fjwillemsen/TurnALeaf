@@ -1,7 +1,7 @@
-import { Project, get_projects_list } from '@/filehandler'
+import { get_project_names } from '@/filehandler'
 
 function list_of_projects() {
-    return get_projects_list().map((project) => <li>{project}</li>)
+    return get_project_names().map((project) => <li>{project}</li>)
 }
 
 export default function ProjectOverview() {
