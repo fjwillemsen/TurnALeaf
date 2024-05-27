@@ -18,3 +18,5 @@
 //         cursor: grab;
 //     }
 // `
+
+export default function Sidebar() {}
