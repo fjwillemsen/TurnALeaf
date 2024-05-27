@@ -6,8 +6,11 @@ import * as fs from 'fs'
 import Store from 'electron-store'
 import { createHash } from 'crypto'
 
+const hasher = createHash('md5')
+type ProjectMapType = Map<string, Project>
+
 type ProjectStoreType = {
-    projects: Map<string, Project>
+    projects: ProjectMapType
 }
 
 const projectstore = new Store<ProjectStoreType>({
@@ -16,11 +19,23 @@ const projectstore = new Store<ProjectStoreType>({
     },
 })
 
-function get_projects(): Map<string, Project> {
+/**
+ * Gets the stored projects.
+ *
+ * @returns ProjectMapType
+ */
+function get_projects(): ProjectMapType {
     return projectstore.get('projects')
 }
 
-const hasher = createHash('md5')
+/**
+ * Sets the stored projects.
+ *
+ * @param ProjectMapType - projectmap
+ */
+function set_projects(projectmap: ProjectMapType) {
+    projectstore.set('projects', projectmap)
+}
 
 /**
  * The Project ID class, provides an interface for identifying projects
@@ -40,7 +55,7 @@ class ProjectID {
     }
 
     /**
-     * Makes a hash out of the URL
+     * Makes a hash out of the URL.
      *
      * @param url - the URL to hash
      * @returns hash string
@@ -87,7 +102,7 @@ function get_projects_dir(): string {
 }
 
 // /**
-//  * Gets a list of all project folder names
+//  * Gets a list of all project folder names.
 //  *
 //  * @returns list of strings
 //  */
@@ -103,15 +118,21 @@ function get_projects_dir(): string {
 // }
 
 /**
- * Function to get the names of the projects
+ * Function to get the names of the projects.
  *
  * @returns array of strings
  */
 export function get_project_names(): string[] {
-    return []
+    return Array.from(get_projects(), ([, value]) => value.name)
 }
 
-export function import_project(url: URL): [Project, boolean] {
+/**
+ * Function to clone a project locally, or return an existing project.
+ *
+ * @param url - the project URL
+ * @returns [Project, boolean] - the project object, and whether the project is newly cloned
+ */
+export function create_project(url: URL): [Project, boolean] {
     const id = new ProjectID(url)
     if (id.exists_locally()) {
         return [get_projects().get(id.hash)!, false]
@@ -121,7 +142,11 @@ export function import_project(url: URL): [Project, boolean] {
             http,
             dir: id.get_project_dir(),
             url: id.get_project_url().toString(),
-        }).then(console.log)
+        })
+            .then(console.log)
+            .catch((e) => {
+                throw e
+            })
         return [new Project(id), true]
     }
 }
@@ -141,6 +166,21 @@ export class Project {
     constructor(id: ProjectID) {
         this.id = id
         this._name = id.hash
+        if (!this.id.exists_locally()) {
+            this.save_in_store()
+        }
+    }
+
+    private save_in_store() {
+        const projects = get_projects()
+        projects.set(this.id.hash, this)
+        set_projects(projects)
+    }
+
+    private remove_from_store() {
+        const projects = get_projects()
+        projects.delete(this.id.hash)
+        set_projects(projects)
     }
 
     public get name(): string {
@@ -170,7 +210,8 @@ export class Project {
     /**
      * Delete the project locally.
      */
-    delete_project() {
-        // git.
+    public delete_project() {
+        fs.rmSync(this.id.get_project_dir(), { recursive: true, force: true })
+        this.remove_from_store()
     }
 }
