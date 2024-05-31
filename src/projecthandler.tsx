@@ -1,12 +1,14 @@
-import path from 'path'
-import git from 'isomorphic-git'
-import http from 'isomorphic-git/http/node'
-import * as fs from 'fs'
-// import type { Dirent } from 'fs'
+// // import { join } from 'path'
+// // import path from 'node:path'
+// import path from 'path'
+// import git from 'isomorphic-git'
+// import http from 'isomorphic-git/http/node'
+// import * as fs from 'fs'
+// // import type { Dirent } from 'fs'
 import Store from 'electron-store'
-import { createHash } from 'crypto'
+// import { createHash } from 'crypto'
 
-const hasher = createHash('md5')
+// const hasher = createHash('md5')
 type ProjectMapType = Map<string, Project>
 
 type ProjectStoreType = {
