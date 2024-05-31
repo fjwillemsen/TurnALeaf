@@ -2,53 +2,57 @@ import { ipcRenderer, contextBridge } from 'electron'
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
-  on(...args: Parameters<typeof ipcRenderer.on>) {
-    const [channel, listener] = args
-    return ipcRenderer.on(channel, (event, ...args) => listener(event, ...args))
-  },
-  off(...args: Parameters<typeof ipcRenderer.off>) {
-    const [channel, ...omit] = args
-    return ipcRenderer.off(channel, ...omit)
-  },
-  send(...args: Parameters<typeof ipcRenderer.send>) {
-    const [channel, ...omit] = args
-    return ipcRenderer.send(channel, ...omit)
-  },
-  invoke(...args: Parameters<typeof ipcRenderer.invoke>) {
-    const [channel, ...omit] = args
-    return ipcRenderer.invoke(channel, ...omit)
-  },
+    on(...args: Parameters<typeof ipcRenderer.on>) {
+        const [channel, listener] = args
+        return ipcRenderer.on(channel, (event, ...args) =>
+            listener(event, ...args)
+        )
+    },
+    off(...args: Parameters<typeof ipcRenderer.off>) {
+        const [channel, ...omit] = args
+        return ipcRenderer.off(channel, ...omit)
+    },
+    send(...args: Parameters<typeof ipcRenderer.send>) {
+        const [channel, ...omit] = args
+        return ipcRenderer.send(channel, ...omit)
+    },
+    invoke(...args: Parameters<typeof ipcRenderer.invoke>) {
+        const [channel, ...omit] = args
+        return ipcRenderer.invoke(channel, ...omit)
+    },
 
-  // You can expose other APTs you need here.
-  // ...
+    // You can expose other APTs you need here.
+    // ...
 })
 
 // --------- Preload scripts loading ---------
-function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
-  return new Promise(resolve => {
-    if (condition.includes(document.readyState)) {
-      resolve(true)
-    } else {
-      document.addEventListener('readystatechange', () => {
+function domReady(
+    condition: DocumentReadyState[] = ['complete', 'interactive']
+) {
+    return new Promise((resolve) => {
         if (condition.includes(document.readyState)) {
-          resolve(true)
+            resolve(true)
+        } else {
+            document.addEventListener('readystatechange', () => {
+                if (condition.includes(document.readyState)) {
+                    resolve(true)
+                }
+            })
         }
-      })
-    }
-  })
+    })
 }
 
 const safeDOM = {
-  append(parent: HTMLElement, child: HTMLElement) {
-    if (!Array.from(parent.children).find(e => e === child)) {
-      return parent.appendChild(child)
-    }
-  },
-  remove(parent: HTMLElement, child: HTMLElement) {
-    if (Array.from(parent.children).find(e => e === child)) {
-      return parent.removeChild(child)
-    }
-  },
+    append(parent: HTMLElement, child: HTMLElement) {
+        if (!Array.from(parent.children).find((e) => e === child)) {
+            return parent.appendChild(child)
+        }
+    },
+    remove(parent: HTMLElement, child: HTMLElement) {
+        if (Array.from(parent.children).find((e) => e === child)) {
+            return parent.removeChild(child)
+        }
+    },
 }
 
 /**
@@ -58,8 +62,8 @@ const safeDOM = {
  * https://matejkustec.github.io/SpinThatShit
  */
 function useLoading() {
-  const className = `loaders-css__square-spin`
-  const styleContent = `
+    const className = `loaders-css__square-spin`
+    const styleContent = `
 @keyframes square-spin {
   25% { transform: perspective(100px) rotateX(180deg) rotateY(0); }
   50% { transform: perspective(100px) rotateX(180deg) rotateY(180deg); }
@@ -86,24 +90,24 @@ function useLoading() {
   z-index: 9;
 }
     `
-  const oStyle = document.createElement('style')
-  const oDiv = document.createElement('div')
+    const oStyle = document.createElement('style')
+    const oDiv = document.createElement('div')
 
-  oStyle.id = 'app-loading-style'
-  oStyle.innerHTML = styleContent
-  oDiv.className = 'app-loading-wrap'
-  oDiv.innerHTML = `<div class="${className}"><div></div></div>`
+    oStyle.id = 'app-loading-style'
+    oStyle.innerHTML = styleContent
+    oDiv.className = 'app-loading-wrap'
+    oDiv.innerHTML = `<div class="${className}"><div></div></div>`
 
-  return {
-    appendLoading() {
-      safeDOM.append(document.head, oStyle)
-      safeDOM.append(document.body, oDiv)
-    },
-    removeLoading() {
-      safeDOM.remove(document.head, oStyle)
-      safeDOM.remove(document.body, oDiv)
-    },
-  }
+    return {
+        appendLoading() {
+            safeDOM.append(document.head, oStyle)
+            safeDOM.append(document.body, oDiv)
+        },
+        removeLoading() {
+            safeDOM.remove(document.head, oStyle)
+            safeDOM.remove(document.body, oDiv)
+        },
+    }
 }
 
 // ----------------------------------------------------------------------
@@ -112,7 +116,7 @@ const { appendLoading, removeLoading } = useLoading()
 domReady().then(appendLoading)
 
 window.onmessage = (ev) => {
-  ev.data.payload === 'removeLoading' && removeLoading()
+    ev.data.payload === 'removeLoading' && removeLoading()
 }
 
 setTimeout(removeLoading, 4999)
