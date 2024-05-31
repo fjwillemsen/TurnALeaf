@@ -1,8 +1,9 @@
 import { AppShell, Burger, Group, Skeleton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { Logo } from '../components/logo/logo'
+import AppRouter from '../router'
 
-export default function MainPage({ children }) {
+export default function MainPage() {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true)
 
@@ -41,7 +42,9 @@ export default function MainPage({ children }) {
                         <Skeleton key={index} h={28} mt="sm" animate={false} />
                     ))}
             </AppShell.Navbar>
-            <AppShell.Main>{children}</AppShell.Main>
+            <AppShell.Main>
+                <AppRouter></AppRouter>
+            </AppShell.Main>
         </AppShell>
     )
 }
