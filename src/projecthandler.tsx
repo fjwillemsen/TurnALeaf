@@ -1,5 +1,8 @@
 import { AbstractProject, AbstractProjectID } from 'shared/project'
 
+/**
+ * The Project ID class, provides an interface for identifying projects.
+ */
 export class ProjectID extends AbstractProjectID {
     constructor(url: URL) {
         super(url)

@@ -103,6 +103,9 @@ export function create_project(url: URL): [Project, boolean] {
 }
 
 // --------- Define the ProjectID class ---------
+/**
+ * The Project ID class, provides an interface for identifying projects.
+ */
 export class ProjectID extends AbstractProjectID {
     constructor(url: URL) {
         super(url)
@@ -126,6 +129,9 @@ export class ProjectID extends AbstractProjectID {
 }
 
 // --------- Define the Project class ---------
+/**
+ * The Project class, exposing functions relating to the handling of locally existing projects.
+ */
 export class Project extends AbstractProject {
     constructor(id: ProjectID) {
         super(id)
