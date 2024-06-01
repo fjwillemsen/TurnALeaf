@@ -50,7 +50,7 @@ export abstract class AbstractProjectID {
  */
 export abstract class AbstractProject {
     readonly id: AbstractProjectID
-    private _name: string
+    protected _name: string
 
     /**
      * Creates an instance of Project.
@@ -95,7 +95,7 @@ export abstract class AbstractProject {
      * Fetch updates to the project from remote.
      *
      */
-    abstract get_project_update()
+    abstract get_project_update(): void
 
     /**
      * Push updates of the project to remote.
