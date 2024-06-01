@@ -1,6 +1,15 @@
 import { AbstractProject, AbstractProjectID } from 'shared/project'
 
 /**
+ * Function to get the names of the projects.
+ *
+ * @returns array of strings
+ */
+export function get_project_names(): string[] {
+    return window.project.getNames()
+}
+
+/**
  * The Project ID class, provides an interface for identifying projects.
  */
 export class ProjectID extends AbstractProjectID {
@@ -37,6 +46,10 @@ export class Project extends AbstractProject {
 
     protected remove_from_store() {}
 
+    protected get_name(): string {
+        return window.project.getName(this.id.url)
+    }
+
     get name(): string {
         return this._name
     }
@@ -46,15 +59,15 @@ export class Project extends AbstractProject {
         window.project.setName(this.id.url)
     }
 
-    async get_project_update() {
+    async get_project_update(): Promise<void> {
         return await window.project.getUpdate(this.id.url)
     }
 
-    async push_project_update() {
+    async push_project_update(): Promise<void> {
         return await window.project.pushUpdate(this.id.url)
     }
 
-    async delete_project() {
-        return await window.project.delete(this.id.url)
+    delete_project(): void {
+        return window.project.delete(this.id.url)
     }
 }

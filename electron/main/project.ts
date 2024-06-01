@@ -149,12 +149,17 @@ export class Project extends AbstractProject {
         set_projects(projects)
     }
 
+    protected get_name(): string {
+        return this._name
+    }
+
     get name(): string {
         return this._name
     }
 
     set name(name: string) {
         this._name = name
+        this.save_in_store()
     }
 
     async get_project_update(): Promise<void> {

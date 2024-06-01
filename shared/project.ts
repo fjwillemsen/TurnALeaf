@@ -62,6 +62,8 @@ export abstract class AbstractProject {
         if (!this.id.exists_locally()) {
             this._name = id.hash
             this.save_in_store()
+        } else {
+            this._name = this.get_name()
         }
     }
 
@@ -76,6 +78,13 @@ export abstract class AbstractProject {
      *
      */
     protected abstract remove_from_store(): void
+
+    /**
+     * Helper function to retrieve the name during construction.
+     *
+     * @returns string - the name of the project
+     */
+    protected abstract get_name(): string
 
     /**
      * Retrieves the name of the project.
