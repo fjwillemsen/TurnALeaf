@@ -31,32 +31,36 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     // ...
 })
 
-// --------- Expose Project API to the Renderer process ---------
-contextBridge.exposeInMainWorld('project', {
-    getProjectNames: get_project_names,
-    createProject: create_project,
-    projectIDMakeHash: (url: URL) => {
+// --------- Expose ProjectID API to the Renderer process ---------
+contextBridge.exposeInMainWorld('projectID', {
+    makeHash: (url: URL) => {
         return new ProjectID(url).hash
     },
-    projectIDExistsLocally: (url: URL) => {
+    existsLocally: (url: URL) => {
         return new ProjectID(url).exists_locally()
     },
-    projectIDGetProjectDir: (url: URL) => {
+    getProjectDir: (url: URL) => {
         return new ProjectID(url).get_project_dir()
     },
-    projectGetName: (url: URL) => {
+})
+
+// --------- Expose Project API to the Renderer process ---------
+contextBridge.exposeInMainWorld('project', {
+    create: create_project,
+    getNames: get_project_names,
+    getName: (url: URL) => {
         return new Project(new ProjectID(url)).name
     },
-    projectSetName: (url: URL, name: string) => {
+    setName: (url: URL, name: string) => {
         new Project(new ProjectID(url)).name = name
     },
-    projectGetUpdate: (url: URL) => {
+    getUpdate: (url: URL) => {
         return new Project(new ProjectID(url)).get_project_update()
     },
-    projectPushUpdate: (url: URL) => {
+    pushUpdate: (url: URL) => {
         return new Project(new ProjectID(url)).push_project_update()
     },
-    projectDelete: (url: URL) => {
+    delete: (url: URL) => {
         return new Project(new ProjectID(url)).delete_project()
     },
 })
