@@ -6,9 +6,6 @@ import { update } from './update'
 import installExtension, {
     REACT_DEVELOPER_TOOLS,
 } from 'electron-devtools-installer'
-import Store from 'electron-store'
-
-Store.initRenderer()
 
 globalThis.__filename = fileURLToPath(import.meta.url)
 globalThis.__dirname = dirname(__filename)

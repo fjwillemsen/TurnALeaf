@@ -201,17 +201,10 @@ export class Project {
         // git.fetch({ fs, http });
     }
 
-    /**
-     * Push updates of the project to remote.
-     *
-     */
     async push_project_update() {
         // git.commit();
     }
 
-    /**
-     * Delete the project locally.
-     */
     public delete_project() {
         fs.rmSync(this.id.get_project_dir(), { recursive: true, force: true })
         this.remove_from_store()
