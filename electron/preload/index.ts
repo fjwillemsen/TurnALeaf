@@ -44,6 +44,21 @@ contextBridge.exposeInMainWorld('project', {
     projectIDGetProjectDir: (url: URL) => {
         return new ProjectID(url).get_project_dir()
     },
+    projectGetName: (url: URL) => {
+        return new Project(new ProjectID(url)).name
+    },
+    projectSetName: (url: URL, name: string) => {
+        new Project(new ProjectID(url)).name = name
+    },
+    projectGetUpdate: (url: URL) => {
+        return new Project(new ProjectID(url)).get_project_update()
+    },
+    projectPushUpdate: (url: URL) => {
+        return new Project(new ProjectID(url)).push_project_update()
+    },
+    projectDelete: (url: URL) => {
+        return new Project(new ProjectID(url)).delete_project()
+    },
 })
 
 // --------- Preload scripts loading ---------

@@ -59,8 +59,8 @@ export abstract class AbstractProject {
      */
     constructor(id: AbstractProjectID) {
         this.id = id
-        this._name = id.hash
         if (!this.id.exists_locally()) {
+            this._name = id.hash
             this.save_in_store()
         }
     }

@@ -41,11 +41,20 @@ export class Project extends AbstractProject {
         return this._name
     }
 
-    set name(name: string) {}
+    set name(name: string) {
+        this._name = name
+        window.project.projectSetName(this.id.url)
+    }
 
-    async get_project_update() {}
+    async get_project_update() {
+        return await window.project.projectGetUpdate(this.id.url)
+    }
 
-    async push_project_update() {}
+    async push_project_update() {
+        return await window.project.projectPushUpdate(this.id.url)
+    }
 
-    delete_project() {}
+    async delete_project() {
+        return await window.project.projectDelete(this.id.url)
+    }
 }
