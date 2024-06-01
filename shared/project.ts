@@ -19,28 +19,28 @@ export abstract class AbstractProjectID {
      * Makes a hash out of the URL.
      *
      * @param url - the URL to hash
-     * @returns hash string
+     * @returns string - the hash
      */
     protected abstract make_hash(url: URL): string
 
     /**
      * Checks whether the project ID exists locally.
      *
-     * @returns boolean, whether the project ID exists locally.
+     * @returns boolean - whether the project ID exists locally.
      */
     abstract exists_locally(): boolean
 
     /**
      * Gets the directory of this project.
      *
-     * @returns absolute path
+     * @returns string - absolute path
      */
     abstract get_project_dir(): string
 
     /**
      * Gets the URL to the remote repository this project belongs to.
      *
-     * @returns URL
+     * @returns URL - the URL of the remote repository
      */
     abstract get_project_url(): URL
 }
@@ -65,13 +65,31 @@ export abstract class AbstractProject {
         }
     }
 
+    /**
+     * Saves this project in the local store.
+     *
+     */
     protected abstract save_in_store(): void
 
+    /**
+     * Removes this prooject from the local store.
+     *
+     */
     protected abstract remove_from_store(): void
 
+    /**
+     * Retrieves the name of the project.
+     *
+     * @returns string - the name of the project
+     */
     abstract get name(): string
 
-    abstract set name(v: string)
+    /**
+     * Sets the name of the project.
+     *
+     * @param string - the name of the project
+     */
+    abstract set name(name: string)
 
     /**
      * Fetch updates to the project from remote.
