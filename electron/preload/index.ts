@@ -1,5 +1,10 @@
 import { ipcRenderer, contextBridge } from 'electron'
-import { get_project_names, create_project } from 'electron/main/project'
+import {
+    get_project_names,
+    create_project,
+    Project,
+    ProjectID,
+} from 'electron/main/project'
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -30,6 +35,9 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 contextBridge.exposeInMainWorld('project', {
     getProjectNames: get_project_names,
     createProject: create_project,
+    projectid_make_hash: (url: URL) => {
+        return ProjectID(url).hash
+    },
 })
 
 // --------- Preload scripts loading ---------

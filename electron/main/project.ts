@@ -1,5 +1,4 @@
-import { contextBridge } from 'electron'
-import { AbstractProject, AbstractProjectID } from '../../shared/project'
+import { AbstractProject, AbstractProjectID } from 'shared/project'
 import path from 'path'
 import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
@@ -148,8 +147,8 @@ class Project extends AbstractProject {
         return this._name
     }
 
-    set name(v: string) {
-        this._name = v
+    set name(name: string) {
+        this._name = name
     }
 
     async get_project_update(): Promise<void> {
