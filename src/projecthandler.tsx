@@ -1,4 +1,4 @@
-import { AbstractProject, AbstractProjectID } from 'shared/project'
+import { AbstractProject, AbstractProjectID } from '../shared/project'
 
 /**
  * Function to get the names of the projects.
