@@ -103,7 +103,7 @@ export function create_project(url: URL): [Project, boolean] {
 }
 
 // --------- Define the ProjectID class ---------
-class ProjectID extends AbstractProjectID {
+export class ProjectID extends AbstractProjectID {
     constructor(url: URL) {
         super(url)
     }
@@ -126,7 +126,7 @@ class ProjectID extends AbstractProjectID {
 }
 
 // --------- Define the Project class ---------
-class Project extends AbstractProject {
+export class Project extends AbstractProject {
     constructor(id: ProjectID) {
         super(id)
     }

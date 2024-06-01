@@ -35,8 +35,14 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 contextBridge.exposeInMainWorld('project', {
     getProjectNames: get_project_names,
     createProject: create_project,
-    projectid_make_hash: (url: URL) => {
-        return ProjectID(url).hash
+    projectIDMakeHash: (url: URL) => {
+        return new ProjectID(url).hash
+    },
+    projectIDExistsLocally: (url: URL) => {
+        return new ProjectID(url).exists_locally()
+    },
+    projectIDGetProjectDir: (url: URL) => {
+        return new ProjectID(url).get_project_dir()
     },
 })
 
