@@ -84,7 +84,7 @@ export function get_project_names(): string[] {
  * @param url - the project URL
  * @returns [Project, boolean] - the project object, and whether the project is newly cloned
  */
-function create_project(url: URL): [Project, boolean] {
+export function create_project(url: URL): [Project, boolean] {
     const id = new ProjectID(url)
     if (id.exists_locally()) {
         return [get_projects().get(id.hash)!, false]
@@ -165,9 +165,3 @@ class Project extends AbstractProject {
         this.remove_from_store()
     }
 }
-
-// --------- Expose Project API to the Renderer process ---------
-contextBridge.exposeInMainWorld('project', {
-    getProjectNames: get_project_names,
-    createProject: create_project,
-})

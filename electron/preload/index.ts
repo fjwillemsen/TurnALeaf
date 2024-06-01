@@ -1,4 +1,5 @@
 import { ipcRenderer, contextBridge } from 'electron'
+import { get_project_names, create_project } from 'electron/main/project'
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -23,6 +24,12 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
     // You can expose other APTs you need here.
     // ...
+})
+
+// --------- Expose Project API to the Renderer process ---------
+contextBridge.exposeInMainWorld('project', {
+    getProjectNames: get_project_names,
+    createProject: create_project,
 })
 
 // --------- Preload scripts loading ---------
