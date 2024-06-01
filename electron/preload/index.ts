@@ -4,7 +4,7 @@ import {
     create_project,
     Project,
     ProjectID,
-} from 'electron/main/project'
+} from '../main/project'
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {

@@ -1,4 +1,4 @@
-import { AbstractProject, AbstractProjectID } from 'shared/project'
+import { AbstractProject, AbstractProjectID } from '../../shared/project'
 import path from 'path'
 import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'

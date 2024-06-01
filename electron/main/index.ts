@@ -56,6 +56,7 @@ async function createWindow() {
         height: 800,
         webPreferences: {
             preload,
+            sandbox: false,
             // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
             // nodeIntegration: true,
 
