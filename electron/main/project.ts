@@ -75,7 +75,17 @@ function get_projects_dir(): string {
  * @returns array of strings
  */
 export function get_project_names(): string[] {
-    return ['hello', 'world']
+    return Array.from(get_projects(), ([, value]) => value.name)
+}
+
+/**
+ * Function to get a Project instance from the store by its hash.
+ *
+ * @param string - hash
+ * @returns (Project | undefined) - the Project instance, or undefined if not existing.
+ */
+export function get_project(hash: string): Project | undefined {
+    return get_projects().get(hash)
 }
 
 /**

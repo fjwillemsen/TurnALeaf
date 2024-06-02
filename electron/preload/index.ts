@@ -1,5 +1,6 @@
 import { ipcRenderer, contextBridge } from 'electron'
 import {
+    get_project,
     get_project_names,
     create_project,
     Project,
@@ -48,20 +49,23 @@ contextBridge.exposeInMainWorld('projectID', {
 contextBridge.exposeInMainWorld('project', {
     create: create_project,
     getNames: get_project_names,
-    getName: (url: URL) => {
-        return new Project(new ProjectID(url)).name
+    getName: (hash: string) => {
+        return get_project(hash)?.name
     },
-    setName: (url: URL, name: string) => {
-        new Project(new ProjectID(url)).name = name
+    setName: (hash: string, name: string) => {
+        const project = get_project(hash)
+        if (project !== undefined) {
+            project.name = name
+        }
     },
-    getUpdate: (url: URL) => {
-        return new Project(new ProjectID(url)).get_project_update()
+    getUpdate: (hash: string) => {
+        return get_project(hash)?.get_project_update()
     },
-    pushUpdate: (url: URL) => {
-        return new Project(new ProjectID(url)).push_project_update()
+    pushUpdate: (hash: string) => {
+        return get_project(hash)?.push_project_update()
     },
-    delete: (url: URL) => {
-        return new Project(new ProjectID(url)).delete_project()
+    delete: (hash: string) => {
+        return get_project(hash)?.delete_project()
     },
 })
 
