@@ -45,6 +45,9 @@ export default defineConfig(({ command }) => {
                                         ? pkg.dependencies
                                         : {}
                                 ),
+                                output: {
+                                    format: 'es',
+                                },
                             },
                         },
                     },
@@ -64,6 +67,9 @@ export default defineConfig(({ command }) => {
                                         ? pkg.dependencies
                                         : {}
                                 ),
+                                output: {
+                                    format: 'es',
+                                },
                             },
                         },
                     },
