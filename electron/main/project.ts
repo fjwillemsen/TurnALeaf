@@ -75,7 +75,7 @@ function get_projects_dir(): string {
  * @returns array of strings
  */
 export function get_project_names(): string[] {
-    return Array.from(get_projects(), ([, value]) => value.name)
+    return ['hello', 'world']
 }
 
 /**

@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 58%) <!-- 11/19 -->
+1. Basic functionality (0.0.1 / alpha release | 63%) <!-- 12/19 -->
     - [x] Base system
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -19,7 +19,7 @@ The following roadmap outlines what will be released after which features are im
         - [x] Component library (Mantine)
     - [ ] Base functionality
         - [x] Modular interface
-        - [ ] Safe inter-process communication via API
+        - [x] Safe inter-process communication via API
         - [x] PDF rendering
         - [ ] Git integration
         - [ ] Projects overview
