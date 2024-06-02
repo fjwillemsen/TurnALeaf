@@ -10,6 +10,16 @@ export function get_project_names(): string[] {
 }
 
 /**
+ * Function to clone a project locally, or return an existing project.
+ *
+ * @param URL - the project URL
+ * @returns [Project, boolean] - the project object, and whether the project is newly cloned
+ */
+export function create_project(url: URL): [Project, boolean] {
+    return window.project.create(url)
+}
+
+/**
  * The Project ID class, provides an interface for identifying projects.
  */
 export class ProjectID extends AbstractProjectID {

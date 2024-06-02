@@ -3,7 +3,6 @@ import {
     get_project,
     get_project_names,
     create_project,
-    Project,
     ProjectID,
 } from '../main/project'
 

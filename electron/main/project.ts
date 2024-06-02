@@ -97,7 +97,7 @@ export function get_project(hash: string): Project | undefined {
 export function create_project(url: URL): [Project, boolean] {
     const id = new ProjectID(url)
     if (id.exists_locally()) {
-        return [get_projects().get(id.hash)!, false]
+        return [get_project(id.hash)!, false]
     } else {
         git.clone({
             fs,
@@ -127,7 +127,11 @@ export class ProjectID extends AbstractProjectID {
     }
 
     exists_locally(): boolean {
-        return get_projects().has(this.hash)
+        const projects = get_projects()
+        if (Object.keys(projects).length == 0) {
+            return false
+        }
+        return projects.has(this.hash)
     }
 
     get_project_dir(): string {
@@ -149,8 +153,9 @@ export class Project extends AbstractProject {
     }
 
     protected save_in_store(): void {
-        const projects = get_projects()
+        const projects = new Map<string, Project>() // TODO get from store
         projects.set(this.id.hash, this)
+        console.log(projects)
         set_projects(projects)
     }
 
