@@ -16,11 +16,7 @@ type ProjectStoreType = {
     projects: ProjectMapType
 }
 
-const projectstore = new Store<ProjectStoreType>({
-    defaults: {
-        projects: new Map<string, Project>(),
-    },
-})
+const projectstore = new Store<ProjectStoreType>({})
 
 // --------- Define the helper functions ---------
 
@@ -32,7 +28,11 @@ const hasher = createHash('md5')
  * @returns ProjectMapType
  */
 function get_projects(): ProjectMapType {
-    return projectstore.get('projects')
+    const projects = projectstore.get('projects')
+    if (Object.keys(projects).length === 0) {
+        return new Map<string, Project>()
+    }
+    return projects
 }
 
 /**
@@ -91,11 +91,11 @@ export function get_project(hash: string): Project | undefined {
 /**
  * Function to clone a project locally, or return an existing project.
  *
- * @param url - the project URL
+ * @param string - the project URL as a string
  * @returns [Project, boolean] - the project object, and whether the project is newly cloned
  */
-export function create_project(url: URL): [Project, boolean] {
-    const id = new ProjectID(url)
+export function create_project(url_string: string): [Project, boolean] {
+    const id = new ProjectID(new URL(url_string))
     if (id.exists_locally()) {
         return [get_project(id.hash)!, false]
     } else {
@@ -153,9 +153,8 @@ export class Project extends AbstractProject {
     }
 
     protected save_in_store(): void {
-        const projects = new Map<string, Project>() // TODO get from store
+        const projects = get_projects()
         projects.set(this.id.hash, this)
-        console.log(projects)
         set_projects(projects)
     }
 
