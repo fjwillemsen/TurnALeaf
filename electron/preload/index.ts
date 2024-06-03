@@ -5,6 +5,7 @@ import {
     create_project,
     ProjectID,
 } from '../main/project'
+import { Settings } from '../main/settings'
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -29,6 +30,24 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
     // You can expose other APTs you need here.
     // ...
+})
+
+// --------- Expose Settings API to the Renderer process ---------
+const settings = new Settings()
+contextBridge.exposeInMainWorld('settings', {
+    get_onboarded: () => {
+        return settings.onboarded
+    },
+    set_onboarded: (b: boolean) => {
+        settings.onboarded = b
+    },
+    get_git_token_overleaf: () => {
+        return settings.git_token_overleaf
+    },
+    set_git_token_overleaf: (token: string) => {
+        settings.git_token_overleaf = token
+    },
+    delete_git_token_overleaf: settings.git_token_overleaf_delete,
 })
 
 // --------- Expose ProjectID API to the Renderer process ---------
