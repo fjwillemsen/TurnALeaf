@@ -11,5 +11,9 @@ export abstract class AbstractSettings {
 
     abstract set git_token_overleaf(token: string)
 
+    /**
+     * Deletes the Overleaf git authentication token from the store.
+     *
+     */
     abstract git_token_overleaf_delete(): void
 }

@@ -1,6 +1,6 @@
 import { AbstractSettings } from '../../shared/settings'
-import Store from 'electron-store'
 import { safeStorage } from 'electron'
+import Store from 'electron-store'
 
 const secure_string_encoding = 'latin1'
 
@@ -26,7 +26,7 @@ const securesettingstore = new Store<SecureSettingStoreType>()
  * The Settings class, exposing functions relating to user settings. Has a secure compartment.
  *
  */
-export class Settings extends AbstractSettings {
+export default class Settings extends AbstractSettings {
     constructor() {
         super()
         if (!safeStorage.isEncryptionAvailable()) {

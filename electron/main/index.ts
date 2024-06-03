@@ -6,6 +6,7 @@ import { update } from './update'
 import installExtension, {
     REACT_DEVELOPER_TOOLS,
 } from 'electron-devtools-installer'
+import Settings from './settings'
 import Store from 'electron-store'
 Store.initRenderer()
 
@@ -96,10 +97,30 @@ async function createWindow() {
 }
 
 app.whenReady().then(() => {
+    // install development extensions
     console.log('Installing dev extensions')
     installExtension(REACT_DEVELOPER_TOOLS)
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err))
+
+    // listen for invokes from preload
+    const settings = new Settings()
+    ipcMain.handle('settings:get_onboarded', async () => {
+        return await settings.onboarded
+    })
+    ipcMain.handle('settings:set_onboarded', (_, b: boolean) => {
+        settings.onboarded = b
+    })
+    ipcMain.handle('settings:get_git_token_overleaf', async () => {
+        return await settings.git_token_overleaf
+    })
+    ipcMain.handle('settings:set_git_token_overleaf', (_, token: string) => {
+        settings.git_token_overleaf = token
+    })
+    ipcMain.handle(
+        'settings:delete_git_token_overleaf',
+        settings.git_token_overleaf_delete
+    )
 
     createWindow()
 
@@ -140,6 +161,7 @@ ipcMain.handle('open-win', (_, arg) => {
     const childWindow = new BrowserWindow({
         webPreferences: {
             preload,
+            sandbox: false,
             nodeIntegration: true,
             contextIsolation: false,
         },
