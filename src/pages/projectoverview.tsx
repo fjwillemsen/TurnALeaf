@@ -4,7 +4,7 @@ import { Popover, Button } from '@mantine/core'
 
 export default function ProjectOverview() {
     return (
-        <div>
+        <>
             <Popover
                 width={300}
                 trapFocus
@@ -13,13 +13,13 @@ export default function ProjectOverview() {
                 shadow="md"
             >
                 <Popover.Target>
-                    <Button>Add project</Button>
+                    <Button>Import project</Button>
                 </Popover.Target>
                 <Popover.Dropdown>
                     <ProjectCreate></ProjectCreate>
                 </Popover.Dropdown>
             </Popover>
             <ProjectsList />
-        </div>
+        </>
     )
 }

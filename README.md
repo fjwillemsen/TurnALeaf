@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 63%) <!-- 12/19 -->
+1. Basic functionality (0.0.1 / alpha release | 52%) <!-- 13/25 -->
     - [x] Base system
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -22,9 +22,16 @@ The following roadmap outlines what will be released after which features are im
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
         - [ ] Git integration
+            - [x] Git client
+            - [ ] Overleaf authentication token support & storage
+            - [ ] Creating projects
+            - [ ] Pulling updates
+            - [ ] Pushing updates
+            - [ ] Removing projects
         - [ ] Projects overview
         - [ ] File navigator
         - [ ] Editor
+        - [ ] User settings storage
     - [ ] Distribution
         - [ ] Downloadable
         - [ ] Installable

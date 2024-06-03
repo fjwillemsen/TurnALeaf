@@ -1,11 +1,33 @@
+import { useEffect } from 'react'
 import { AppShell, Burger, Group, Skeleton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { useModals } from '@mantine/modals'
+import { Onboarding } from '../modals/onboarding'
 import { Logo } from '../components/logo/logo'
 import AppRouter from '../router'
 
 export default function MainPage() {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
-    const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true)
+    const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false)
+    const modals = useModals()
+    const openOnboardingModal = () =>
+        modals.openModal({
+            size: 'auto',
+            centered: true,
+            transitionProps: { transition: 'fade', duration: 200 },
+            trapFocus: true,
+            withCloseButton: false,
+            closeOnClickOutside: false,
+            closeOnEscape: false,
+            children: (
+                <>
+                    <Onboarding />
+                </>
+            ),
+        })
+    useEffect(() => {
+        openOnboardingModal()
+    }, [])
 
     return (
         <AppShell
