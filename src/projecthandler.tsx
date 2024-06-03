@@ -16,7 +16,7 @@ export function get_project_names(): string[] {
  * @returns [Project, boolean] - the project object, and whether the project is newly cloned
  */
 export function create_project(url: URL): [Project, boolean] {
-    return window.project.create(url)
+    return window.project.create(url.toString())
 }
 
 /**
