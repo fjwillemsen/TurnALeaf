@@ -4,9 +4,11 @@ import { useDisclosure } from '@mantine/hooks'
 import { useModals } from '@mantine/modals'
 import { Onboarding } from '../modals/onboarding'
 import { Logo } from '../components/logo/logo'
+import { Settings } from '@/settingshandler'
 import AppRouter from '../router'
 
 export default function MainPage() {
+    const settings = new Settings()
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false)
     const modals = useModals()
@@ -19,6 +21,9 @@ export default function MainPage() {
             withCloseButton: false,
             closeOnClickOutside: false,
             closeOnEscape: false,
+            onClose: () => {
+                settings.onboarded = true
+            },
             children: (
                 <>
                     <Onboarding />
@@ -26,7 +31,9 @@ export default function MainPage() {
             ),
         })
     useEffect(() => {
-        openOnboardingModal()
+        if (settings.onboarded == false) {
+            openOnboardingModal()
+        }
     }, [])
 
     return (
