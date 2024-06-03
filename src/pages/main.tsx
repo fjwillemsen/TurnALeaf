@@ -31,9 +31,12 @@ export default function MainPage() {
             ),
         })
     useEffect(() => {
-        if (settings.onboarded == false) {
-            openOnboardingModal()
+        const fetchOnboarded = async () => {
+            if ((await settings.onboarded) == false) {
+                openOnboardingModal()
+            }
         }
+        fetchOnboarded().catch(console.error)
     }, [])
 
     return (
