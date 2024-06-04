@@ -1,7 +1,7 @@
 import { AbstractProject, AbstractProjectID } from '../../shared/project'
 
 import path from 'path'
-import git, { AuthCallback, GitAuth } from 'isomorphic-git'
+import git, { AuthCallback } from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
 import fs from 'fs'
 // import type { Dirent } from 'fs'

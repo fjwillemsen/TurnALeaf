@@ -6,6 +6,12 @@ import { update } from './update'
 import installExtension, {
     REACT_DEVELOPER_TOOLS,
 } from 'electron-devtools-installer'
+import {
+    get_project,
+    get_project_names,
+    create_project,
+    ProjectID,
+} from '../main/project'
 import Settings from './settings'
 import Store from 'electron-store'
 Store.initRenderer()
@@ -104,15 +110,17 @@ app.whenReady().then(() => {
         .catch((err) => console.log('An error occurred: ', err))
 
     // listen for invokes from preload
+
+    // Settings API
     const settings = new Settings()
-    ipcMain.handle('settings:get_onboarded', async () => {
-        return await settings.onboarded
+    ipcMain.handle('settings:get_onboarded', () => {
+        return settings.onboarded
     })
     ipcMain.handle('settings:set_onboarded', (_, b: boolean) => {
         settings.onboarded = b
     })
-    ipcMain.handle('settings:get_git_token_overleaf', async () => {
-        return await settings.git_token_overleaf
+    ipcMain.handle('settings:get_git_token_overleaf', () => {
+        return settings.git_token_overleaf
     })
     ipcMain.handle('settings:set_git_token_overleaf', (_, token: string) => {
         settings.git_token_overleaf = token
@@ -122,6 +130,43 @@ app.whenReady().then(() => {
         settings.git_token_overleaf_delete
     )
 
+    // ProjectID API
+    ipcMain.handle('projectid:make_hash', (_, url: URL) => {
+        return new ProjectID(url).hash
+    })
+    ipcMain.handle('projectid:exists_locally', (_, url: URL) => {
+        return new ProjectID(url).exists_locally()
+    })
+    ipcMain.handle('projectid:get_project_dir', (_, url: URL) => {
+        return new ProjectID(url).get_project_dir()
+    })
+
+    // Project API
+    ipcMain.handle('project:create', (_, url: URL) => {
+        console.log(`create: ${url}, ${typeof url}`)
+        return create_project(url)
+    })
+    ipcMain.handle('project:get_names', get_project_names)
+    ipcMain.handle('project:get_name', (_, hash: string) => {
+        return get_project(hash)?.name
+    })
+    ipcMain.handle('project:set_name', (_, hash: string, name: string) => {
+        const project = get_project(hash)
+        if (project !== undefined) {
+            project.name = name
+        }
+    })
+    ipcMain.handle('project:get_update', (_, hash: string) => {
+        return get_project(hash)?.get_project_update()
+    })
+    ipcMain.handle('project:push_update', (_, hash: string) => {
+        return get_project(hash)?.push_project_update()
+    })
+    ipcMain.handle('project:delete', (_, hash: string) => {
+        return get_project(hash)?.delete_project()
+    })
+
+    // finish setup
     createWindow()
 
     app.on('activate', function () {

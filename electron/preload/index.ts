@@ -1,10 +1,4 @@
 import { ipcRenderer, contextBridge } from 'electron'
-import {
-    get_project,
-    get_project_names,
-    create_project,
-    ProjectID,
-} from '../main/project'
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -46,39 +40,25 @@ contextBridge.exposeInMainWorld('settings', {
 
 // --------- Expose ProjectID API to the Renderer process ---------
 contextBridge.exposeInMainWorld('projectID', {
-    makeHash: (url: URL) => {
-        return new ProjectID(url).hash
-    },
-    existsLocally: (url: URL) => {
-        return new ProjectID(url).exists_locally()
-    },
-    getProjectDir: (url: URL) => {
-        return new ProjectID(url).get_project_dir()
-    },
+    makeHash: (url: URL) => ipcRenderer.invoke('projectid:make_hash', url),
+    existsLocally: (url: URL) =>
+        ipcRenderer.invoke('projectid:exists_locally', url),
+    getProjectDir: (url: URL) =>
+        ipcRenderer.invoke('projectid:get_project_dir', url),
 })
 
 // --------- Expose Project API to the Renderer process ---------
 contextBridge.exposeInMainWorld('project', {
-    create: create_project,
-    getNames: get_project_names,
-    getName: (hash: string) => {
-        return get_project(hash)?.name
-    },
-    setName: (hash: string, name: string) => {
-        const project = get_project(hash)
-        if (project !== undefined) {
-            project.name = name
-        }
-    },
-    getUpdate: (hash: string) => {
-        return get_project(hash)?.get_project_update()
-    },
-    pushUpdate: (hash: string) => {
-        return get_project(hash)?.push_project_update()
-    },
-    delete: (hash: string) => {
-        return get_project(hash)?.delete_project()
-    },
+    create: (url: URL) => ipcRenderer.invoke('project:create', url),
+    getNames: () => ipcRenderer.invoke('project:get_names'),
+    getName: (hash: string) => ipcRenderer.invoke('project:get_name', hash),
+    setName: (hash: string, name: string) =>
+        ipcRenderer.invoke('project:set_name', hash, name),
+    get_update: (hash: string) =>
+        ipcRenderer.invoke('project:get_update', hash),
+    push_update: (hash: string) =>
+        ipcRenderer.invoke('project:push_name', hash),
+    delete: (hash: string) => ipcRenderer.invoke('project:delete', hash),
 })
 
 // --------- Preload scripts loading ---------
