@@ -83,6 +83,10 @@ export class Project extends AbstractProject {
         window.project.setName(this.id.url)
     }
 
+    get id(): ProjectID {
+        return new ProjectID(new URL(this._id_url_string))
+    }
+
     async get_project_update(): Promise<void> {
         return await window.project.getUpdate(this.id.url)
     }

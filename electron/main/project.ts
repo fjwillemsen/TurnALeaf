@@ -231,6 +231,10 @@ export class Project extends AbstractProject {
         this.save_in_store()
     }
 
+    get id(): ProjectID {
+        return new ProjectID(new URL(this._id_url_string))
+    }
+
     async get_project_update(): Promise<void> {
         // git.fetch({ fs, http });
     }

@@ -1,5 +1,5 @@
 /**
- * The Project ID class, provides an interface for identifying projects.
+ * The Project ID class, provides identification and location of projects.
  */
 export abstract class AbstractProjectID {
     protected readonly _url_string: string
@@ -68,7 +68,7 @@ export abstract class AbstractProjectID {
  * The Project class, exposing functions relating to the handling of locally existing projects.
  */
 export abstract class AbstractProject {
-    readonly id: AbstractProjectID
+    protected readonly _id_url_string: string
     protected _name: string
 
     /**
@@ -77,12 +77,12 @@ export abstract class AbstractProject {
      * @param id - the ProjectID
      */
     constructor(id: AbstractProjectID) {
-        this.id = id
-        if (!this.id.exists_locally()) {
+        this._id_url_string = id.url.toString()
+        if (id.exists_locally()) {
+            this._name = this.get_name()
+        } else {
             this._name = id.hash
             this.save_in_store()
-        } else {
-            this._name = this.get_name()
         }
     }
 
@@ -118,6 +118,13 @@ export abstract class AbstractProject {
      * @param string - the name of the project
      */
     abstract set name(name: string)
+
+    /**
+     * Gets the ProjectID of this project.
+     *
+     * @returns AbstractProjectID - the ProjectID
+     */
+    abstract get id(): AbstractProjectID
 
     /**
      * Fetch updates to the project from remote.
