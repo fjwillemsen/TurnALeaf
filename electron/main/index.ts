@@ -65,7 +65,7 @@ async function createWindow() {
         height: 800,
         webPreferences: {
             preload,
-            sandbox: false,
+            sandbox: false, // TODO enable sandboxing
             // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
             // nodeIntegration: true,
 
@@ -142,8 +142,7 @@ app.whenReady().then(() => {
     })
 
     // Project API
-    ipcMain.handle('project:create', (_, url: URL) => {
-        console.log(`create: ${url}, ${typeof url}`)
+    ipcMain.handle('project:create', (_, url: string) => {
         return create_project(url)
     })
     ipcMain.handle('project:get_names', get_project_names)

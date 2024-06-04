@@ -51,7 +51,7 @@ export default class Settings extends AbstractSettings {
      * @returns string - the decrypted value
      */
     private get_secure(key: keyof SecureSettingStoreType): string {
-        if (!this.has_secure(key)) {
+        if (this.has_secure(key) == false) {
             throw new Error('Settings: requested secure key does not exist')
         }
         const buffer = Buffer.from(

@@ -21,7 +21,6 @@ const projectstore = new Store<ProjectStoreType>({})
 
 // --------- Define the helper functions ---------
 
-const hasher = createHash('md5')
 const settings = new Settings()
 
 /**
@@ -31,10 +30,10 @@ const settings = new Settings()
  */
 function get_projects(): ProjectMapType {
     const projects = projectstore.get('projects')
-    if (Object.keys(projects).length === 0) {
+    if (projects == undefined || Object.keys(projects).length === 0) {
         return new Map<string, Project>()
     }
-    return projects
+    return new Map(projects)
 }
 
 /**
@@ -43,7 +42,7 @@ function get_projects(): ProjectMapType {
  * @param ProjectMapType - projectmap
  */
 function set_projects(projectmap: ProjectMapType) {
-    projectstore.set('projects', projectmap)
+    projectstore.set('projects', Array.from(projectmap.entries()))
 }
 
 /**
@@ -97,16 +96,14 @@ export function get_project(hash: string): Project | undefined {
  * @returns AuthCallback - the authentication details
  */
 const get_auth: AuthCallback = (url: string) => {
-    const url_origin = new URL(url)
-    if (url_origin.hostname.includes('overleaf.com')) {
+    const url_hostname = new URL(url).hostname
+    if (url_hostname.includes('overleaf.com')) {
         return {
             username: 'git',
             password: settings.git_token_overleaf,
         }
     }
-    throw new Error(
-        `Authentication not defined for hostname ${url_origin.hostname}`
-    )
+    throw new Error(`Authentication not defined for hostname ${url_hostname}`)
 }
 
 /**
@@ -115,7 +112,9 @@ const get_auth: AuthCallback = (url: string) => {
  * @param string - the project URL as a string
  * @returns [Project, boolean] - the project object, and whether the project is newly cloned
  */
-export function create_project(url_string: string): [Project, boolean] {
+export function create_project(
+    url_string: string
+): [Project, boolean] | undefined {
     const id = new ProjectID(new URL(url_string))
     if (id.exists_locally()) {
         return [get_project(id.hash)!, false]
@@ -127,11 +126,13 @@ export function create_project(url_string: string): [Project, boolean] {
             url: id.get_project_url().toString(),
             onAuth: get_auth,
         })
-            .then(console.log)
+            .then(() => {
+                return [new Project(id), true]
+            })
             .catch((e) => {
+                console.error(e)
                 throw e
             })
-        return [new Project(id), true]
     }
 }
 
@@ -145,6 +146,7 @@ export class ProjectID extends AbstractProjectID {
     }
 
     protected make_hash(url: URL): string {
+        const hasher = createHash('md5')
         return hasher.update(url.toString()).digest('hex')
     }
 
