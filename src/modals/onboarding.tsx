@@ -1,4 +1,5 @@
 import { Stepper, Button, Group } from '@mantine/core'
+import { GitTokenOverleaf } from '@/components/settings/settings'
 import { useState } from 'react'
 
 export function Onboarding() {
@@ -25,10 +26,10 @@ export function Onboarding() {
             <Stepper active={active} onStepClick={setActive}>
                 <Stepper.Step
                     label="First step"
-                    description="Create an account"
+                    description="Overleaf authentication"
                     allowStepSelect={shouldAllowSelectStep(0)}
                 >
-                    Step 1 content: Create an account
+                    <GitTokenOverleaf />
                 </Stepper.Step>
                 <Stepper.Step
                     label="Second step"
