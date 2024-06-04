@@ -140,8 +140,8 @@ export function create_project(
         git.clone({
             fs,
             http,
-            dir: id.get_project_dir(),
-            url: id.get_project_url().toString(),
+            dir: id.directory,
+            url: id.url.toString(),
             onAuth: get_auth,
         })
             .then(() => {
@@ -168,12 +168,24 @@ export class ProjectID extends AbstractProjectID {
         return hasher.update(url.toString()).digest('hex')
     }
 
+    get url(): URL {
+        return new URL(this._url_string)
+    }
+
+    get hash(): string {
+        return this._hash
+    }
+
+    get directory(): string {
+        return path.join(get_projects_dir(), this.hash)
+    }
+
     exists_dir(): boolean {
-        return fs.existsSync(this.get_project_dir())
+        return fs.existsSync(this.directory)
     }
 
     remove_dir() {
-        fs.rmSync(this.get_project_dir(), { recursive: true, force: true })
+        fs.rmSync(this.directory, { recursive: true, force: true })
     }
 
     exists_locally(): boolean {
@@ -182,14 +194,6 @@ export class ProjectID extends AbstractProjectID {
             return false
         }
         return projects.has(this.hash) && this.exists_dir()
-    }
-
-    get_project_dir(): string {
-        return path.join(get_projects_dir(), this.hash)
-    }
-
-    get_project_url(): URL {
-        return this.url
     }
 }
 

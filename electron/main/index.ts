@@ -136,7 +136,7 @@ app.whenReady().then(() => {
         return new ProjectID(url).exists_locally()
     })
     ipcMain.handle('projectid:get_project_dir', (_, url: URL) => {
-        return new ProjectID(url).get_project_dir()
+        return new ProjectID(url).directory
     })
 
     // Project API

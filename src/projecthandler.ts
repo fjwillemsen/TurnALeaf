@@ -34,6 +34,18 @@ export class ProjectID extends AbstractProjectID {
         return window.projectID.makeHash(url)
     }
 
+    get hash(): string {
+        return this._hash
+    }
+
+    get url(): URL {
+        return new URL(this._url_string)
+    }
+
+    get directory(): string {
+        return window.project.getProjectDir(this.url)
+    }
+
     exists_dir(): boolean {
         throw new Error('Method not implemented.')
     }
@@ -43,14 +55,6 @@ export class ProjectID extends AbstractProjectID {
 
     exists_locally(): boolean {
         return window.project.existsLocally(this.url)
-    }
-
-    get_project_dir(): string {
-        return window.project.getProjectDir(this.url)
-    }
-
-    get_project_url(): URL {
-        return this.url
     }
 }
 

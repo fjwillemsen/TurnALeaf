@@ -2,8 +2,8 @@
  * The Project ID class, provides an interface for identifying projects.
  */
 export abstract class AbstractProjectID {
-    readonly url: URL
-    readonly hash: string
+    protected readonly _url_string: string
+    protected readonly _hash: string
 
     /**
      * Creates an instance of ProjectID.
@@ -11,8 +11,8 @@ export abstract class AbstractProjectID {
      * @param url - the URL to the project
      */
     constructor(url: URL) {
-        this.url = url
-        this.hash = this.make_hash(url)
+        this._url_string = url.toString()
+        this._hash = this.make_hash(url)
     }
 
     /**
@@ -22,6 +22,27 @@ export abstract class AbstractProjectID {
      * @returns string - the hash
      */
     protected abstract make_hash(url: URL): string
+
+    /**
+     * Gets the hash identifying this project.
+     *
+     * @returns string - the hash identifyer
+     */
+    abstract get hash(): string
+
+    /**
+     * Gets the URL to the remote repository this project belongs to.
+     *
+     * @returns URL - the URL of the remote repository
+     */
+    abstract get url(): URL
+
+    /**
+     * Gets the project directory on disk
+     *
+     * @returns string - absolute path to the directory
+     */
+    abstract get directory(): string
 
     /**
      * Checks whether the project directory exists on disk.
@@ -41,20 +62,6 @@ export abstract class AbstractProjectID {
      * @returns boolean - whether the project ID exists locally.
      */
     abstract exists_locally(): boolean
-
-    /**
-     * Gets the directory of this project.
-     *
-     * @returns string - absolute path
-     */
-    abstract get_project_dir(): string
-
-    /**
-     * Gets the URL to the remote repository this project belongs to.
-     *
-     * @returns URL - the URL of the remote repository
-     */
-    abstract get_project_url(): URL
 }
 
 /**
