@@ -30,8 +30,7 @@ export default function ProjectCreate() {
     })
 
     const handleSubmit = (values: typeof form.values) => {
-        console.log(values)
-        create_project(new URL(values.url))
+        create_project(new URL(values.url), false)
     }
 
     return (

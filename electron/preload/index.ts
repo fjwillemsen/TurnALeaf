@@ -49,7 +49,8 @@ contextBridge.exposeInMainWorld('projectID', {
 
 // --------- Expose Project API to the Renderer process ---------
 contextBridge.exposeInMainWorld('project', {
-    create: (url: URL) => ipcRenderer.invoke('project:create', url),
+    create: (url: URL, overwrite: boolean) =>
+        ipcRenderer.invoke('project:create', url, overwrite),
     getNames: () => ipcRenderer.invoke('project:get_names'),
     getName: (hash: string) => ipcRenderer.invoke('project:get_name', hash),
     setName: (hash: string, name: string) =>

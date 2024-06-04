@@ -24,6 +24,18 @@ export abstract class AbstractProjectID {
     protected abstract make_hash(url: URL): string
 
     /**
+     * Checks whether the project directory exists on disk.
+     *
+     * @returns boolean - whether the directory exists
+     */
+    abstract exists_dir(): boolean
+
+    /**
+     * Remove the project directory on disk.
+     */
+    abstract remove_dir(): void
+
+    /**
      * Checks whether the project ID exists locally.
      *
      * @returns boolean - whether the project ID exists locally.

@@ -142,8 +142,8 @@ app.whenReady().then(() => {
     })
 
     // Project API
-    ipcMain.handle('project:create', (_, url: string) => {
-        return create_project(url)
+    ipcMain.handle('project:create', (_, url: string, overwrite: boolean) => {
+        return create_project(url, overwrite)
     })
     ipcMain.handle('project:get_names', get_project_names)
     ipcMain.handle('project:get_name', (_, hash: string) => {

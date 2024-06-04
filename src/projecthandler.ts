@@ -15,8 +15,11 @@ export function get_project_names(): Promise<string[]> {
  * @param URL - the project URL
  * @returns [Project, boolean] - the project object, and whether the project is newly cloned
  */
-export function create_project(url: URL): [Project, boolean] {
-    return window.project.create(url.toString())
+export function create_project(
+    url: URL,
+    overwrite: boolean
+): [Project, boolean] {
+    return window.project.create(url.toString(), overwrite)
 }
 
 /**
@@ -29,6 +32,13 @@ export class ProjectID extends AbstractProjectID {
 
     protected make_hash(url: URL): string {
         return window.projectID.makeHash(url)
+    }
+
+    exists_dir(): boolean {
+        throw new Error('Method not implemented.')
+    }
+    remove_dir(): void {
+        throw new Error('Method not implemented.')
     }
 
     exists_locally(): boolean {

@@ -18,6 +18,7 @@ type ProjectStoreType = {
 }
 
 const projectstore = new Store<ProjectStoreType>({})
+remove_projects()
 
 // --------- Define the helper functions ---------
 
@@ -43,6 +44,14 @@ function get_projects(): ProjectMapType {
  */
 function set_projects(projectmap: ProjectMapType) {
     projectstore.set('projects', Array.from(projectmap.entries()))
+}
+
+/**
+ * Removes all local projects, both on disk and in storage.
+ */
+function remove_projects() {
+    fs.rmSync(get_projects_dir(), { recursive: true, force: true })
+    projectstore.clear()
 }
 
 /**
@@ -110,15 +119,26 @@ const get_auth: AuthCallback = (url: string) => {
  * Function to clone a project locally, or return an existing project.
  *
  * @param string - the project URL as a string
+ * @param boolean - whether to overwrite the project if it exists on disk
  * @returns [Project, boolean] - the project object, and whether the project is newly cloned
  */
 export function create_project(
-    url_string: string
+    url_string: string,
+    overwrite: boolean
 ): [Project, boolean] | undefined {
     const id = new ProjectID(new URL(url_string))
     if (id.exists_locally()) {
         return [get_project(id.hash)!, false]
     } else {
+        if (id.exists_dir()) {
+            if (overwrite) {
+                id.remove_dir()
+            } else {
+                throw new Error(
+                    `Project with hash ${id.hash} already exists on disk`
+                )
+            }
+        }
         git.clone({
             fs,
             http,
@@ -150,12 +170,20 @@ export class ProjectID extends AbstractProjectID {
         return hasher.update(url.toString()).digest('hex')
     }
 
+    exists_dir(): boolean {
+        return fs.existsSync(this.get_project_dir())
+    }
+
+    remove_dir() {
+        fs.rmSync(this.get_project_dir(), { recursive: true, force: true })
+    }
+
     exists_locally(): boolean {
         const projects = get_projects()
         if (Object.keys(projects).length == 0) {
             return false
         }
-        return projects.has(this.hash)
+        return projects.has(this.hash) && this.exists_dir()
     }
 
     get_project_dir(): string {
@@ -210,7 +238,7 @@ export class Project extends AbstractProject {
     }
 
     delete_project() {
-        fs.rmSync(this.id.get_project_dir(), { recursive: true, force: true })
+        this.id.remove_dir()
         this.remove_from_store()
     }
 }
