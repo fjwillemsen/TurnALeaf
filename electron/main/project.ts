@@ -18,7 +18,6 @@ type ProjectStoreType = {
 }
 
 const projectstore = new Store<ProjectStoreType>({})
-remove_projects()
 
 // --------- Define the helper functions ---------
 
@@ -32,6 +31,9 @@ function get_projects(): ProjectMapType {
     if (projects == undefined || Object.keys(projects).length === 0) {
         return new Map<string, Project>()
     }
+    projects.forEach((project, hash) => {
+        return [new Project(new ProjectID(project.id.url)), hash]
+    })
     return new Map(projects)
 }
 
@@ -47,9 +49,10 @@ function set_projects(projectmap: ProjectMapType) {
 /**
  * Removes all local projects, both on disk and in storage.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function remove_projects() {
     fs.rmSync(get_projects_dir(), { recursive: true, force: true })
-    projectstore.reset()
+    projectstore.clear()
 }
 
 /**
@@ -148,8 +151,7 @@ export function create_project(
                 return [new Project(id), true]
             })
             .catch((e) => {
-                console.error(e)
-                throw e
+                throw new Error(`Failed to clone project, reason: ${e.message}`)
             })
     }
 }
