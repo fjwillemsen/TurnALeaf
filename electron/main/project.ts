@@ -7,6 +7,7 @@ import fs from 'fs'
 // import type { Dirent } from 'fs'
 import { createHash } from 'crypto'
 import Store from 'electron-store'
+import Settings from './settings'
 
 // --------- Initialize the local storage ---------
 
@@ -21,6 +22,7 @@ const projectstore = new Store<ProjectStoreType>({})
 // --------- Define the helper functions ---------
 
 const hasher = createHash('md5')
+const settings = new Settings()
 
 /**
  * Gets the stored projects.
@@ -104,6 +106,13 @@ export function create_project(url_string: string): [Project, boolean] {
             http,
             dir: id.get_project_dir(),
             url: id.get_project_url().toString(),
+            onAuth: () => {
+                // https://isomorphic-git.org/docs/en/onAuth
+                return {
+                    username: 'git',
+                    password: settings.git_token_overleaf,
+                }
+            },
         })
             .then(console.log)
             .catch((e) => {
