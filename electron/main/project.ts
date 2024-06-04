@@ -1,7 +1,7 @@
 import { AbstractProject, AbstractProjectID } from '../../shared/project'
 
 import path from 'path'
-import git from 'isomorphic-git'
+import git, { AuthCallback, GitAuth } from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
 import fs from 'fs'
 // import type { Dirent } from 'fs'
@@ -91,6 +91,25 @@ export function get_project(hash: string): Project | undefined {
 }
 
 /**
+ * Function to get for the authentication for `onAuth`. See https://isomorphic-git.org/docs/en/onAuth.
+ *
+ * @param URL - the URL
+ * @returns AuthCallback - the authentication details
+ */
+const get_auth: AuthCallback = (url: string) => {
+    const url_origin = new URL(url)
+    if (url_origin.hostname.includes('overleaf.com')) {
+        return {
+            username: 'git',
+            password: settings.git_token_overleaf,
+        }
+    }
+    throw new Error(
+        `Authentication not defined for hostname ${url_origin.hostname}`
+    )
+}
+
+/**
  * Function to clone a project locally, or return an existing project.
  *
  * @param string - the project URL as a string
@@ -106,13 +125,7 @@ export function create_project(url_string: string): [Project, boolean] {
             http,
             dir: id.get_project_dir(),
             url: id.get_project_url().toString(),
-            onAuth: () => {
-                // https://isomorphic-git.org/docs/en/onAuth
-                return {
-                    username: 'git',
-                    password: settings.git_token_overleaf,
-                }
-            },
+            onAuth: get_auth,
         })
             .then(console.log)
             .catch((e) => {
