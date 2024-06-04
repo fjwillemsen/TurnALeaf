@@ -12,7 +12,7 @@ import {
     create_project,
     ProjectID,
 } from '../main/project'
-import Settings from './settings'
+import { settings } from './settings'
 import Store from 'electron-store'
 Store.initRenderer()
 
@@ -109,10 +109,8 @@ app.whenReady().then(() => {
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err))
 
-    // listen for invokes from preload
-
+    // --------- Listen for invokes from preload ---------
     // Settings API
-    const settings = new Settings()
     ipcMain.handle('settings:get_onboarded', () => {
         return settings.onboarded
     })

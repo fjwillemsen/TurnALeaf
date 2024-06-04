@@ -30,14 +30,14 @@ export default function MainPage() {
                 </>
             ),
         })
-    // useEffect(() => {
-    //     const fetchOnboarded = async () => {
-    //         if ((await settings.onboarded) == false) {
-    //             openOnboardingModal()
-    //         }
-    //     }
-    //     fetchOnboarded().catch(console.error)
-    // }, [])
+    useEffect(() => {
+        const fetchOnboarded = async () => {
+            if ((await settings.onboarded) == false) {
+                // openOnboardingModal()
+            }
+        }
+        fetchOnboarded().catch(console.error)
+    }, [])
 
     return (
         <AppShell

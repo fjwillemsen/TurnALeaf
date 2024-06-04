@@ -7,7 +7,7 @@ import fs from 'fs'
 // import type { Dirent } from 'fs'
 import { createHash } from 'crypto'
 import Store from 'electron-store'
-import Settings from './settings'
+import { settings } from './settings'
 
 // --------- Initialize the local storage ---------
 
@@ -21,8 +21,6 @@ const projectstore = new Store<ProjectStoreType>({})
 remove_projects()
 
 // --------- Define the helper functions ---------
-
-const settings = new Settings()
 
 /**
  * Gets the stored projects.
@@ -51,7 +49,7 @@ function set_projects(projectmap: ProjectMapType) {
  */
 function remove_projects() {
     fs.rmSync(get_projects_dir(), { recursive: true, force: true })
-    projectstore.clear()
+    projectstore.reset()
 }
 
 /**

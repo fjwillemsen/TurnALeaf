@@ -1,4 +1,5 @@
 import { create_project } from '@/projecthandler'
+import { handleIPCError } from '../general/errorhandler'
 import { Button, Group, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
@@ -30,7 +31,7 @@ export default function ProjectCreate() {
     })
 
     const handleSubmit = (values: typeof form.values) => {
-        create_project(new URL(values.url), false)
+        create_project(new URL(values.url), false).catch(handleIPCError)
     }
 
     return (

@@ -26,7 +26,7 @@ const securesettingstore = new Store<SecureSettingStoreType>()
  * The Settings class, exposing functions relating to user settings. Has a secure compartment.
  *
  */
-export default class Settings extends AbstractSettings {
+export class Settings extends AbstractSettings {
     constructor() {
         super()
         if (!safeStorage.isEncryptionAvailable()) {
@@ -101,3 +101,5 @@ export default class Settings extends AbstractSettings {
         this.delete_secure('git_token_overleaf')
     }
 }
+
+export const settings = new Settings()

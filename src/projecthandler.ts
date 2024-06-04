@@ -18,7 +18,7 @@ export function get_project_names(): Promise<string[]> {
 export function create_project(
     url: URL,
     overwrite: boolean
-): [Project, boolean] {
+): Promise<[Project, boolean]> {
     return window.project.create(url.toString(), overwrite)
 }
 
