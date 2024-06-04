@@ -1,15 +1,20 @@
 import { get_project_names } from '@/projecthandler'
-
-function list_of_projects() {
-    const project_names = get_project_names()
-    console.log(project_names)
-    return project_names.map((projectname) => <li>{projectname}</li>)
-}
+import { useEffect, useState } from 'react'
 
 export default function ProjectsList() {
+    const [projectsList, setProjectsList] = useState<string[]>([])
+
+    useEffect(() => {
+        get_project_names().then((names) => setProjectsList(names))
+    }, [])
+
     return (
         <div>
-            <ul>{list_of_projects()}</ul>
+            <ul>
+                {projectsList.map((name: string) => (
+                    <li>{name}</li>
+                ))}
+            </ul>
         </div>
     )
 }
