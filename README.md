@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 52%) <!-- 13/25 -->
+1. Basic functionality (0.0.1 / alpha release | 72%) <!-- 18/25 -->
     - [x] Base system
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -23,15 +23,15 @@ The following roadmap outlines what will be released after which features are im
         - [x] PDF rendering
         - [ ] Git integration
             - [x] Git client
-            - [ ] Overleaf authentication token support & storage
-            - [ ] Creating projects
+            - [x] Overleaf authentication token support & storage
+            - [x] Creating projects
             - [ ] Pulling updates
             - [ ] Pushing updates
-            - [ ] Removing projects
-        - [ ] Projects overview
+            - [x] Removing projects
+        - [x] Projects overview
         - [ ] File navigator
         - [ ] Editor
-        - [ ] User settings storage
+        - [x] User settings storage
     - [ ] Distribution
         - [ ] Downloadable
         - [ ] Installable
@@ -40,11 +40,12 @@ The following roadmap outlines what will be released after which features are im
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-2. Extra features & non-functional requirements (0.1.0 / beta release | 15%) <!-- 2/13 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 14%) <!-- 2/14 -->
     - [ ] Alpha release tested
     - [ ] Sections panel
     - [ ] Landing page
     - [ ] Settings menu
+    - [ ] Onboarding tutorial
     - [ ] Test coverage 60%
     - [ ] CI/CD pipeline
         - [ ] Tests
@@ -68,7 +69,6 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Overleaf notifications
     - [ ] TeX Distribution selection
     - [ ] Help pages
-    - [ ] Onboarding tutorial
     - [ ] Multi-language support
     - [ ] Plugin support
 
