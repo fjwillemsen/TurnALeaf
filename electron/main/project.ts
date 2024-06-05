@@ -38,13 +38,8 @@ function update_projects_cache(): void {
     new Map(projects_values).forEach((project, hash) => {
         const projectid = new ProjectID(new URL(project._id_url_string))
         updated_projects_cache.set(hash, new Project(projectid))
-        // return [
-        //     new Project(new ProjectID(new URL(project._id_url_string))),
-        //     hash,
-        // ]
     })
     projects_cache = updated_projects_cache
-    console.log(projects_cache)
 }
 
 /**
@@ -91,12 +86,15 @@ function get_projects_dir(): string {
 // }
 
 /**
- * Function to get the names of the projects.
+ * Function to get the names and hashes of the projects.
  *
- * @returns array of strings
+ * @returns [string, string][] - array of [name, hash]
  */
-export function get_project_names(): string[] {
-    return Array.from(projects_cache, ([, value]) => value.name)
+export function get_project_names(): [string, string][] {
+    return Array.from(projects_cache, ([, value]) => [
+        value.name,
+        value.id.hash,
+    ])
 }
 
 /**

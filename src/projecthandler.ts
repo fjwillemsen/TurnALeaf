@@ -1,11 +1,11 @@
 import { AbstractProject, AbstractProjectID } from '../shared/project'
 
 /**
- * Function to get the names of the projects.
+ * Function to get the names and hashes of the projects.
  *
- * @returns array of strings
+ * @returns [string, string][] - array of [name, hash]
  */
-export function get_project_names(): Promise<string[]> {
+export function get_project_names(): Promise<[string, string][]> {
     return window.project.getNames()
 }
 
