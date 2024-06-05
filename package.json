@@ -15,9 +15,9 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build && electron-builder",
-        "lint": "eslint src",
-        "format": "eslint src --fix",
-        "test": "eslint src --quiet",
+        "lint": "eslint src electron shared",
+        "format": "eslint src electron shared --fix",
+        "test": "eslint src electron shared --quiet",
         "preview": "vite preview",
         "pree2e": "vite build --mode=test",
         "e2e": "playwright test",
