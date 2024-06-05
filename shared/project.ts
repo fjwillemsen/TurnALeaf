@@ -68,7 +68,7 @@ export abstract class AbstractProjectID {
  * The Project class, exposing functions relating to the handling of locally existing projects.
  */
 export abstract class AbstractProject {
-    protected readonly _id_url_string: string
+    readonly _id_url_string: string
     protected _name: string
 
     /**

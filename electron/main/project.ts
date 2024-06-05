@@ -18,23 +18,33 @@ type ProjectStoreType = {
 }
 
 const projectstore = new Store<ProjectStoreType>({})
+let projects_cache = new Map<string, Project>()
 
 // --------- Define the helper functions ---------
 
 /**
- * Gets the stored projects.
+ * Updates the project cache by fetching from projectstore.
  *
- * @returns ProjectMapType
  */
-function get_projects(): ProjectMapType {
-    const projects = projectstore.get('projects')
-    if (projects == undefined || Object.keys(projects).length === 0) {
-        return new Map<string, Project>()
+function update_projects_cache(): void {
+    const projects_values = projectstore.get('projects')
+    if (
+        projects_values == undefined ||
+        Object.keys(projects_values).length === 0
+    ) {
+        return
     }
-    projects.forEach((project, hash) => {
-        return [new Project(new ProjectID(project.id.url)), hash]
+    const updated_projects_cache = new Map<string, Project>()
+    new Map(projects_values).forEach((project, hash) => {
+        const projectid = new ProjectID(new URL(project._id_url_string))
+        updated_projects_cache.set(hash, new Project(projectid))
+        // return [
+        //     new Project(new ProjectID(new URL(project._id_url_string))),
+        //     hash,
+        // ]
     })
-    return new Map(projects)
+    projects_cache = updated_projects_cache
+    console.log(projects_cache)
 }
 
 /**
@@ -52,7 +62,7 @@ function set_projects(projectmap: ProjectMapType) {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function remove_projects() {
     fs.rmSync(get_projects_dir(), { recursive: true, force: true })
-    projectstore.clear()
+    projectstore.delete('projects')
 }
 
 /**
@@ -77,7 +87,7 @@ function get_projects_dir(): string {
 // }
 
 // function validate_projects() {
-//     get_projects()
+//     projects_cache
 // }
 
 /**
@@ -86,7 +96,7 @@ function get_projects_dir(): string {
  * @returns array of strings
  */
 export function get_project_names(): string[] {
-    return Array.from(get_projects(), ([, value]) => value.name)
+    return Array.from(projects_cache, ([, value]) => value.name)
 }
 
 /**
@@ -96,7 +106,7 @@ export function get_project_names(): string[] {
  * @returns (Project | undefined) - the Project instance, or undefined if not existing.
  */
 export function get_project(hash: string): Project | undefined {
-    return get_projects().get(hash)
+    return projects_cache.get(hash)
 }
 
 /**
@@ -191,11 +201,7 @@ export class ProjectID extends AbstractProjectID {
     }
 
     exists_locally(): boolean {
-        const projects = get_projects()
-        if (Object.keys(projects).length == 0) {
-            return false
-        }
-        return projects.has(this.hash) && this.exists_dir()
+        return projects_cache.has(this.hash) && this.exists_dir()
     }
 }
 
@@ -209,15 +215,13 @@ export class Project extends AbstractProject {
     }
 
     protected save_in_store(): void {
-        const projects = get_projects()
-        projects.set(this.id.hash, this)
-        set_projects(projects)
+        projects_cache.set(this.id.hash, this)
+        set_projects(projects_cache)
     }
 
     protected remove_from_store(): void {
-        const projects = get_projects()
-        projects.delete(this.id.hash)
-        set_projects(projects)
+        projects_cache.delete(this.id.hash)
+        set_projects(projects_cache)
     }
 
     protected get_name(): string {
@@ -250,3 +254,6 @@ export class Project extends AbstractProject {
         this.remove_from_store()
     }
 }
+
+// --------- Initialize ---------
+update_projects_cache()
