@@ -8,7 +8,7 @@ export default function AppRouter() {
         <Router>
             <Routes>
                 <Route path="/" element={<ProjectOverview />} />
-                <Route path="/project" element={<ProjectPage />} />
+                <Route path="/project/:hash" element={<ProjectPage />} />
             </Routes>
         </Router>
     )

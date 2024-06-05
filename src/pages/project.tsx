@@ -1,4 +1,5 @@
-import { lazy, useState, createRef, RefObject } from 'react'
+import { lazy, useState, createRef, RefObject, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import {
     ImperativePanelHandle,
     Panel,
@@ -63,6 +64,11 @@ function PanelResizeCollapseHandle({
 }
 
 export default function ProjectPage() {
+    const { hash } = useParams()
+
+    useEffect(() => {
+        console.log(hash)
+    }, [])
     return (
         <PanelGroup
             autoSaveId="ProjectPagePanels"
@@ -114,7 +120,7 @@ export default function ProjectPage() {
                     key="pdf"
                     style={{ border: '1px solid blue', height: '100%' }}
                 >
-                    <Preview />
+                    {/* <Preview /> */}
                 </div>
             </Panel>
         </PanelGroup>

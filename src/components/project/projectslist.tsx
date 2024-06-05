@@ -2,6 +2,7 @@ import { get_project_names } from '@/projecthandler'
 import { handleIPCError } from '../general/errorhandler'
 import { useEffect, useState } from 'react'
 import { List, Text } from '@mantine/core'
+import { Link } from 'react-router-dom'
 
 export default function ProjectsList() {
     const [projectsList, setProjectsList] = useState<[string, string][]>([])
@@ -17,7 +18,9 @@ export default function ProjectsList() {
             <Text>Projects:</Text>
             <List>
                 {projectsList.map(([name, hash]) => (
-                    <List.Item key={hash}>{name}</List.Item>
+                    <List.Item key={hash}>
+                        <Link to={`/project/${hash}`}>{name}</Link>
+                    </List.Item>
                 ))}
             </List>
         </>
