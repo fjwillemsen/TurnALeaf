@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { AppShell, Burger, Group, Skeleton } from '@mantine/core'
+import { AppShell, Burger, Group, NavLink, Skeleton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useModals } from '@mantine/modals'
 import { Onboarding } from '../modals/onboarding'
@@ -63,12 +63,14 @@ export default function MainPage() {
                         visibleFrom="sm"
                         size="sm"
                     />
-                    <Logo size={30} />
+                    <Logo size={40} to={1} />
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p="md">
-                Navbar
-                {Array(15)
+                Settings
+                <NavLink></NavLink>
+                Projects
+                {Array(5)
                     .fill(0)
                     .map((_, index) => (
                         <Skeleton key={index} h={28} mt="sm" animate={false} />

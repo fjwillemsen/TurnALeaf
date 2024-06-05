@@ -30,5 +30,8 @@ release
 /playwright-report/
 /playwright/.cache/
 
+# Generated files
+assets/logo/sized
+
 # User files
 projects/

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, nativeImage } from 'electron'
 import { release } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -103,6 +103,15 @@ async function createWindow() {
 }
 
 app.whenReady().then(() => {
+    // set the dock icon on macOS
+    if (process.platform == 'darwin') {
+        app.dock.setIcon(
+            nativeImage.createFromPath(
+                join(app.getAppPath(), '/public/icon.icon')
+            )
+        )
+    }
+
     // install development extensions
     console.log('Installing dev extensions')
     installExtension(REACT_DEVELOPER_TOOLS)
