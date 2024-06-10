@@ -7,9 +7,11 @@ import {
     PanelResizeHandle,
 } from 'react-resizable-panels'
 import styles from './project.module.css'
+import FileBrowser from '../components/filebrowser/filebrowser'
 // import { Project } from '@/projecthandler'
 
-const Preview = lazy(() => import('../components/editor/preview'))
+// import Preview from '../components/editor/preview'
+// const Preview = lazy(() => import('../components/editor/preview'))
 // const currentProject: Project = null
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
@@ -86,11 +88,7 @@ export default function ProjectPage() {
                     key="files"
                     style={{ border: '1px solid green', height: '100%' }}
                 >
-                    <ul>
-                        <li>file</li>
-                        <li>goes</li>
-                        <li>here</li>
-                    </ul>
+                    <FileBrowser />
                 </div>
             </Panel>
             <PanelResizeCollapseHandle collapsePanel={0} />
