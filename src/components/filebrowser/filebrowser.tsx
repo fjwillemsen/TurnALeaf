@@ -1,6 +1,8 @@
-import { FullFileBrowser } from 'chonky'
+import { FullFileBrowser, FileArray } from '@aperturerobotics/chonky'
+import { ChonkyIconFA } from '@aperturerobotics/chonky-icon-fontawesome'
+
 export default function FileBrowser() {
-    const files = [
+    const files: FileArray = [
         { id: 'lht', name: 'Projects', isDir: true },
         {
             id: 'mcd',
@@ -15,6 +17,7 @@ export default function FileBrowser() {
                 files={files}
                 folderChain={folderChain}
                 darkMode={true}
+                iconComponent={ChonkyIconFA}
             />
         </div>
     )
