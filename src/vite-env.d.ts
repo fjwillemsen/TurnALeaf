@@ -6,4 +6,5 @@ interface Window {
     settings: import('electron').settings
     project: import('electron').Project
     projectID: import('electron').ProjectID
+    padding: (padding?: string) => void
 }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { AppShell, Burger, Group, NavLink, Skeleton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useModals } from '@mantine/modals'
@@ -11,7 +11,11 @@ export default function MainPage() {
     const settings = new Settings()
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false)
+    const [appPadding, setAppPadding] = useState('md')
     const modals = useModals()
+    window.padding = (padding = 'md') => {
+        setAppPadding(padding)
+    }
     const openOnboardingModal = () =>
         modals.openModal({
             size: 'auto',
@@ -33,7 +37,7 @@ export default function MainPage() {
     useEffect(() => {
         const fetchOnboarded = async () => {
             if ((await settings.onboarded) == false) {
-                // openOnboardingModal()
+                openOnboardingModal()
             }
         }
         fetchOnboarded().catch(console.error)
@@ -47,7 +51,7 @@ export default function MainPage() {
                 breakpoint: 'sm',
                 collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
             }}
-            padding="md"
+            padding={appPadding}
         >
             <AppShell.Header>
                 <Group h="100%" px="md">

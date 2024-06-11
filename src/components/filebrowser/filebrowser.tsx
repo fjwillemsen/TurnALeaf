@@ -12,13 +12,11 @@ export default function FileBrowser() {
     ]
     const folderChain = [{ id: 'xcv', name: 'Demo', isDir: true }]
     return (
-        <div style={{ height: 300 }}>
-            <FullFileBrowser
-                files={files}
-                folderChain={folderChain}
-                darkMode={true}
-                iconComponent={ChonkyIconFA}
-            />
-        </div>
+        <FullFileBrowser
+            files={files}
+            folderChain={folderChain}
+            darkMode={true}
+            iconComponent={ChonkyIconFA}
+        />
     )
 }

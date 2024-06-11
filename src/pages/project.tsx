@@ -1,4 +1,4 @@
-import { lazy, useState, createRef, RefObject, useEffect } from 'react'
+import { useState, createRef, RefObject, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import {
     ImperativePanelHandle,
@@ -10,8 +10,7 @@ import styles from './project.module.css'
 import FileBrowser from '../components/filebrowser/filebrowser'
 // import { Project } from '@/projecthandler'
 
-// import Preview from '../components/editor/preview'
-// const Preview = lazy(() => import('../components/editor/preview'))
+import Preview from '../components/editor/preview'
 // const currentProject: Project = null
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
@@ -70,12 +69,15 @@ export default function ProjectPage() {
 
     useEffect(() => {
         console.log(hash)
+        window.padding('0')
     }, [])
     return (
         <PanelGroup
             autoSaveId="ProjectPagePanels"
             direction="horizontal"
-            style={{ width: '100vw', height: '100vh' }}
+            style={{
+                position: 'fixed',
+            }}
         >
             <Panel
                 ref={panelRefs[0]}
@@ -83,6 +85,7 @@ export default function ProjectPage() {
                 defaultSize={20}
                 collapsible={true}
                 minSize={2}
+                style={{ height: '100%' }}
             >
                 <div
                     key="files"
@@ -118,7 +121,7 @@ export default function ProjectPage() {
                     key="pdf"
                     style={{ border: '1px solid blue', height: '100%' }}
                 >
-                    {/* <Preview /> */}
+                    <Preview />
                 </div>
             </Panel>
         </PanelGroup>
