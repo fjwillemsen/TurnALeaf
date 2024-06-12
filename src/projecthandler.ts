@@ -1,3 +1,4 @@
+import { FileArray } from '@aperturerobotics/chonky'
 import { AbstractProject, AbstractProjectID } from '../shared/project'
 
 /**
@@ -23,6 +24,26 @@ export function create_project(
 }
 
 /**
+ * Get a Project instance using a hash.
+ *
+ * @param string - hash
+ * @returns Project - the project instance
+ */
+export async function get_project(hash: string): Promise<Project> {
+    const url = new URL(await window.project.hashToURL(hash))
+    const proj = await new Project(new ProjectID(url))
+    if ((await proj.id.url.toString()) !== url.toString()) {
+        throw new Error(
+            `Inconsistent URLs: ${url.toString()} != ${await proj.id.url.toString()}`
+        )
+    }
+    if ((await proj._hash) !== hash) {
+        throw new Error(`Inconsistent hashes: ${hash} != ${await proj._hash}`)
+    }
+    return proj
+}
+
+/**
  * The Project ID class, provides an interface for identifying projects.
  */
 export class ProjectID extends AbstractProjectID {
@@ -31,7 +52,7 @@ export class ProjectID extends AbstractProjectID {
     }
 
     protected make_hash(url: URL): string {
-        return window.projectID.makeHash(url)
+        return window.projectID.makeHash(url.toString())
     }
 
     get hash(): string {
@@ -43,7 +64,7 @@ export class ProjectID extends AbstractProjectID {
     }
 
     get directory(): string {
-        return window.project.getProjectDir(this.url)
+        return window.projectID.getProjectDir(this.url.toString())
     }
 
     exists_dir(): boolean {
@@ -54,7 +75,7 @@ export class ProjectID extends AbstractProjectID {
     }
 
     exists_locally(): boolean {
-        return window.project.existsLocally(this.url)
+        return window.projectID.existsLocally(this.url.toString())
     }
 }
 
@@ -70,8 +91,8 @@ export class Project extends AbstractProject {
 
     protected remove_from_store() {}
 
-    protected get_name(): string {
-        return window.project.getName(this.id.url)
+    protected async get_name(): Promise<string> {
+        return await window.project.getName(await this.id.hash)
     }
 
     get name(): string {
@@ -80,7 +101,7 @@ export class Project extends AbstractProject {
 
     set name(name: string) {
         this._name = name
-        window.project.setName(this.id.url)
+        window.project.setName(this.id.hash, name)
     }
 
     get id(): ProjectID {
@@ -88,14 +109,18 @@ export class Project extends AbstractProject {
     }
 
     async get_project_update(): Promise<void> {
-        return await window.project.getUpdate(this.id.url)
+        return await window.project.getUpdate(await this.id.hash)
     }
 
     async push_project_update(): Promise<void> {
-        return await window.project.pushUpdate(this.id.url)
+        return await window.project.pushUpdate(await this.id.hash)
     }
 
-    delete_project(): void {
-        return window.project.delete(this.id.url)
+    async delete_project(): Promise<void> {
+        return await window.project.delete(await this.id.hash)
+    }
+
+    async get_files(): Promise<FileArray> {
+        return await window.project.getFiles(await this.id.hash)
     }
 }

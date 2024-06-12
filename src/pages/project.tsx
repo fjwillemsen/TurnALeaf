@@ -8,10 +8,8 @@ import {
 } from 'react-resizable-panels'
 import styles from './project.module.css'
 import FileBrowser from '../components/filebrowser/filebrowser'
-// import { Project } from '@/projecthandler'
 
 import Preview from '../components/editor/preview'
-// const currentProject: Project = null
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
     .fill(null)
@@ -68,7 +66,6 @@ export default function ProjectPage() {
     const { hash } = useParams()
 
     useEffect(() => {
-        console.log(hash)
         window.padding('0')
     }, [])
     return (
@@ -91,7 +88,7 @@ export default function ProjectPage() {
                     key="files"
                     style={{ border: '1px solid green', height: '100%' }}
                 >
-                    <FileBrowser />
+                    <FileBrowser projecthash={hash!} />
                 </div>
             </Panel>
             <PanelResizeCollapseHandle collapsePanel={0} />

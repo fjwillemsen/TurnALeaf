@@ -31,7 +31,7 @@ export default function ProjectCreate() {
     })
 
     const handleSubmit = (values: typeof form.values) => {
-        create_project(new URL(values.url), false).catch(handleIPCError)
+        create_project(new URL(values.url), true).catch(handleIPCError)
     }
 
     return (
