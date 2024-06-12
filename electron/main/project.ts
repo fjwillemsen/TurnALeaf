@@ -8,6 +8,7 @@ import fs from 'fs'
 import { createHash } from 'crypto'
 import Store from 'electron-store'
 import { settings } from './settings'
+import { FileArray } from '@aperturerobotics/chonky'
 
 // --------- Initialize the local storage ---------
 
@@ -104,6 +105,9 @@ export function get_project_names(): [string, string][] {
  * @returns (Project | undefined) - the Project instance, or undefined if not existing.
  */
 export function get_project(hash: string): Project | undefined {
+    if (projects_cache.has(hash) !== true) {
+        throw new Error(`Project with hash ${hash} not in projects_cache`)
+    }
     return projects_cache.get(hash)
 }
 
@@ -131,10 +135,10 @@ const get_auth: AuthCallback = (url: string) => {
  * @param boolean - whether to overwrite the project if it exists on disk
  * @returns [Project, boolean] - the project object, and whether the project is newly cloned
  */
-export function create_project(
+export async function create_project(
     url_string: string,
     overwrite: boolean
-): [Project, boolean] | undefined {
+): Promise<[Project, boolean] | undefined> {
     const id = new ProjectID(new URL(url_string))
     if (id.exists_locally()) {
         return [get_project(id.hash)!, false]
@@ -148,17 +152,19 @@ export function create_project(
                 )
             }
         }
-        git.clone({
-            fs,
-            http,
-            dir: id.directory,
-            url: id.url.toString(),
-            onAuth: get_auth,
-        })
+        await git
+            .clone({
+                fs,
+                http,
+                dir: id.directory,
+                url: id.url.toString(),
+                onAuth: get_auth,
+            })
             .then(() => {
                 return [new Project(id), true]
             })
             .catch((e) => {
+                id.remove_dir()
                 throw new Error(`Failed to clone project, reason: ${e.message}`)
             })
     }
@@ -222,8 +228,8 @@ export class Project extends AbstractProject {
         set_projects(projects_cache)
     }
 
-    protected get_name(): string {
-        return this._name
+    protected get_name(): Promise<string> {
+        return new Promise(() => this._name)
     }
 
     get name(): string {
@@ -250,6 +256,15 @@ export class Project extends AbstractProject {
     delete_project() {
         this.id.remove_dir()
         this.remove_from_store()
+    }
+
+    get_files(): Promise<FileArray> {
+        return fs.promises.readdir(this.id.directory).then((filenames) => {
+            const a: FileArray = filenames.map((f) => {
+                return { id: f, name: f }
+            })
+            return a
+        })
     }
 }
 

@@ -40,16 +40,18 @@ contextBridge.exposeInMainWorld('settings', {
 
 // --------- Expose ProjectID API to the Renderer process ---------
 contextBridge.exposeInMainWorld('projectID', {
-    makeHash: (url: URL) => ipcRenderer.invoke('projectid:make_hash', url),
-    existsLocally: (url: URL) =>
+    makeHash: (url: string) => ipcRenderer.invoke('projectid:make_hash', url),
+    existsLocally: (url: string) =>
         ipcRenderer.invoke('projectid:exists_locally', url),
-    getProjectDir: (url: URL) =>
+    getProjectDir: (url: string) =>
         ipcRenderer.invoke('projectid:get_project_dir', url),
 })
 
 // --------- Expose Project API to the Renderer process ---------
 contextBridge.exposeInMainWorld('project', {
-    create: (url: URL, overwrite: boolean) =>
+    hashToURL: (hash: string) =>
+        ipcRenderer.invoke('project:hash_to_url', hash),
+    create: (url: string, overwrite: boolean) =>
         ipcRenderer.invoke('project:create', url, overwrite),
     getNames: () => ipcRenderer.invoke('project:get_names'),
     getName: (hash: string) => ipcRenderer.invoke('project:get_name', hash),
@@ -60,6 +62,7 @@ contextBridge.exposeInMainWorld('project', {
     push_update: (hash: string) =>
         ipcRenderer.invoke('project:push_name', hash),
     delete: (hash: string) => ipcRenderer.invoke('project:delete', hash),
+    getFiles: (hash: string) => ipcRenderer.invoke('project:get_files', hash),
 })
 
 // --------- Preload scripts loading ---------

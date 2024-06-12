@@ -138,17 +138,20 @@ app.whenReady().then(() => {
     )
 
     // ProjectID API
-    ipcMain.handle('projectid:make_hash', (_, url: URL) => {
-        return new ProjectID(url).hash
+    ipcMain.handle('projectid:make_hash', (_, url: string) => {
+        return new ProjectID(new URL(url)).hash
     })
-    ipcMain.handle('projectid:exists_locally', (_, url: URL) => {
-        return new ProjectID(url).exists_locally()
+    ipcMain.handle('projectid:exists_locally', (_, url: string) => {
+        return new ProjectID(new URL(url)).exists_locally()
     })
-    ipcMain.handle('projectid:get_project_dir', (_, url: URL) => {
-        return new ProjectID(url).directory
+    ipcMain.handle('projectid:get_project_dir', (_, url: string) => {
+        return new ProjectID(new URL(url)).directory
     })
 
     // Project API
+    ipcMain.handle('project:hash_to_url', (_, hash: string) => {
+        return get_project(hash)?.id.url.toString()
+    })
     ipcMain.handle('project:create', (_, url: string, overwrite: boolean) => {
         return create_project(url, overwrite)
     })
@@ -170,6 +173,9 @@ app.whenReady().then(() => {
     })
     ipcMain.handle('project:delete', (_, hash: string) => {
         return get_project(hash)?.delete_project()
+    })
+    ipcMain.handle('project:get_files', (_, hash: string) => {
+        return get_project(hash)?.get_files()
     })
 
     // finish setup
