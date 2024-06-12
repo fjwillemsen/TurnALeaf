@@ -1,3 +1,5 @@
+import { FileArray } from '@aperturerobotics/chonky'
+
 /**
  * The Project ID class, provides identification and location of projects.
  */
@@ -69,6 +71,7 @@ export abstract class AbstractProjectID {
  */
 export abstract class AbstractProject {
     readonly _id_url_string: string
+    readonly _hash: string
     protected _name: string
 
     /**
@@ -78,8 +81,12 @@ export abstract class AbstractProject {
      */
     constructor(id: AbstractProjectID) {
         this._id_url_string = id.url.toString()
+        this._hash = id.hash
         if (id.exists_locally()) {
-            this._name = this.get_name()
+            this._name = id.hash
+            this.get_name().then((name) => {
+                this._name = name
+            })
         } else {
             this._name = id.hash
             this.save_in_store()
@@ -103,7 +110,7 @@ export abstract class AbstractProject {
      *
      * @returns string - the name of the project
      */
-    protected abstract get_name(): string
+    protected abstract get_name(): Promise<string>
 
     /**
      * Retrieves the name of the project.
@@ -142,4 +149,11 @@ export abstract class AbstractProject {
      * Delete the project locally.
      */
     abstract delete_project(): void
+
+    /**
+     * Get the list of project files and folders.
+     *
+     * @returns FileArray - Chonky file array containing the files and folders.
+     */
+    abstract get_files(): Promise<FileArray>
 }
