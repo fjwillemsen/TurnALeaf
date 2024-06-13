@@ -259,10 +259,22 @@ export class Project extends AbstractProject {
     }
 
     get_files(): Promise<FileArray> {
-        return fs.promises.readdir(this.id.directory).then((filenames) => {
+        const dir = this.id.directory
+        const is_hidden_file = (filename: string) => /^\..*/.test(filename)
+        return fs.promises.readdir(dir).then((filenames) => {
             const a: FileArray = filenames.map((f) => {
-                return { id: f, name: f }
+                const filepath = path.join(dir, f)
+                const stat = fs.statSync(filepath)
+                return {
+                    id: filepath,
+                    name: f,
+                    size: stat.size,
+                    modDate: stat.mtime,
+                    isDir: stat.isDirectory(),
+                    isHidden: is_hidden_file(f),
+                }
             })
+            console.log(a)
             return a
         })
     }
