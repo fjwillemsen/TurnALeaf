@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 68%) <!-- 18/28 -->
+1. Basic functionality (0.0.1 / alpha release | 72%) <!-- 21/29 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -30,9 +30,10 @@ The following roadmap outlines what will be released after which features are im
             - [x] Removing projects
         - [x] Projects overview
         - [x] File navigator
-        - [ ] Editor <!-- 0/3 -->
+        - [ ] Editor <!-- 2/4 -->
             - [ ] Retrieval from backend
-            - [ ] Basic editing
+            - [x] Basic editing
+            - [x] Line counter & polishing
             - [ ] Saving to backend
         - [x] User settings storage
     - [ ] Distribution <!-- 0/3 -->
@@ -45,7 +46,7 @@ The following roadmap outlines what will be released after which features are im
     - [x] Documentation for early testers / contributers
     - [ ] Bug fixing: <!-- 0/1 -->
         - [ ] Double execution of IPC calls
-2. Extra features & non-functional requirements (0.1.0 / beta release | 8%) <!-- 2/23 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 8%) <!-- 2/24 -->
     - [ ] Alpha release tested
     - [ ] File operations <!-- 0/5 -->
         - [ ] Creation
@@ -53,9 +54,10 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Lazy recursive folder expansion
         - [ ] Deletion
         - [ ] Merging
-    - [ ] Editor <!-- 0/3 -->
+    - [ ] Editor <!-- 0/4 -->
         - [ ] Tab-based editor
         - [ ] Edit .bib files
+        - [ ] Syntax highlighting
         - [ ] View non-editable files (e.g. images)
     - [ ] Sections panel
     - [ ] Polished layout
@@ -87,6 +89,7 @@ The following roadmap outlines what will be released after which features are im
     - [ ] TeX Distribution selection
     - [ ] Help pages
     - [ ] Multi-language support
+    - [ ] Rich text editor
     - [ ] Plugin support
     - [ ] Import files from URL (Zotero)
 
