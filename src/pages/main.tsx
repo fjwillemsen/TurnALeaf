@@ -37,7 +37,7 @@ export default function MainPage() {
     useEffect(() => {
         const fetchOnboarded = async () => {
             if ((await settings.onboarded) == false) {
-                openOnboardingModal()
+                // openOnboardingModal()
             }
         }
         fetchOnboarded().catch(console.error)

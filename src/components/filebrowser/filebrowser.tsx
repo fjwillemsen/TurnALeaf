@@ -1,27 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FullFileBrowser, FileArray } from '@aperturerobotics/chonky'
 import { ChonkyIconFA } from '@aperturerobotics/chonky-icon-fontawesome'
 import { handleIPCError } from '../general/errorhandler'
-import { get_project } from '@/projecthandler'
+import { ProjectContext } from '@/pages/project'
 
-interface FileBrowserProps {
-    projecthash: string
-}
-
-export default function FileBrowser({ projecthash }: FileBrowserProps) {
+export default function FileBrowser() {
+    const project = useContext(ProjectContext)
     const [projectFiles, setProjectFiles] = useState<FileArray>([null])
 
     async function get_files(): Promise<void> {
-        await get_project(projecthash).then((p) => {
-            p.get_files()
-                .then((files) => setProjectFiles(files))
-                .catch(handleIPCError)
-        })
+        project!
+            .get_files()
+            .then((files) => setProjectFiles(files))
+            .catch(handleIPCError)
     }
 
     useEffect(() => {
         get_files()
-    }, [])
+    }, [project])
 
     // const files: FileArray = [
     //     { id: 'lht', name: 'Projects', isDir: true },

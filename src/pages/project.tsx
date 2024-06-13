@@ -1,4 +1,4 @@
-import { useState, createRef, RefObject, useEffect } from 'react'
+import { useState, createRef, RefObject, useEffect, createContext } from 'react'
 import { useParams } from 'react-router-dom'
 import {
     ImperativePanelHandle,
@@ -10,6 +10,7 @@ import styles from './project.module.css'
 import FileBrowser from '../components/filebrowser/filebrowser'
 
 import Preview from '../components/editor/preview'
+import { Project, get_project } from '@/projecthandler'
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
     .fill(null)
@@ -62,12 +63,16 @@ function PanelResizeCollapseHandle({
     )
 }
 
+export const ProjectContext = createContext<Project | undefined>(undefined)
 export default function ProjectPage() {
     const { hash } = useParams()
+    const [project, setProject] = useState<Project>()
 
     useEffect(() => {
         window.padding('0')
+        get_project(hash!).then((p) => setProject(p))
     }, [])
+
     return (
         <PanelGroup
             autoSaveId="ProjectPagePanels"
@@ -88,7 +93,11 @@ export default function ProjectPage() {
                     key="files"
                     style={{ border: '1px solid green', height: '100%' }}
                 >
-                    <FileBrowser projecthash={hash!} />
+                    {project !== undefined && (
+                        <ProjectContext.Provider value={project}>
+                            <FileBrowser />
+                        </ProjectContext.Provider>
+                    )}
                 </div>
             </Panel>
             <PanelResizeCollapseHandle collapsePanel={0} />
