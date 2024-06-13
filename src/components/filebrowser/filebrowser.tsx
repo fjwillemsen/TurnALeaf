@@ -1,11 +1,16 @@
 import { useContext, useEffect, useState } from 'react'
-import { FullFileBrowser, FileArray } from '@aperturerobotics/chonky'
+import {
+    FullFileBrowser,
+    FileArray,
+    FileActionHandler,
+} from '@aperturerobotics/chonky'
 import { ChonkyIconFA } from '@aperturerobotics/chonky-icon-fontawesome'
 import { handleIPCError } from '../general/errorhandler'
-import { ProjectContext } from '@/pages/project'
+import { ProjectContext, ProjectFilesContext } from '@/pages/project'
 
 export default function FileBrowser() {
     const project = useContext(ProjectContext)
+    const [openFiles, setOpenFiles] = useContext(ProjectFilesContext)
     const [projectFiles, setProjectFiles] = useState<FileArray>([null])
 
     async function get_files(): Promise<void> {
@@ -15,25 +20,28 @@ export default function FileBrowser() {
             .catch(handleIPCError)
     }
 
+    const handleAction: FileActionHandler = (action) => {
+        if (action.id === 'mouse_click_file') {
+            // open the file in the editor
+            setOpenFiles!(action.state.selectedFiles.map((f) => f.id))
+        }
+    }
+
     useEffect(() => {
         get_files()
     }, [project])
 
-    // const files: FileArray = [
-    //     { id: 'lht', name: 'Projects', isDir: true },
-    //     {
-    //         id: 'mcd',
-    //         name: 'chonky-sphere-v2.png',
-    //         thumbnailUrl: 'https://chonky.io/chonky-sphere-v2.png',
-    //     },
-    // ]
-    // const folderChain = [{ id: 'xcv', name: 'Demo', isDir: true }]
+    useEffect(() => {
+        console.log('useEffect')
+        console.log(openFiles)
+    }, [openFiles])
+
     return (
         <FullFileBrowser
             files={projectFiles}
-            // folderChain={folderChain}
             darkMode={true}
             iconComponent={ChonkyIconFA}
+            onFileAction={handleAction}
         />
     )
 }

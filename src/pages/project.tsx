@@ -64,9 +64,14 @@ function PanelResizeCollapseHandle({
 }
 
 export const ProjectContext = createContext<Project | undefined>(undefined)
+export const ProjectFilesContext = createContext<
+    [string[], React.Dispatch<React.SetStateAction<string[]>> | undefined]
+>([[], undefined])
+
 export default function ProjectPage() {
     const { hash } = useParams()
     const [project, setProject] = useState<Project>()
+    const [openFiles, setOpenFiles] = useState<string[]>([])
 
     useEffect(() => {
         window.padding('0')
@@ -95,7 +100,11 @@ export default function ProjectPage() {
                 >
                     {project !== undefined && (
                         <ProjectContext.Provider value={project}>
-                            <FileBrowser />
+                            <ProjectFilesContext.Provider
+                                value={[openFiles, setOpenFiles]}
+                            >
+                                <FileBrowser />
+                            </ProjectFilesContext.Provider>
                         </ProjectContext.Provider>
                     )}
                 </div>
