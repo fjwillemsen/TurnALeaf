@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 64%) <!-- 18/28 -->
+1. Basic functionality (0.0.1 / alpha release | 68%) <!-- 18/28 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -29,7 +29,7 @@ The following roadmap outlines what will be released after which features are im
             - [ ] Pushing updates
             - [x] Removing projects
         - [x] Projects overview
-        - [ ] File navigator <!-- Done: File browser in frontend; To do: Get file details from backend; Display in frontend; Pass to editor -->
+        - [x] File navigator
         - [ ] Editor <!-- 0/3 -->
             - [ ] Retrieval from backend
             - [ ] Basic editing
@@ -45,18 +45,20 @@ The following roadmap outlines what will be released after which features are im
     - [x] Documentation for early testers / contributers
     - [ ] Bug fixing: <!-- 0/1 -->
         - [ ] Double execution of IPC calls
-2. Extra features & non-functional requirements (0.1.0 / beta release | 10%) <!-- 2/21 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 8%) <!-- 2/23 -->
     - [ ] Alpha release tested
     - [ ] File operations <!-- 0/5 -->
         - [ ] Creation
         - [ ] Moving files
-        - [ ] Recursive folders
+        - [ ] Lazy recursive folder expansion
         - [ ] Deletion
         - [ ] Merging
-    - [ ] Editor <!-- 0/2 -->
+    - [ ] Editor <!-- 0/3 -->
+        - [ ] Tab-based editor
         - [ ] Edit .bib files
         - [ ] View non-editable files (e.g. images)
     - [ ] Sections panel
+    - [ ] Polished layout
     - [ ] Landing page
     - [ ] Settings menu
     - [ ] Onboarding tutorial
@@ -70,8 +72,9 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Issue templates
     - [ ] GitHub discussion
     - [ ] Documentation
-3. Polishing (1.0.0 / stable release | 0%) <!-- 0/7 -->
+3. Polishing (1.0.0 / stable release | 0%) <!-- 0/8 -->
     - [ ] Beta release tested on a variety of systems
+    - [ ] Project overview 'shelves' with previews
     - [ ] Auto-completion
     - [ ] System features <!-- 0/3 -->
         - [ ] Dark Mode / Light Mode switching
