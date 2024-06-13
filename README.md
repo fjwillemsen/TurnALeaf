@@ -10,18 +10,18 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 72%) <!-- 18/25 -->
-    - [x] Base system
+1. Basic functionality (0.0.1 / alpha release | 64%) <!-- 18/28 -->
+    - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
         - [x] Interface library (React)
         - [x] Styling language (PostCSS / Tailwind)
         - [x] Component library (Mantine)
-    - [ ] Base functionality
+    - [ ] Base functionality <!-- 9/15 -->
         - [x] Modular interface
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
-        - [ ] Git integration
+        - [ ] Git integration <!-- 4/6 -->
             - [x] Git client
             - [x] Overleaf authentication token support & storage
             - [x] Creating projects
@@ -29,10 +29,13 @@ The following roadmap outlines what will be released after which features are im
             - [ ] Pushing updates
             - [x] Removing projects
         - [x] Projects overview
-        - [ ] File navigator
-        - [ ] Editor
+        - [ ] File navigator <!-- Done: File browser in frontend; To do: Get file details from backend; Display in frontend; Pass to editor -->
+        - [ ] Editor <!-- 0/3 -->
+            - [ ] Retrieval from backend
+            - [ ] Basic editing
+            - [ ] Saving to backend
         - [x] User settings storage
-    - [ ] Distribution
+    - [ ] Distribution <!-- 0/3 -->
         - [ ] Downloadable
         - [ ] Installable
         - [ ] Updatable
@@ -40,14 +43,25 @@ The following roadmap outlines what will be released after which features are im
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-2. Extra features & non-functional requirements (0.1.0 / beta release | 14%) <!-- 2/14 -->
+    - [ ] Bug fixing: <!-- 0/1 -->
+        - [ ] Double execution of IPC calls
+2. Extra features & non-functional requirements (0.1.0 / beta release | 10%) <!-- 2/21 -->
     - [ ] Alpha release tested
+    - [ ] File operations <!-- 0/5 -->
+        - [ ] Creation
+        - [ ] Moving files
+        - [ ] Recursive folders
+        - [ ] Deletion
+        - [ ] Merging
+    - [ ] Editor <!-- 0/2 -->
+        - [ ] Edit .bib files
+        - [ ] View non-editable files (e.g. images)
     - [ ] Sections panel
     - [ ] Landing page
     - [ ] Settings menu
     - [ ] Onboarding tutorial
     - [ ] Test coverage 60%
-    - [ ] CI/CD pipeline
+    - [ ] CI/CD pipeline <!-- 2/4 -->
         - [ ] Tests
         - [x] Build
         - [x] Linting
@@ -59,7 +73,7 @@ The following roadmap outlines what will be released after which features are im
 3. Polishing (1.0.0 / stable release | 0%) <!-- 0/7 -->
     - [ ] Beta release tested on a variety of systems
     - [ ] Auto-completion
-    - [ ] System features
+    - [ ] System features <!-- 0/3 -->
         - [ ] Dark Mode / Light Mode switching
         - [ ] Themes
         - [ ] Native look & feel
@@ -71,6 +85,7 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Help pages
     - [ ] Multi-language support
     - [ ] Plugin support
+    - [ ] Import files from URL (Zotero)
 
 ## Installation
 
