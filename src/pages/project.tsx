@@ -7,10 +7,12 @@ import {
     PanelResizeHandle,
 } from 'react-resizable-panels'
 import styles from './project.module.css'
-import FileBrowser from '../components/filebrowser/filebrowser'
 
+import FileBrowser from '../components/filebrowser/filebrowser'
+import Writer from '@/components/editor/writer'
 import Preview from '../components/editor/preview'
 import { Project, get_project } from '@/projecthandler'
+import { handleIPCError } from '@/components/general/errorhandler'
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
     .fill(null)
@@ -75,7 +77,9 @@ export default function ProjectPage() {
 
     useEffect(() => {
         window.padding('0')
-        get_project(hash!).then((p) => setProject(p))
+        get_project(hash!)
+            .then((p) => setProject(p))
+            .catch(handleIPCError)
     }, [])
 
     return (
@@ -121,7 +125,15 @@ export default function ProjectPage() {
                     key="editor"
                     style={{ border: '1px solid red', height: '100%' }}
                 >
-                    <p>Hello world</p>
+                    {project !== undefined && (
+                        <ProjectContext.Provider value={project}>
+                            <ProjectFilesContext.Provider
+                                value={[openFiles, setOpenFiles]}
+                            >
+                                <Writer />
+                            </ProjectFilesContext.Provider>
+                        </ProjectContext.Provider>
+                    )}
                 </div>
             </Panel>
             <PanelResizeCollapseHandle collapsePanel={2} right={true} />
@@ -136,7 +148,11 @@ export default function ProjectPage() {
                     key="pdf"
                     style={{ border: '1px solid blue', height: '100%' }}
                 >
-                    <Preview />
+                    {project !== undefined && (
+                        <ProjectContext.Provider value={project}>
+                            <Preview />
+                        </ProjectContext.Provider>
+                    )}
                 </div>
             </Panel>
         </PanelGroup>

@@ -22,7 +22,7 @@ export default function ProjectCreate() {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
-            url: '',
+            url: 'https://git@git.overleaf.com/62db1e7ff06c89dcd3887b38', // TODO remove
         },
 
         validate: {

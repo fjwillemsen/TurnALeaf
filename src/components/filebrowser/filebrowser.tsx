@@ -10,7 +10,7 @@ import { ProjectContext, ProjectFilesContext } from '@/pages/project'
 
 export default function FileBrowser() {
     const project = useContext(ProjectContext)
-    const [openFiles, setOpenFiles] = useContext(ProjectFilesContext)
+    const [, setOpenFiles] = useContext(ProjectFilesContext)
     const [projectFiles, setProjectFiles] = useState<FileArray>([null])
 
     async function get_files(): Promise<void> {
@@ -30,11 +30,6 @@ export default function FileBrowser() {
     useEffect(() => {
         get_files()
     }, [project])
-
-    useEffect(() => {
-        console.log('useEffect')
-        console.log(openFiles)
-    }, [openFiles])
 
     return (
         <FullFileBrowser
