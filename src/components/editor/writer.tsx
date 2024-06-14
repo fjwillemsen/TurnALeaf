@@ -10,6 +10,8 @@ export default function Writer() {
     const editorRef = useRef(
         null
     ) as React.MutableRefObject<null | monaco.editor.IStandaloneCodeEditor>
+    const autosaveDelaySeconds = 30 // the time to wait between automatically saving the new contents in seconds
+    let lastSaveTime: Date | undefined
 
     useEffect(() => {
         console.log('useEffect')
@@ -20,12 +22,24 @@ export default function Writer() {
         editorRef.current = editor
         project!
             .get_file_contents(openFiles[0])
-            .then((c) => editor.getModel()?.setValue(c))
+            .then((c) => {
+                lastSaveTime = new Date()
+                editor.getModel()?.setValue(c[0]!.name)
+            })
             .catch(handleIPCError)
     }
 
     function handleEditorChange(value: string | undefined) {
-        console.log(value)
+        const currentTime = new Date()
+        if (
+            lastSaveTime !== undefined &&
+            (currentTime.getTime() - lastSaveTime.getTime()) / 1000 >
+                autosaveDelaySeconds
+        ) {
+            lastSaveTime = currentTime
+            console.log(value)
+            // project.set_file_contents(value)
+        }
     }
 
     return (
