@@ -156,4 +156,12 @@ export abstract class AbstractProject {
      * @returns FileArray - Chonky file array containing the files and folders.
      */
     abstract get_files(): Promise<FileArray>
+
+    /**
+     * Get the contents of a file in the project directory.
+     *
+     * @param string - the filepath to the file relative to the project directory.
+     * @returns Promise<Buffer> - the contents of the file as a buffer.
+     */
+    abstract get_file_contents(filepath: string): Promise<Buffer>
 }

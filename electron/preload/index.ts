@@ -63,6 +63,8 @@ contextBridge.exposeInMainWorld('project', {
         ipcRenderer.invoke('project:push_name', hash),
     delete: (hash: string) => ipcRenderer.invoke('project:delete', hash),
     getFiles: (hash: string) => ipcRenderer.invoke('project:get_files', hash),
+    getFileContents: (hash: string, filepath: string) =>
+        ipcRenderer.invoke('project:get_file_contents', hash, filepath),
 })
 
 // --------- Preload scripts loading ---------

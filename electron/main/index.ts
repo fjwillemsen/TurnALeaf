@@ -177,6 +177,12 @@ app.whenReady().then(() => {
     ipcMain.handle('project:get_files', (_, hash: string) => {
         return get_project(hash)?.get_files()
     })
+    ipcMain.handle(
+        'project:get_file_contents',
+        (_, hash: string, filepath: string) => {
+            return get_project(hash)?.get_file_contents(filepath)
+        }
+    )
 
     // finish setup
     createWindow()

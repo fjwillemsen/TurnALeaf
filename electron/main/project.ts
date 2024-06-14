@@ -278,6 +278,10 @@ export class Project extends AbstractProject {
             return a
         })
     }
+
+    get_file_contents(filepath: string): Promise<Buffer> {
+        return fs.promises.readFile(path.join(this.id.directory, filepath))
+    }
 }
 
 // --------- Initialize ---------
