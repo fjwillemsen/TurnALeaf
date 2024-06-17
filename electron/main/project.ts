@@ -266,7 +266,7 @@ export class Project extends AbstractProject {
                 const filepath = path.join(dir, f)
                 const stat = fs.statSync(filepath)
                 return {
-                    id: filepath,
+                    id: f,
                     name: f,
                     size: stat.size,
                     modDate: stat.mtime,

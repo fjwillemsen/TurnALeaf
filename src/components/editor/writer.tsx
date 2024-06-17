@@ -1,30 +1,29 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import { handleIPCError } from '../general/errorhandler'
-import { ProjectContext, ProjectFilesContext } from '@/pages/project'
+import { ProjectContext } from '@/pages/project'
 import { Editor } from '@monaco-editor/react'
 import type monaco from 'monaco-editor'
 
-export default function Writer() {
+interface WriterProps {
+    filepath: string
+}
+
+export default function Writer({ filepath }: WriterProps) {
     const project = useContext(ProjectContext)
-    const [openFiles] = useContext(ProjectFilesContext)
     const editorRef = useRef(
         null
     ) as React.MutableRefObject<null | monaco.editor.IStandaloneCodeEditor>
     const autosaveDelaySeconds = 30 // the time to wait between automatically saving the new contents in seconds
     let lastSaveTime: Date | undefined
 
-    useEffect(() => {
-        console.log('useEffect')
-        console.log(openFiles)
-    }, [openFiles])
-
     function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor) {
         editorRef.current = editor
+        const decoder = new TextDecoder('utf-8')
         project!
-            .get_file_contents(openFiles[0])
+            .get_file_contents(filepath)
             .then((c) => {
                 lastSaveTime = new Date()
-                editor.getModel()?.setValue(c[0]!.name)
+                editor.getModel()?.setValue(decoder.decode(c))
             })
             .catch(handleIPCError)
     }
@@ -44,7 +43,6 @@ export default function Writer() {
 
     return (
         <Editor
-            height="100%"
             defaultValue=""
             onMount={handleEditorDidMount}
             onChange={handleEditorChange}
