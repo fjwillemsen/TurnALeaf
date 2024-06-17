@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 77%) <!-- 23/30 -->
+1. Basic functionality (0.0.1 / alpha release | 74%) <!-- 23/31 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -45,9 +45,10 @@ The following roadmap outlines what will be released after which features are im
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-    - [ ] Bug fixing: <!-- 0/1 -->
+    - [ ] Bug fixing: <!-- 0/2 -->
         - [ ] Double execution of IPC calls
-2. Extra features & non-functional requirements (0.1.0 / beta release | 8%) <!-- 2/24 -->
+        - [ ] Working input files for TeX compilation
+2. Extra features & non-functional requirements (0.1.0 / beta release | 7%) <!-- 2/27 -->
     - [ ] Alpha release tested
     - [ ] File operations <!-- 0/5 -->
         - [ ] Creation
@@ -60,6 +61,11 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Syntax highlighting
         - [ ] View non-editable files (e.g. images)
         - [ ] Temporary file viewing on single click
+    - [ ] PDF rendering <!-- 0/4 -->
+        - [ ] Selecting main file
+        - [ ] One-off TeX resource download
+        - [ ] Only overwrite changed files
+        - [ ] Log with warnings and errors
     - [ ] Sections panel
     - [ ] Polished layout
     - [ ] Landing page
