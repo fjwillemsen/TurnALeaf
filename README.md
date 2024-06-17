@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 76%) <!-- 22/29 -->
+1. Basic functionality (0.0.1 / alpha release | 77%) <!-- 23/30 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -30,10 +30,11 @@ The following roadmap outlines what will be released after which features are im
             - [x] Removing projects
         - [x] Projects overview
         - [x] File navigator
-        - [ ] Editor <!-- 3/4 -->
+        - [ ] Editor <!-- 4/5 -->
             - [x] Retrieval from backend
             - [x] Basic editing
             - [x] Line counter & polishing
+            - [x] Tab-based editor
             - [ ] Saving to backend
         - [x] User settings storage
     - [ ] Distribution <!-- 0/3 -->
@@ -55,10 +56,10 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Deletion
         - [ ] Merging
     - [ ] Editor <!-- 0/4 -->
-        - [ ] Tab-based editor
         - [ ] Edit .bib files
         - [ ] Syntax highlighting
         - [ ] View non-editable files (e.g. images)
+        - [ ] Temporary file viewing on single click
     - [ ] Sections panel
     - [ ] Polished layout
     - [ ] Landing page
@@ -74,10 +75,11 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Issue templates
     - [ ] GitHub discussion
     - [ ] Documentation
-3. Polishing (1.0.0 / stable release | 0%) <!-- 0/8 -->
+3. Polishing (1.0.0 / stable release | 0%) <!-- 0/9 -->
     - [ ] Beta release tested on a variety of systems
     - [ ] Project overview 'shelves' with previews
     - [ ] Auto-completion
+    - [ ] Keyboard shortcuts
     - [ ] System features <!-- 0/3 -->
         - [ ] Dark Mode / Light Mode switching
         - [ ] Themes
