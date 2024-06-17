@@ -1,70 +1,81 @@
 import { PdfTeXEngine, XeTeXEngine, DvipdfmxEngine } from 'swiftlatex'
-
-const pdftex = new PdfTeXEngine()
-const xetex = new XeTeXEngine()
-const dvipdfmx = new DvipdfmxEngine()
-let engineLoaded = false
+let engineLoaded: string = ''
+let engine: typeof PdfTeXEngine | typeof XeTeXEngine = undefined
+let engine_dvi: typeof DvipdfmxEngine = undefined
 
 export type LaTeXOpts = {
     cmd: 'pdflatex' | 'xelatex'
+    bufferInputs?: [string, Buffer][]
     inputs?: string[]
     fonts?: string[]
 }
 
-export default async function latex(texDoc: string, opts: LaTeXOpts) {
-    if (!engineLoaded) {
-        await Promise.all([
-            pdftex.loadEngine(),
-            xetex.loadEngine(),
-            dvipdfmx.loadEngine(),
-        ])
-        engineLoaded = true
+function getEngine(engine: string) {
+    switch (engine) {
+        case 'pdflatex': {
+            return new PdfTeXEngine()
+        }
+        case 'xelatex': {
+            return new XeTeXEngine()
+        }
+    }
+}
 
-        await pdftex.makeMemFSFolder('fonts/')
-        await xetex.makeMemFSFolder('fonts/')
-        await dvipdfmx.makeMemFSFolder('fonts/')
+export default async function latex(
+    texDoc: string | Uint8Array | Buffer,
+    opts: LaTeXOpts
+) {
+    // (re)load the engine if not yet loaded
+    if (engineLoaded !== opts.cmd) {
+        engine = getEngine(opts.cmd)
+        await engine.loadEngine()
+        if (opts.cmd == 'xelatex') {
+            engine_dvi = new DvipdfmxEngine()
+            await engine_dvi.loadEngine()
+        }
+        await engine.makeMemFSFolder('fonts/')
+        engineLoaded = opts.cmd
     }
 
+    // load the required fonts
     const fonts = await resolveAssets(opts.fonts || [])
-    const inputs = await resolveAssets(opts.inputs || [])
+    for (const [name, content] of fonts) {
+        await engine.writeMemFSFile(`fonts/${name}`, content)
+    }
 
+    // load the required inputs
+    const inputs = await resolveAssets(opts.inputs || [])
+    for (const [name, content] of inputs) {
+        await engine.writeMemFSFile(name, content)
+    }
+
+    // load the required files
+    const bufferInputs =
+        opts.bufferInputs !== undefined ? opts.bufferInputs : []
+    for (const [name, content] of bufferInputs) {
+        console.log('writing ', name)
+        await engine.writeMemFSFile(name, content)
+    }
+
+    // load the main file
+    await engine.writeMemFSFile('main.tex', texDoc)
+    await engine.setEngineMainFile('main.tex')
+
+    // compile to a PDF and return the result as a PDF blob
     switch (opts.cmd) {
         case 'pdflatex': {
-            for (const [name, content] of fonts) {
-                await pdftex.writeMemFSFile(`fonts/${name}`, content)
-            }
-
-            for (const [name, content] of inputs) {
-                await pdftex.writeMemFSFile(name, content)
-            }
-
-            await pdftex.writeMemFSFile('main.tex', texDoc)
-            await pdftex.setEngineMainFile('main.tex')
-            const { pdf } = await pdftex.compileLaTeX()
-
+            const { pdf } = await engine.compileLaTeX()
             return URL.createObjectURL(
                 new Blob([pdf], { type: 'application/pdf' })
             )
         }
         case 'xelatex': {
-            for (const engine of [xetex, dvipdfmx]) {
-                for (const [name, content] of fonts) {
-                    await engine.writeMemFSFile(`fonts/${name}`, content)
-                }
-            }
-
-            for (const [name, content] of inputs) {
-                await xetex.writeMemFSFile(name, content)
-            }
-
-            await xetex.writeMemFSFile('main.tex', texDoc)
-            await xetex.setEngineMainFile('main.tex')
-            const res = await xetex.compileLaTeX()
-
-            await dvipdfmx.writeMemFSFile('main.xdv', res.pdf)
-            await dvipdfmx.setEngineMainFile('main.xdv')
-            const { pdf } = await dvipdfmx.compilePDF()
-
+            // compile to an intermediate format
+            const res = await engine.compileLaTeX()
+            // compile the intermediate result to PDF
+            await engine_dvi.writeMemFSFile('main.xdv', res.pdf)
+            await engine_dvi.setEngineMainFile('main.xdv')
+            const { pdf } = await engine_dvi.compilePDF()
             return URL.createObjectURL(
                 new Blob([pdf], { type: 'application/pdf' })
             )

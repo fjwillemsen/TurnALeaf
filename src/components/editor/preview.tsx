@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useContext } from 'react'
 import { Document, Page } from 'react-pdf'
 import { pdfjs } from 'react-pdf'
 import type { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api'
@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import latex from '../../latex'
 import { LaTeXOpts } from '../../latex'
 import { pdfAtom } from '../../atoms/pdfAtom'
+import { ProjectContext } from '@/pages/project'
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/build/pdf.worker.min.js',
@@ -45,28 +46,32 @@ const PdfPage = styled(Page)`
     }
 `
 
-async function generatePDF() {
-    const docstring = [
-        '\\documentclass[conference]{IEEEtran}',
-        '\\begin{document}',
-        'Hello world',
-        '\\end{document}',
-    ].join('\n')
-    const opts: LaTeXOpts = {
-        cmd: 'xelatex',
-    }
-    return latex(docstring, opts)
-}
-
 export default function Preview() {
+    const project = useContext(ProjectContext)
     const [pdf, setPDF] = useAtom(pdfAtom)
-    const [, setPageCount] = useState(1)
-    const [pageNumber] = useState(1)
-    const [scale] = useState(document.body.clientWidth > 1440 ? 1.75 : 1)
+    const [pageNumber, setPageCount] = useState(1)
 
     const handleDocumentLoadSuccess = useCallback((pdf: PDFDocumentProxy) => {
         setPageCount(pdf.numPages)
     }, [])
+
+    async function generatePDF() {
+        const docstring = await project?.get_file_contents('main.tex')
+        // const docstring = [
+        //     '\\documentclass[conference]{IEEEtran}',
+        //     '\\begin{document}',
+        //     'Hello world',
+        //     '\\end{document}',
+        // ].join('\n')
+        const opts: LaTeXOpts = {
+            cmd: 'xelatex',
+            bufferInputs: [
+                ['frog.jpg', await project!.get_file_contents('frog.jpg')],
+                ['sample.bib', await project!.get_file_contents('sample.bib')],
+            ],
+        }
+        return latex(docstring!, opts)
+    }
 
     async function renderPDF() {
         setPDF({ ...pdf, isLoading: true })
@@ -100,7 +105,6 @@ export default function Preview() {
                 >
                     <PdfPage
                         pageNumber={pageNumber}
-                        scale={scale}
                         renderAnnotationLayer={false}
                         renderTextLayer={false}
                         loading=""
