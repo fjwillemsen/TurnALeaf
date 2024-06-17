@@ -9,10 +9,10 @@ import {
 import styles from './project.module.css'
 
 import FileBrowser from '../components/filebrowser/filebrowser'
-import Writer from '@/components/editor/writer'
 import Preview from '../components/editor/preview'
 import { Project, get_project } from '@/projecthandler'
 import { handleIPCError } from '@/components/general/errorhandler'
+import FileViewer from '@/components/editor/fileviewer'
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
     .fill(null)
@@ -130,7 +130,7 @@ export default function ProjectPage() {
                             <ProjectFilesContext.Provider
                                 value={[openFiles, setOpenFiles]}
                             >
-                                <Writer />
+                                <FileViewer />
                             </ProjectFilesContext.Provider>
                         </ProjectContext.Provider>
                     )}
