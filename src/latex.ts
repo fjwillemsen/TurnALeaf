@@ -8,6 +8,7 @@ export type LaTeXOpts = {
     bufferInputs?: [string, Buffer][]
     inputs?: string[]
     fonts?: string[]
+    mainFile?: string | undefined
 }
 
 function getEngine(engine: string) {
@@ -21,10 +22,7 @@ function getEngine(engine: string) {
     }
 }
 
-export default async function latex(
-    texDoc: string | Uint8Array | Buffer,
-    opts: LaTeXOpts
-) {
+export default async function latex(opts: LaTeXOpts) {
     // (re)load the engine if not yet loaded
     const engineUsed = opts.cmd
     if (engineLoaded !== engineUsed) {
@@ -59,8 +57,8 @@ export default async function latex(
     }
 
     // set the main file
-    await engine.writeMemFSFile('main.tex', texDoc)
-    await engine.setEngineMainFile('main.tex')
+    const mainFile = opts.mainFile !== undefined ? opts.mainFile : 'main.tex'
+    await engine.setEngineMainFile(mainFile)
 
     // compile to a PDF and return the result as a PDF blob
     switch (engineUsed) {

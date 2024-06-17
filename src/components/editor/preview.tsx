@@ -19,15 +19,29 @@ export default function Preview() {
     const [pdf, setPDF] = useAtom(pdfAtom)
 
     async function generatePDF() {
-        const docstring = await project?.get_file_contents('main.tex')
+        const bufferInputs = async () => {
+            const files = await project!.get_files().then(async (files) => {
+                return files
+                    .filter(
+                        (file) => file?.isDir == false && file.isHidden == false
+                    )
+                    .map((file) => {
+                        return file!.id
+                    })
+            })
+            const buffers: [string, Buffer][] = await Promise.all(
+                files.map(async (file) => {
+                    return [file, await project!.get_file_contents(file)]
+                })
+            )
+            return buffers
+        }
         const opts: LaTeXOpts = {
             cmd: 'pdflatex',
-            bufferInputs: [
-                ['frog.jpg', await project!.get_file_contents('frog.jpg')],
-                ['sample.bib', await project!.get_file_contents('sample.bib')],
-            ],
+            bufferInputs: await bufferInputs(),
+            mainFile: 'main.tex',
         }
-        return latex(docstring!, opts)
+        return latex(opts)
     }
 
     async function renderPDF() {
