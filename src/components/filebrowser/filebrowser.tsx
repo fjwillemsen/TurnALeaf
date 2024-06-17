@@ -6,12 +6,17 @@ import {
 } from '@aperturerobotics/chonky'
 import { ChonkyIconFA } from '@aperturerobotics/chonky-icon-fontawesome'
 import { handleIPCError } from '../general/errorhandler'
-import { ProjectContext, ProjectFilesContext } from '@/pages/project'
+import {
+    ProjectContext,
+    ProjectFilesContext,
+    ProjectOpenedFileContext,
+} from '@/pages/project'
 
 export default function FileBrowser() {
     const project = useContext(ProjectContext)
-    const [openFiles, setOpenFiles] = useContext(ProjectFilesContext)
     const [projectFiles, setProjectFiles] = useState<FileArray>([null])
+    const [openFiles, setOpenFiles] = useContext(ProjectFilesContext)
+    const [, setOpenedFile] = useContext(ProjectOpenedFileContext)
 
     async function get_files(): Promise<void> {
         project!
@@ -26,8 +31,9 @@ export default function FileBrowser() {
             action.payload.file.isDir == false
         ) {
             // open the file in the editor
-            setOpenFiles!(new Set(openFiles.add(action.payload.file.id)))
-            // setOpenFiles!(action.state.selectedFiles.map((f) => f.id))
+            const fileid = action.payload.file.id
+            setOpenFiles!(new Set(openFiles.add(fileid)))
+            setOpenedFile!(fileid)
         }
     }
 

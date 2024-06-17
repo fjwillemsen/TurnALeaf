@@ -69,11 +69,15 @@ export const ProjectContext = createContext<Project | undefined>(undefined)
 export const ProjectFilesContext = createContext<
     [Set<string>, React.Dispatch<React.SetStateAction<Set<string>>> | undefined]
 >([new Set(), undefined])
+export const ProjectOpenedFileContext = createContext<
+    [string, React.Dispatch<React.SetStateAction<string>> | undefined]
+>(['main.tex', undefined])
 
 export default function ProjectPage() {
     const { hash } = useParams()
     const [project, setProject] = useState<Project>()
     const [openFiles, setOpenFiles] = useState<Set<string>>(new Set())
+    const [openedFile, setOpenedFile] = useState<string>('main.tex')
 
     useEffect(() => {
         window.padding('0')
@@ -107,7 +111,11 @@ export default function ProjectPage() {
                             <ProjectFilesContext.Provider
                                 value={[openFiles, setOpenFiles]}
                             >
-                                <FileBrowser />
+                                <ProjectOpenedFileContext.Provider
+                                    value={[openedFile, setOpenedFile]}
+                                >
+                                    <FileBrowser />
+                                </ProjectOpenedFileContext.Provider>
                             </ProjectFilesContext.Provider>
                         </ProjectContext.Provider>
                     )}
@@ -130,7 +138,11 @@ export default function ProjectPage() {
                             <ProjectFilesContext.Provider
                                 value={[openFiles, setOpenFiles]}
                             >
-                                <FileViewer />
+                                <ProjectOpenedFileContext.Provider
+                                    value={[openedFile, setOpenedFile]}
+                                >
+                                    <FileViewer />
+                                </ProjectOpenedFileContext.Provider>
                             </ProjectFilesContext.Provider>
                         </ProjectContext.Provider>
                     )}
