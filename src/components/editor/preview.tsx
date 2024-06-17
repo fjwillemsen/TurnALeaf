@@ -1,70 +1,27 @@
 import { useAtom } from 'jotai'
-import { useState, useCallback, useContext } from 'react'
-import { Document, Page } from 'react-pdf'
-import { pdfjs } from 'react-pdf'
-import type { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api'
-import styled from 'styled-components'
+import { useContext } from 'react'
 
 import latex from '../../latex'
 import { LaTeXOpts } from '../../latex'
 import { pdfAtom } from '../../atoms/pdfAtom'
 import { ProjectContext } from '@/pages/project'
 
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   'pdfjs-dist/build/pdf.worker.min.js',
-//   import.meta.url,
-// ).toString();
+interface PDFViewerInterface {
+    url: string
+}
 
-const workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
-pdfjs.GlobalWorkerOptions.workerSrc = workerSrc
-
-const Output = styled.output`
-    grid-area: preview;
-    background: ${(props) => props.theme.lightBlack};
-    overflow-y: auto;
-    border-left: 1px solid black;
-`
-
-const PdfContainer = styled.article`
-    width: 100%;
-    height: 100%;
-`
-
-const PdfDocument = styled(Document)`
-    width: 100%;
-`
-
-const PdfPage = styled(Page)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5em 0 10rem 0;
-
-    canvas {
-        max-width: 95% !important;
-        height: auto !important;
-    }
-`
+const PDFViewer = ({ url }: PDFViewerInterface) => {
+    return <iframe src={url} width="100%" height="100%" />
+}
 
 export default function Preview() {
     const project = useContext(ProjectContext)
     const [pdf, setPDF] = useAtom(pdfAtom)
-    const [pageNumber, setPageCount] = useState(1)
-
-    const handleDocumentLoadSuccess = useCallback((pdf: PDFDocumentProxy) => {
-        setPageCount(pdf.numPages)
-    }, [])
 
     async function generatePDF() {
         const docstring = await project?.get_file_contents('main.tex')
-        // const docstring = [
-        //     '\\documentclass[conference]{IEEEtran}',
-        //     '\\begin{document}',
-        //     'Hello world',
-        //     '\\end{document}',
-        // ].join('\n')
         const opts: LaTeXOpts = {
-            cmd: 'xelatex',
+            cmd: 'pdflatex',
             bufferInputs: [
                 ['frog.jpg', await project!.get_file_contents('frog.jpg')],
                 ['sample.bib', await project!.get_file_contents('sample.bib')],
@@ -85,32 +42,11 @@ export default function Preview() {
     }
 
     return (
-        <Output>
+        <>
             <button onClick={renderPDF}>Click to compile</button>
             <button onClick={() => window.open(pdf.url)}>export as pdf</button>
             <hr />
-            <PdfContainer>
-                {/* <div>
-                <Document file={pdf.url || '/blank.pdf'} onLoadSuccess={onDocumentLoadSuccess}>
-                    <Page pageNumber={pageNumber} />
-                </Document>
-                <p>
-                    Page {pageNumber} of {numPages}
-                </p>
-            </div> */}
-                <PdfDocument
-                    file={pdf.url || '/blank.pdf'}
-                    onLoadSuccess={handleDocumentLoadSuccess}
-                    loading=""
-                >
-                    <PdfPage
-                        pageNumber={pageNumber}
-                        renderAnnotationLayer={false}
-                        renderTextLayer={false}
-                        loading=""
-                    />
-                </PdfDocument>
-            </PdfContainer>
-        </Output>
+            <PDFViewer url={pdf.url} />
+        </>
     )
 }

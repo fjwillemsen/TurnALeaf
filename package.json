@@ -43,8 +43,6 @@
         "electron-updater": "^6.2.1",
         "isomorphic-git": "^1.25.10",
         "jotai": "^2.8.3",
-        "pdfjs-dist": "^3.11.174",
-        "react-pdf": "^8.0.2",
         "react-resizable-panels": "^2.0.19",
         "react-router-dom": "^6.23.1",
         "styled-components": "^6.1.11",

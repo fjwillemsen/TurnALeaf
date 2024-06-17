@@ -26,15 +26,16 @@ export default async function latex(
     opts: LaTeXOpts
 ) {
     // (re)load the engine if not yet loaded
-    if (engineLoaded !== opts.cmd) {
-        engine = getEngine(opts.cmd)
+    const engineUsed = opts.cmd
+    if (engineLoaded !== engineUsed) {
+        engine = getEngine(engineUsed)
         await engine.loadEngine()
-        if (opts.cmd == 'xelatex') {
+        if (engineUsed == 'xelatex') {
             engine_dvi = new DvipdfmxEngine()
             await engine_dvi.loadEngine()
         }
         await engine.makeMemFSFolder('fonts/')
-        engineLoaded = opts.cmd
+        engineLoaded = engineUsed
     }
 
     // load the required fonts
@@ -57,12 +58,12 @@ export default async function latex(
         await engine.writeMemFSFile(name, content)
     }
 
-    // load the main file
+    // set the main file
     await engine.writeMemFSFile('main.tex', texDoc)
     await engine.setEngineMainFile('main.tex')
 
     // compile to a PDF and return the result as a PDF blob
-    switch (opts.cmd) {
+    switch (engineUsed) {
         case 'pdflatex': {
             const { pdf } = await engine.compileLaTeX()
             return URL.createObjectURL(
