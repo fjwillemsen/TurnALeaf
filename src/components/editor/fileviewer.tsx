@@ -17,7 +17,7 @@ export default function FileViewer() {
     return (
         <Tabs defaultValue="main.tex" style={{ height: '100%', width: '100%' }}>
             <Tabs.List>
-                {openFiles.map((filepath) => {
+                {Array.from(openFiles).map((filepath) => {
                     return (
                         <Tabs.Tab
                             value={filepath}
@@ -30,7 +30,7 @@ export default function FileViewer() {
                 })}
             </Tabs.List>
 
-            {openFiles.map((filepath) => {
+            {Array.from(openFiles).map((filepath) => {
                 return (
                     <Tabs.Panel
                         value={filepath}

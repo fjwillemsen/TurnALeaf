@@ -67,13 +67,13 @@ function PanelResizeCollapseHandle({
 
 export const ProjectContext = createContext<Project | undefined>(undefined)
 export const ProjectFilesContext = createContext<
-    [string[], React.Dispatch<React.SetStateAction<string[]>> | undefined]
->([[], undefined])
+    [Set<string>, React.Dispatch<React.SetStateAction<Set<string>>> | undefined]
+>([new Set(), undefined])
 
 export default function ProjectPage() {
     const { hash } = useParams()
     const [project, setProject] = useState<Project>()
-    const [openFiles, setOpenFiles] = useState<string[]>([])
+    const [openFiles, setOpenFiles] = useState<Set<string>>(new Set())
 
     useEffect(() => {
         window.padding('0')

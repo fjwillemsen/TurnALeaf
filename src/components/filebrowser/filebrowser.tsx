@@ -10,7 +10,7 @@ import { ProjectContext, ProjectFilesContext } from '@/pages/project'
 
 export default function FileBrowser() {
     const project = useContext(ProjectContext)
-    const [, setOpenFiles] = useContext(ProjectFilesContext)
+    const [openFiles, setOpenFiles] = useContext(ProjectFilesContext)
     const [projectFiles, setProjectFiles] = useState<FileArray>([null])
 
     async function get_files(): Promise<void> {
@@ -21,9 +21,13 @@ export default function FileBrowser() {
     }
 
     const handleAction: FileActionHandler = (action) => {
-        if (action.id === 'mouse_click_file') {
+        if (
+            action.id === 'mouse_click_file' &&
+            action.payload.file.isDir == false
+        ) {
             // open the file in the editor
-            setOpenFiles!(action.state.selectedFiles.map((f) => f.id))
+            setOpenFiles!(new Set(openFiles.add(action.payload.file.id)))
+            // setOpenFiles!(action.state.selectedFiles.map((f) => f.id))
         }
     }
 
