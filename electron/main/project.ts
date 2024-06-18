@@ -257,11 +257,28 @@ export class Project extends AbstractProject {
     }
 
     /**
-     * Get the files that were changed relative to the last commit.
+     * Get the list of unstaged files.
+     *
+     * @returns string[] - the list of filenames.
+     */
+    async get_files_to_add(): Promise<string[]> {
+        const dir = this.id.directory
+        const files = await git.listFiles({ fs, dir: dir })
+        const files_status = await Promise.all(
+            files.map((file) => git.status({ fs, dir: dir, filepath: file }))
+        )
+        const unstaged_files = files.filter((file, index) =>
+            ['*modified', '*deleted', '*added'].includes(files_status[index])
+        )
+        return unstaged_files
+    }
+
+    /**
+     * Get the status of files that were changed relative to the last commit.
      *
      * @returns string[] - list of `type of change`: `filename`.
      */
-    async get_files_changed(): Promise<string[]> {
+    async get_files_changed_status(): Promise<string[]> {
         const FILE = 0,
             HEAD = 1,
             WORKDIR = 2,
@@ -298,7 +315,7 @@ export class Project extends AbstractProject {
     }
 
     get_generated_commit_message(multiline = false): Promise<string> {
-        return this.get_files_changed().then((changes) => {
+        return this.get_files_changed_status().then((changes) => {
             if (changes.length == 0) {
                 return ''
             }
@@ -314,13 +331,23 @@ export class Project extends AbstractProject {
         // git.fetch({ fs, http });
     }
 
-    async push_project_update(): Promise<void> {
-        // return git.commit({
-        //     fs,
-        //     dir: this.id.directory,
-        //     url: this.id.url.toString(),
-        //     onAuth: get_auth,
-        // })
+    async push_project_update(): Promise<string | void> {
+        const dir = this.id.directory
+        const filesToAdd = await this.get_files_to_add()
+        if (filesToAdd.length > 0) {
+            git.add({
+                fs,
+                dir: dir,
+                filepath: filesToAdd,
+            })
+            const sha = await git.commit({
+                fs,
+                dir: dir,
+                message: await this.get_generated_commit_message(false),
+            })
+            console.log('SHA: ', sha)
+            return sha
+        }
     }
 
     delete_project() {
@@ -354,12 +381,10 @@ export class Project extends AbstractProject {
     async set_file_contents(
         filepath: string,
         contents: Uint8Array
-    ): Promise<void> {
-        console.log(await this.get_generated_commit_message())
-        return fs.promises.writeFile(
-            path.join(this.id.directory, filepath),
-            contents
-        )
+    ): Promise<void | string> {
+        return fs.promises
+            .writeFile(path.join(this.id.directory, filepath), contents)
+            .then(this.push_project_update)
     }
 }
 

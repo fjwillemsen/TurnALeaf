@@ -137,13 +137,13 @@ export abstract class AbstractProject {
      * Fetch updates to the project from remote.
      *
      */
-    abstract get_project_update(): void
+    abstract get_project_update(): Promise<void>
 
     /**
      * Push updates of the project to remote.
      *
      */
-    abstract push_project_update(): void
+    abstract push_project_update(): Promise<string | void>
 
     /**
      * Delete the project locally.
@@ -174,5 +174,5 @@ export abstract class AbstractProject {
     abstract set_file_contents(
         filepath: string,
         contents: Uint8Array
-    ): Promise<void>
+    ): Promise<void | string>
 }

@@ -112,7 +112,7 @@ export class Project extends AbstractProject {
         return await window.project.getUpdate(await this.id.hash)
     }
 
-    async push_project_update(): Promise<void> {
+    async push_project_update(): Promise<string> {
         return await window.project.pushUpdate(await this.id.hash)
     }
 
