@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react'
+import { useContext, useRef, forwardRef, useImperativeHandle } from 'react'
 import { handleIPCError } from '../general/errorhandler'
 import { ProjectContext } from '@/pages/project'
 import { Editor } from '@monaco-editor/react'
@@ -8,7 +8,7 @@ interface WriterProps {
     filepath: string
 }
 
-export default function Writer({ filepath }: WriterProps) {
+const Writer = forwardRef(({ filepath }: WriterProps, ref) => {
     const project = useContext(ProjectContext)
     const decoder = new TextDecoder('utf-8')
     const encoder = new TextEncoder()
@@ -19,14 +19,20 @@ export default function Writer({ filepath }: WriterProps) {
     let lastSaveTime: Date | undefined
     let awaitingSaving = false
 
-    function saveContents(value?: string) {
+    useImperativeHandle(ref, () => ({
+        async saveFile() {
+            console.log('saving ', filepath)
+            await saveContents()
+        },
+    }))
+
+    async function saveContents(value?: string) {
         if (value == undefined) {
             value = editorRef.current?.getValue()
         }
         awaitingSaving = true
-        project?.set_file_contents(filepath, encoder.encode(value)).then(() => {
-            awaitingSaving = false
-        })
+        await project?.set_file_contents(filepath, encoder.encode(value))
+        awaitingSaving = false
     }
 
     function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor) {
@@ -59,4 +65,5 @@ export default function Writer({ filepath }: WriterProps) {
             onChange={handleEditorChange}
         />
     )
-}
+})
+export default Writer
