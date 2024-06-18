@@ -161,6 +161,12 @@ export async function create_project(
                 onAuth: get_auth,
             })
             .then(() => {
+                const dir = id.directory
+                fs.copyFileSync(
+                    path.join(process.env.VITE_PUBLIC, 'defaultgitignore'),
+                    path.join(dir, '.gitignore')
+                )
+                git.add({ fs, dir: dir, filepath: '.gitignore' })
                 return [new Project(id), true]
             })
             .catch((e) => {
@@ -250,7 +256,12 @@ export class Project extends AbstractProject {
     }
 
     async push_project_update(): Promise<void> {
-        // git.commit();
+        // return git.commit({
+        //     fs,
+        //     dir: this.id.directory,
+        //     url: this.id.url.toString(),
+        //     onAuth: get_auth,
+        // })
     }
 
     delete_project() {
@@ -281,7 +292,11 @@ export class Project extends AbstractProject {
         return fs.promises.readFile(path.join(this.id.directory, filepath))
     }
 
-    set_file_contents(filepath: string, contents: Uint8Array): Promise<void> {
+    async set_file_contents(
+        filepath: string,
+        contents: Uint8Array
+    ): Promise<void> {
+        console.log(await this.get_files_changed())
         return fs.promises.writeFile(
             path.join(this.id.directory, filepath),
             contents
