@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 73%) <!-- 24/33 -->
+1. Basic functionality (0.0.1 / alpha release | 76%) <!-- 25/33 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -30,13 +30,13 @@ The following roadmap outlines what will be released after which features are im
             - [x] Removing projects
         - [x] Projects overview
         - [x] File navigator
-        - [x] Editor <!-- 5/6 -->
+        - [x] Editor <!-- 6/6 -->
             - [x] Retrieval from backend
             - [x] Basic editing
             - [x] Line counter & polishing
             - [x] Tab-based editor
             - [x] Auto-saving to backend
-            - [ ] Retrieval from frontend on PDF render
+            - [x] Retrieval from frontend on PDF render
         - [x] User settings storage
         - [ ] Onboarding
     - [ ] Distribution <!-- 0/3 -->

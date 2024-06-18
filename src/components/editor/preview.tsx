@@ -14,11 +14,16 @@ const PDFViewer = ({ url }: PDFViewerInterface) => {
     return <iframe src={url} width="100%" height="100%" />
 }
 
-export default function Preview() {
+interface PreviewInterface {
+    saveFilesMethod: () => Promise<void>
+}
+
+export default function Preview({ saveFilesMethod }: PreviewInterface) {
     const project = useContext(ProjectContext)
     const [pdf, setPDF] = useAtom(pdfAtom)
 
     async function generatePDF() {
+        await saveFilesMethod()
         const bufferInputs = async () => {
             const files = await project!.get_files().then(async (files) => {
                 return files

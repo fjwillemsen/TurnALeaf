@@ -4,28 +4,41 @@ import {
     useContext,
     useRef,
     useEffect,
+    forwardRef,
+    useImperativeHandle,
 } from 'react'
 import { Badge, Center, Tabs, rem } from '@mantine/core'
 import { IconFile, IconX } from '@tabler/icons-react'
 import { ProjectFilesContext, ProjectOpenedFileContext } from '@/pages/project'
 import Writer from '@/components/editor/writer'
 
-export default function FileViewer() {
+const FileViewer = forwardRef((_: unknown, ref) => {
+    const iconStyle = { width: rem(12), height: rem(12) }
     const [openFiles, setOpenFiles] = useContext(ProjectFilesContext)
     const [openedFile, setOpenedFile] = useContext(ProjectOpenedFileContext)
-    const itemsRef = useRef(
+    const writersRef = useRef(
         new Map<
             string,
             RefObject<ForwardRefExoticComponent<typeof Writer>> | null
         >()
     )
-    const iconStyle = { width: rem(12), height: rem(12) }
 
-    // list for changes to openFiles, if a new file is opened add an empty reference
+    // Manages calls by outside references.
+    useImperativeHandle(ref, () => ({
+        async saveFiles() {
+            await Promise.all(
+                Array.from(openFiles).map((filepath) => {
+                    return writersRef.current.get(filepath)?.saveFile()
+                })
+            )
+        },
+    }))
+
+    // listen for changes to openFiles, if a new file is opened add an empty reference
     useEffect(() => {
         openFiles.forEach((filepath) => {
-            if (itemsRef.current.has(filepath) == false) {
-                itemsRef.current.set(filepath, null)
+            if (writersRef.current.has(filepath) == false) {
+                writersRef.current.set(filepath, null)
             }
         })
     }, [openFiles])
@@ -46,9 +59,9 @@ export default function FileViewer() {
      */
     async function handleCloseTab(tabname: string) {
         // save the opened file
-        await itemsRef.current.get(tabname)?.saveFile()
+        await writersRef.current.get(tabname)?.saveFile()
         // remove from references
-        itemsRef.current.delete(tabname)
+        writersRef.current.delete(tabname)
         openFiles.delete(tabname)
         await setOpenFiles!(openFiles)
         // change the tab if the closed tab is the current tab
@@ -108,7 +121,7 @@ export default function FileViewer() {
                                                 typeof Writer
                                             >
                                         >
-                                    ) => itemsRef.current.set(filepath, el)}
+                                    ) => writersRef.current.set(filepath, el)}
                                 />
                             </Tabs.Panel>
                         )
@@ -122,4 +135,5 @@ export default function FileViewer() {
             )}
         </>
     )
-}
+})
+export default FileViewer

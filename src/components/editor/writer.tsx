@@ -19,6 +19,7 @@ const Writer = forwardRef(({ filepath }: WriterProps, ref) => {
     let lastSaveTime: Date | undefined
     let awaitingSaving = false
 
+    // Manages calls by outside references.
     useImperativeHandle(ref, () => ({
         async saveFile() {
             console.log('saving ', filepath)
@@ -26,6 +27,11 @@ const Writer = forwardRef(({ filepath }: WriterProps, ref) => {
         },
     }))
 
+    /**
+     * Save the contents to the file on disk.
+     *
+     * @param string - optional: the contents to save. If not passed, the contents of the current editor are used.
+     */
     async function saveContents(value?: string) {
         if (value == undefined) {
             value = editorRef.current?.getValue()
@@ -35,6 +41,11 @@ const Writer = forwardRef(({ filepath }: WriterProps, ref) => {
         awaitingSaving = false
     }
 
+    /**
+     * Handler function called when mounted, retrieves the file contents from disk.
+     *
+     * @param IStandaloneCodeEditor - the editor.
+     */
     function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor) {
         editorRef.current = editor
         project!
@@ -45,6 +56,11 @@ const Writer = forwardRef(({ filepath }: WriterProps, ref) => {
             .catch(handleIPCError)
     }
 
+    /**
+     * Handler function called when an edit is made by the user.
+     *
+     * @param string - the new contents.
+     */
     function handleEditorChange(value: string | undefined) {
         const currentTime = new Date()
         if (

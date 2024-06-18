@@ -1,4 +1,11 @@
-import { useState, createRef, RefObject, useEffect, createContext } from 'react'
+import {
+    useState,
+    createRef,
+    useRef,
+    RefObject,
+    useEffect,
+    createContext,
+} from 'react'
 import { useParams } from 'react-router-dom'
 import {
     ImperativePanelHandle,
@@ -78,6 +85,11 @@ export default function ProjectPage() {
     const [project, setProject] = useState<Project>()
     const [openFiles, setOpenFiles] = useState<Set<string>>(new Set())
     const [openedFile, setOpenedFile] = useState<string>('main.tex')
+    const fileviewerRef = useRef(null)
+
+    const saveFilesMethod = () => {
+        return fileviewerRef.current?.saveFiles()
+    }
 
     useEffect(() => {
         window.padding('0')
@@ -141,7 +153,7 @@ export default function ProjectPage() {
                                 <ProjectOpenedFileContext.Provider
                                     value={[openedFile, setOpenedFile]}
                                 >
-                                    <FileViewer />
+                                    <FileViewer ref={fileviewerRef} />
                                 </ProjectOpenedFileContext.Provider>
                             </ProjectFilesContext.Provider>
                         </ProjectContext.Provider>
@@ -162,7 +174,7 @@ export default function ProjectPage() {
                 >
                     {project !== undefined && (
                         <ProjectContext.Provider value={project}>
-                            <Preview />
+                            <Preview saveFilesMethod={saveFilesMethod} />
                         </ProjectContext.Provider>
                     )}
                 </div>
