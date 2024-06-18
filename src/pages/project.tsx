@@ -116,7 +116,7 @@ export default function ProjectPage() {
             >
                 <div
                     key="files"
-                    style={{ border: '1px solid green', height: '100%' }}
+                    style={{ border: '1px solid black', height: '100%' }}
                 >
                     {project !== undefined && (
                         <ProjectContext.Provider value={project}>
@@ -143,7 +143,7 @@ export default function ProjectPage() {
             >
                 <div
                     key="editor"
-                    style={{ border: '1px solid red', height: '100%' }}
+                    style={{ border: '1px solid black', height: '100%' }}
                 >
                     {project !== undefined && (
                         <ProjectContext.Provider value={project}>
@@ -170,7 +170,7 @@ export default function ProjectPage() {
             >
                 <div
                     key="pdf"
-                    style={{ border: '1px solid blue', height: '100%' }}
+                    style={{ border: '1px solid black', height: '100%' }}
                 >
                     {project !== undefined && (
                         <ProjectContext.Provider value={project}>

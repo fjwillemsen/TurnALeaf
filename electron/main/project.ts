@@ -262,7 +262,7 @@ export class Project extends AbstractProject {
         const dir = this.id.directory
         const is_hidden_file = (filename: string) => /^\..*/.test(filename)
         return fs.promises.readdir(dir).then((filenames) => {
-            const a: FileArray = filenames.map((f) => {
+            return filenames.map((f) => {
                 const filepath = path.join(dir, f)
                 const stat = fs.statSync(filepath)
                 return {
@@ -274,8 +274,6 @@ export class Project extends AbstractProject {
                     isHidden: is_hidden_file(f),
                 }
             })
-            console.log(a)
-            return a
         })
     }
 
