@@ -167,6 +167,11 @@ export async function create_project(
                     path.join(dir, '.gitignore')
                 )
                 git.add({ fs, dir: dir, filepath: '.gitignore' })
+                git.commit({
+                    fs,
+                    dir: dir,
+                    message: `Via ${process.env.APPNAME}: added default gitignore file`,
+                })
                 return [new Project(id), true]
             })
             .catch((e) => {
@@ -251,6 +256,60 @@ export class Project extends AbstractProject {
         return new ProjectID(new URL(this._id_url_string))
     }
 
+    /**
+     * Get the files that were changed relative to the last commit.
+     *
+     * @returns string[] - list of `type of change`: `filename`.
+     */
+    async get_files_changed(): Promise<string[]> {
+        const FILE = 0,
+            HEAD = 1,
+            WORKDIR = 2,
+            STAGE = 3
+
+        type statusMap = {
+            [id: string]: string
+        }
+
+        const statusMapping: statusMap = {
+            '003': 'added, staged, deleted unstaged',
+            '020': 'new, untracked',
+            '022': 'added, staged',
+            '023': 'added, staged, with unstaged changes',
+            '100': 'deleted, staged',
+            '101': 'deleted, unstaged',
+            '103': 'modified, staged, deleted unstaged',
+            '111': 'unmodified',
+            '121': 'modified, unstaged',
+            '122': 'modified, staged',
+            '123': 'modified, staged, with unstaged changes',
+        }
+
+        const statusMatrix = (
+            await git.statusMatrix({ fs, dir: this.id.directory })
+        ).filter(
+            (row) => row[HEAD] !== row[WORKDIR] || row[HEAD] !== row[STAGE]
+        )
+
+        const allUncommitedChanges = statusMatrix.map(
+            (row) => statusMapping[row.slice(1).join('')] + ': ' + row[FILE]
+        )
+        return allUncommitedChanges
+    }
+
+    get_generated_commit_message(multiline = false): Promise<string> {
+        return this.get_files_changed().then((changes) => {
+            if (changes.length == 0) {
+                return ''
+            }
+            changes = changes.map((change) => {
+                return change.replace(/,.*:/gm, '')
+            })
+            const changes_string = changes.join(multiline ? '\n' : ', ')
+            return `Via ${process.env.APPNAME}:${multiline && changes.length > 1 ? '\n' : ' '}${changes_string}`
+        })
+    }
+
     async get_project_update(): Promise<void> {
         // git.fetch({ fs, http });
     }
@@ -296,7 +355,7 @@ export class Project extends AbstractProject {
         filepath: string,
         contents: Uint8Array
     ): Promise<void> {
-        console.log(await this.get_files_changed())
+        console.log(await this.get_generated_commit_message())
         return fs.promises.writeFile(
             path.join(this.id.directory, filepath),
             contents

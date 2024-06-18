@@ -29,6 +29,7 @@ globalThis.__dirname = dirname(__filename)
 // ├─┬ dist
 // │ └── index.html    > Electron-Renderer
 //
+process.env.APPNAME = 'TurnALeaf'
 process.env.DIST_ELECTRON = join(__dirname, '../')
 process.env.DIST = join(process.env.DIST_ELECTRON, '../dist')
 process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL
