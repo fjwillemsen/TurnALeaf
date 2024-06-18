@@ -65,6 +65,13 @@ contextBridge.exposeInMainWorld('project', {
     getFiles: (hash: string) => ipcRenderer.invoke('project:get_files', hash),
     getFileContents: (hash: string, filepath: string) =>
         ipcRenderer.invoke('project:get_file_contents', hash, filepath),
+    setFileContents: (hash: string, filepath: string, contents: Uint8Array) =>
+        ipcRenderer.invoke(
+            'project:set_file_contents',
+            hash,
+            filepath,
+            contents
+        ),
 })
 
 // --------- Preload scripts loading ---------

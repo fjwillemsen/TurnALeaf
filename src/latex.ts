@@ -5,7 +5,7 @@ let engine_dvi: typeof DvipdfmxEngine = undefined
 
 export type LaTeXOpts = {
     cmd: 'pdflatex' | 'xelatex'
-    bufferInputs?: [string, Buffer][]
+    bufferInputs?: [string, Uint8Array][]
     inputs?: string[]
     fonts?: string[]
     mainFile?: string | undefined

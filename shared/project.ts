@@ -161,7 +161,18 @@ export abstract class AbstractProject {
      * Get the contents of a file in the project directory.
      *
      * @param string - the filepath to the file relative to the project directory.
-     * @returns Promise<Buffer> - the contents of the file as a buffer.
+     * @returns Promise<Uint8Array> - the contents of the file as a byte array.
      */
-    abstract get_file_contents(filepath: string): Promise<Buffer>
+    abstract get_file_contents(filepath: string): Promise<Uint8Array>
+
+    /**
+     * Set the contents of a file in the project directory to the buffer.
+     *
+     * @param string - the filepath to the file relative to the project directory.
+     * @param Uint8Array - the byte array of the file contents.
+     */
+    abstract set_file_contents(
+        filepath: string,
+        contents: Uint8Array
+    ): Promise<void>
 }

@@ -124,10 +124,21 @@ export class Project extends AbstractProject {
         return await window.project.getFiles(await this.id.hash)
     }
 
-    async get_file_contents(filepath: string): Promise<Buffer> {
+    async get_file_contents(filepath: string): Promise<Uint8Array> {
         return await window.project.getFileContents(
             await this.id.hash,
             filepath
+        )
+    }
+
+    async set_file_contents(
+        filepath: string,
+        contents: Uint8Array
+    ): Promise<void> {
+        return await window.project.setFileContents(
+            await this.id.hash,
+            filepath,
+            contents
         )
     }
 }

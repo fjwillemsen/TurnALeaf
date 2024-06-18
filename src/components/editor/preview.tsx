@@ -29,7 +29,7 @@ export default function Preview() {
                         return file!.id
                     })
             })
-            const buffers: [string, Buffer][] = await Promise.all(
+            const buffers: [string, Uint8Array][] = await Promise.all(
                 files.map(async (file) => {
                     return [file, await project!.get_file_contents(file)]
                 })

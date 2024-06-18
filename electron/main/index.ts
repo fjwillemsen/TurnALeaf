@@ -183,6 +183,12 @@ app.whenReady().then(() => {
             return get_project(hash)?.get_file_contents(filepath)
         }
     )
+    ipcMain.handle(
+        'project:set_file_contents',
+        (_, hash: string, filepath: string, contents: Uint8Array) => {
+            return get_project(hash)?.set_file_contents(filepath, contents)
+        }
+    )
 
     // finish setup
     createWindow()

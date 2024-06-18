@@ -279,8 +279,15 @@ export class Project extends AbstractProject {
         })
     }
 
-    get_file_contents(filepath: string): Promise<Buffer> {
+    get_file_contents(filepath: string): Promise<Uint8Array> {
         return fs.promises.readFile(path.join(this.id.directory, filepath))
+    }
+
+    set_file_contents(filepath: string, contents: Uint8Array): Promise<void> {
+        return fs.promises.writeFile(
+            path.join(this.id.directory, filepath),
+            contents
+        )
     }
 }
 
