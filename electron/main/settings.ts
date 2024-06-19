@@ -8,11 +8,15 @@ const secure_string_encoding = 'latin1'
 
 type SettingStoreType = {
     onboarded: boolean
+    git_commit_author_name: string
+    git_commit_author_email: string
 }
 
 const settingstore = new Store<SettingStoreType>({
     defaults: {
         onboarded: false,
+        git_commit_author_name: '',
+        git_commit_author_email: '',
     },
 })
 
@@ -87,6 +91,22 @@ export class Settings extends AbstractSettings {
 
     set onboarded(b: boolean) {
         settingstore.set('onboarded', b)
+    }
+
+    get git_author_name(): string {
+        return settingstore.get('git_commit_author_name')
+    }
+
+    set git_author_name(name: string) {
+        settingstore.set('git_commit_author_name', name)
+    }
+
+    get git_author_email(): string {
+        return settingstore.get('git_commit_author_email')
+    }
+
+    set git_author_email(email: string) {
+        settingstore.set('git_commit_author_email', email)
     }
 
     get git_token_overleaf(): string {

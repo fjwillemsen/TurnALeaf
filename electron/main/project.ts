@@ -135,8 +135,8 @@ const get_auth: AuthCallback = (url: string) => {
  */
 function get_author() {
     return {
-        name: '',
-        email: '',
+        name: settings.git_author_name,
+        email: settings.git_author_name,
     }
 }
 
@@ -338,7 +338,7 @@ export class Project extends AbstractProject {
     }
 
     async get_project_update(): Promise<void> {
-        // git.fetch({ fs, http });
+        // git.fetch({ fs, http })
     }
 
     async push_project_update(): Promise<string | void> {

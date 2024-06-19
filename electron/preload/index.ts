@@ -30,6 +30,12 @@ contextBridge.exposeInMainWorld('settings', {
     get_onboarded: () => ipcRenderer.invoke('settings:get_onboarded'),
     set_onboarded: (b: boolean) =>
         ipcRenderer.invoke('settings:set_onboarded', b),
+    get_git_author_name: () => ipcRenderer.invoke('settings:git_author_name'),
+    set_git_author_name: (name: string) =>
+        ipcRenderer.invoke('settings:git_author_name', name),
+    get_git_author_email: () => ipcRenderer.invoke('settings:git_author_email'),
+    set_git_author_email: (name: string) =>
+        ipcRenderer.invoke('settings:git_author_email', name),
     get_git_token_overleaf: () =>
         ipcRenderer.invoke('settings:get_git_token_overleaf'),
     set_git_token_overleaf: (token: string) =>

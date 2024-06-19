@@ -127,6 +127,18 @@ app.whenReady().then(() => {
     ipcMain.handle('settings:set_onboarded', (_, b: boolean) => {
         settings.onboarded = b
     })
+    ipcMain.handle('settings:git_author_name', () => {
+        return settings.git_author_name
+    })
+    ipcMain.handle('settings:git_author_name', (_, name: string) => {
+        settings.git_author_name = name
+    })
+    ipcMain.handle('settings:git_author_email', () => {
+        return settings.git_author_email
+    })
+    ipcMain.handle('settings:git_author_email', (_, email: string) => {
+        settings.git_author_email = email
+    })
     ipcMain.handle('settings:get_git_token_overleaf', () => {
         return settings.git_token_overleaf
     })
