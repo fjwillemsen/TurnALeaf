@@ -3,7 +3,14 @@
 import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-import { existsSync, mkdirSync, rmSync, statSync, renameSync } from 'fs'
+import {
+    existsSync,
+    mkdirSync,
+    rmSync,
+    statSync,
+    renameSync,
+    copyFileSync,
+} from 'fs'
 import icongen from 'icon-gen'
 import { Buffer } from 'buffer'
 
@@ -130,7 +137,7 @@ async function generate_icons(always_run = true) {
         join(build_out_path, 'icon.png')
     )
     renameSync(join(icon_sizes_folder, 'favicon.ico'), favicon_out_path)
-    renameSync(icon_src_path, icon_out_path)
+    copyFileSync(icon_src_path, icon_out_path)
 }
 
 generate_icons()
