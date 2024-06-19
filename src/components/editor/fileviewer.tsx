@@ -10,18 +10,17 @@ import {
 import { Badge, Center, Tabs, rem } from '@mantine/core'
 import { IconFile, IconX } from '@tabler/icons-react'
 import { ProjectFilesContext, ProjectOpenedFileContext } from '@/pages/project'
-import Writer from '@/components/editor/writer'
+import Writer, { SaveFileHandle } from '@/components/editor/writer'
 
-const FileViewer = forwardRef((_: unknown, ref) => {
+export type SaveFilesHandle = {
+    saveFiles: () => Promise<void>
+}
+
+const FileViewer = forwardRef<SaveFilesHandle>((_: unknown, ref) => {
     const iconStyle = { width: rem(12), height: rem(12) }
     const [openFiles, setOpenFiles] = useContext(ProjectFilesContext)
     const [openedFile, setOpenedFile] = useContext(ProjectOpenedFileContext)
-    const writersRef = useRef(
-        new Map<
-            string,
-            RefObject<ForwardRefExoticComponent<typeof Writer>> | null
-        >()
-    )
+    const writersRef = useRef(new Map<string, SaveFileHandle | null>())
 
     // Manages calls by outside references.
     useImperativeHandle(ref, () => ({

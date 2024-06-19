@@ -19,7 +19,7 @@ import FileBrowser from '../components/filebrowser/filebrowser'
 import Preview from '../components/editor/preview'
 import { Project, get_project } from '@/projecthandler'
 import { handleIPCError } from '@/components/general/errorhandler'
-import FileViewer from '@/components/editor/fileviewer'
+import FileViewer, { SaveFilesHandle } from '@/components/editor/fileviewer'
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3)
     .fill(null)
@@ -85,10 +85,10 @@ export default function ProjectPage() {
     const [project, setProject] = useState<Project>()
     const [openFiles, setOpenFiles] = useState<Set<string>>(new Set())
     const [openedFile, setOpenedFile] = useState<string>('main.tex')
-    const fileviewerRef = useRef(null)
+    const fileviewerRef = useRef<SaveFilesHandle>(null)
 
     const saveFilesMethod = () => {
-        return fileviewerRef.current?.saveFiles()
+        return fileviewerRef.current!.saveFiles()
     }
 
     useEffect(() => {
