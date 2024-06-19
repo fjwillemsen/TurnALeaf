@@ -10,21 +10,22 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 82%) <!-- 28/34 -->
+1. Basic functionality (0.0.1 / alpha release | 80%) <!-- 28/35 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
         - [x] Interface library (React)
         - [x] Styling language (PostCSS / Tailwind)
         - [x] Component library (Mantine)
-    - [ ] Base functionality <!-- 18/20 -->
+    - [ ] Base functionality <!-- 18/21 -->
         - [x] Modular interface
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
-        - [ ] Git integration <!-- 6/7 -->
+        - [ ] Git integration <!-- 6/8 -->
             - [x] Git client
             - [x] Overleaf authentication token support & storage
             - [x] Creating projects
+            - [ ] Fetching updates
             - [ ] Pulling updates
             - [x] Pushing updates
             - [x] Removing projects
