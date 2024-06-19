@@ -1,30 +1,14 @@
-import { Settings } from '@/settingshandler'
-import { Button, Group, TextInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
-
-const settings = new Settings()
+import { Text, TextInput } from '@mantine/core'
+import {
+    useGitAuthorDetailsFormContext,
+    useGitTokenOverleafFormContext,
+} from './formcontext'
 
 export function GitTokenOverleaf() {
-    const form = useForm({
-        mode: 'uncontrolled',
-        initialValues: {
-            token: '',
-        },
-
-        validate: {
-            token: (value) =>
-                100 >= value.length && value.length > 5
-                    ? null
-                    : 'Invalid token',
-        },
-    })
-
-    const handleSubmit = (values: typeof form.values) => {
-        settings.git_token_overleaf = values.token
-    }
+    const form = useGitTokenOverleafFormContext()
 
     return (
-        <form onSubmit={form.onSubmit(handleSubmit)}>
+        <>
             <TextInput
                 withAsterisk
                 label="Overleaf git authentication token"
@@ -33,37 +17,22 @@ export function GitTokenOverleaf() {
                 {...form.getInputProps('token')}
             />
 
-            <Group justify="flex-end" mt="md">
-                <Button type="submit">Submit</Button>
-            </Group>
-        </form>
+            <Text>
+                This token is necessary to get your project from Overleaf and to
+                make sure changes made in TurnALeaf also appear on Overleaf. Get
+                it by going to https://www.overleaf.com/user/settings, scroll
+                down to 'Project Synchronisation', and create a token under 'Git
+                Integration'.
+            </Text>
+        </>
     )
 }
 
 export function GitAuthorDetails() {
-    const form = useForm({
-        mode: 'uncontrolled',
-        initialValues: {
-            name: '',
-            email: '',
-        },
-
-        validate: {
-            name: (value) => value.length > 2,
-            email: (value) =>
-                String(value)
-                    .toLowerCase()
-                    .match(/^\S+@\S+\.\S+$/),
-        },
-    })
-
-    const handleSubmit = (values: typeof form.values) => {
-        settings.git_author_name = values.name
-        settings.git_author_email = values.email
-    }
+    const form = useGitAuthorDetailsFormContext()
 
     return (
-        <form onSubmit={form.onSubmit(handleSubmit)}>
+        <>
             <TextInput
                 withAsterisk
                 label="Git commit author name"
@@ -79,9 +48,10 @@ export function GitAuthorDetails() {
                 {...form.getInputProps('email')}
             />
 
-            <Group justify="flex-end" mt="md">
-                <Button type="submit">Submit</Button>
-            </Group>
-        </form>
+            <Text>
+                This information is used to track who made which changes to a
+                project, and are exclusively used for this purpose.
+            </Text>
+        </>
     )
 }

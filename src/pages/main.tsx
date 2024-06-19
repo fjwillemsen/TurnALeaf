@@ -17,7 +17,6 @@ export default function MainPage() {
     }
 
     useEffect(() => {
-        settings.onboarded = false
         const fetchOnboarded = async () => {
             if ((await settings.onboarded) == false) {
                 await new Promise((r) => setTimeout(r, 1000))
@@ -32,9 +31,6 @@ export default function MainPage() {
                     withCloseButton: false,
                     closeOnClickOutside: false,
                     closeOnEscape: false,
-                    onClose: () => {
-                        settings.onboarded = true
-                    },
                     innerProps: {
                         modalBody: '',
                     },

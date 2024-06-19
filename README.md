@@ -10,14 +10,14 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 80%) <!-- 29/36 -->
+1. Basic functionality (0.0.1 / alpha release | 83%) <!-- 30/36 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
         - [x] Interface library (React)
         - [x] Styling language (PostCSS / Tailwind)
         - [x] Component library (Mantine)
-    - [ ] Base functionality <!-- 18/21 -->
+    - [ ] Base functionality <!-- 19/21 -->
         - [x] Modular interface
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
@@ -40,7 +40,7 @@ The following roadmap outlines what will be released after which features are im
             - [x] Auto-saving to backend
             - [x] Retrieval from frontend on PDF render
         - [x] User settings storage
-        - [ ] Onboarding
+        - [x] Onboarding
     - [ ] Distribution <!-- 0/3 -->
         - [ ] Downloadable
         - [ ] Installable
