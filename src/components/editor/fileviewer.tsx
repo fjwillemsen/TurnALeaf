@@ -1,6 +1,4 @@
 import {
-    ForwardRefExoticComponent,
-    RefObject,
     useContext,
     useRef,
     useEffect,
@@ -114,13 +112,9 @@ const FileViewer = forwardRef<SaveFilesHandle>((_: unknown, ref) => {
                             >
                                 <Writer
                                     filepath={filepath}
-                                    ref={(
-                                        el: RefObject<
-                                            ForwardRefExoticComponent<
-                                                typeof Writer
-                                            >
-                                        >
-                                    ) => writersRef.current.set(filepath, el)}
+                                    ref={(el: SaveFileHandle) =>
+                                        writersRef.current.set(filepath, el)
+                                    }
                                 />
                             </Tabs.Panel>
                         )
