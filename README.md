@@ -103,14 +103,16 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Test coverage 80%
     - [ ] Known issues have been resolved or marked
 4. Future
-    - [ ] Overleaf notifications
+    - [ ] View of commit history with differences between files
+    - [ ] Preloading of TeX files during installation
     - [ ] TeX Distribution selection
     - [ ] Import files from URL (Zotero)
-    - [ ] Preloading of TeX files during installation
     - [ ] Help pages
-    - [ ] Multi-language support
-    - [ ] Rich text editor
+    - [ ] Browser extension support
     - [ ] Plugin support
+    - [ ] Rich text editor
+    - [ ] Multi-language support
+    - [ ] Overleaf notifications
 
 ## Installation
 
