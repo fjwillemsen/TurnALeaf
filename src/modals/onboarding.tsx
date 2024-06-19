@@ -1,5 +1,8 @@
 import { Stepper, Button, Group } from '@mantine/core'
-import { GitTokenOverleaf } from '@/components/settings/settings'
+import {
+    GitTokenOverleaf,
+    GitAuthorDetails,
+} from '@/components/settings/settings'
 import { useState } from 'react'
 
 export function Onboarding() {
@@ -36,7 +39,7 @@ export function Onboarding() {
                     description="Verify email"
                     allowStepSelect={shouldAllowSelectStep(1)}
                 >
-                    Step 2 content: Verify email
+                    <GitAuthorDetails />
                 </Stepper.Step>
                 <Stepper.Step
                     label="Final step"

@@ -16,8 +16,7 @@ export default function MainPage() {
     window.padding = (padding = 'md') => {
         setAppPadding(padding)
     }
-    // TODO remove
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const openOnboardingModal = () =>
         modals.openModal({
             size: 'auto',
@@ -39,7 +38,7 @@ export default function MainPage() {
     useEffect(() => {
         const fetchOnboarded = async () => {
             if ((await settings.onboarded) == false) {
-                // openOnboardingModal()
+                openOnboardingModal()
             }
         }
         fetchOnboarded().catch(console.error)

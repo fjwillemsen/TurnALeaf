@@ -7,6 +7,14 @@ export abstract class AbstractSettings {
 
     abstract set onboarded(b: boolean)
 
+    abstract get git_author_name(): string
+
+    abstract set git_author_name(name: string)
+
+    abstract get git_author_email(): string
+
+    abstract set git_author_email(email: string)
+
     abstract get git_token_overleaf(): string
 
     abstract set git_token_overleaf(token: string)
