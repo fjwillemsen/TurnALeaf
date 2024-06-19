@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import { AppShell, Burger, Group, NavLink, Skeleton, Text } from '@mantine/core'
+import { AppShell, Burger, Group, NavLink, Skeleton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { modals } from '@mantine/modals'
-import { Onboarding } from '../modals/onboarding'
+import { openContextModal } from '@mantine/modals'
 import { Logo } from '../components/logo/logo'
 import { Settings } from '@/settingshandler'
 import AppRouter from '../router'
@@ -12,19 +11,23 @@ export default function MainPage() {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false)
     const [appPadding, setAppPadding] = useState('md')
-    // const modals = useModals()
+
     window.padding = (padding = 'md') => {
         setAppPadding(padding)
     }
 
     useEffect(() => {
+        settings.onboarded = false
         const fetchOnboarded = async () => {
             if ((await settings.onboarded) == false) {
                 await new Promise((r) => setTimeout(r, 1000))
-                modals.open({
+
+                openContextModal({
+                    modal: 'onboarding',
+                    title: 'One-time setup',
                     size: 'auto',
                     centered: true,
-                    transitionProps: { transition: 'fade', duration: 200 },
+                    transitionProps: { transition: 'fade', duration: 250 },
                     trapFocus: true,
                     withCloseButton: false,
                     closeOnClickOutside: false,
@@ -32,11 +35,9 @@ export default function MainPage() {
                     onClose: () => {
                         settings.onboarded = true
                     },
-                    children: (
-                        <>
-                            <Onboarding />
-                        </>
-                    ),
+                    innerProps: {
+                        modalBody: '',
+                    },
                 })
             }
         }

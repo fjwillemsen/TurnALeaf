@@ -4,13 +4,23 @@ import {
     GitAuthorDetails,
 } from '@/components/settings/settings'
 import { useState } from 'react'
+import { ContextModalProps } from '@mantine/modals'
 
-export function Onboarding() {
+export const OnboardingModal = ({
+    context,
+    id,
+    innerProps,
+}: ContextModalProps<{ modalBody: string }>) => {
     const [active, setActive] = useState(1)
     const [highestStepVisited, setHighestStepVisited] = useState(active)
+    const numSteps = 2
 
     const handleStepChange = (nextStep: number) => {
-        const isOutOfBounds = nextStep > 3 || nextStep < 0
+        const isOutOfBounds = nextStep > numSteps || nextStep < 0
+
+        if (nextStep > numSteps) {
+            context.closeContextModal(id)
+        }
 
         if (isOutOfBounds) {
             return
@@ -36,21 +46,14 @@ export function Onboarding() {
                 </Stepper.Step>
                 <Stepper.Step
                     label="Second step"
-                    description="Verify email"
+                    description="Set Git commit author details"
                     allowStepSelect={shouldAllowSelectStep(1)}
                 >
                     <GitAuthorDetails />
                 </Stepper.Step>
-                <Stepper.Step
-                    label="Final step"
-                    description="Get full access"
-                    allowStepSelect={shouldAllowSelectStep(2)}
-                >
-                    Step 3 content: Get full access
-                </Stepper.Step>
 
                 <Stepper.Completed>
-                    Completed, click back button to get to previous step
+                    Done, welcome to TurnALeaf!
                 </Stepper.Completed>
             </Stepper>
 
@@ -58,11 +61,12 @@ export function Onboarding() {
                 <Button
                     variant="default"
                     onClick={() => handleStepChange(active - 1)}
+                    disabled={active <= 0}
                 >
                     Back
                 </Button>
                 <Button onClick={() => handleStepChange(active + 1)}>
-                    Next step
+                    {active < numSteps ? 'Next step' : 'Finish'}
                 </Button>
             </Group>
         </>
