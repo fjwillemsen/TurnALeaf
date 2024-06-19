@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { AppShell, Burger, Group, NavLink, Skeleton } from '@mantine/core'
+import { AppShell, Burger, Group, NavLink, Skeleton, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useModals } from '@mantine/modals'
+import { modals } from '@mantine/modals'
 import { Onboarding } from '../modals/onboarding'
 import { Logo } from '../components/logo/logo'
 import { Settings } from '@/settingshandler'
@@ -12,33 +12,32 @@ export default function MainPage() {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false)
     const [appPadding, setAppPadding] = useState('md')
-    const modals = useModals()
+    // const modals = useModals()
     window.padding = (padding = 'md') => {
         setAppPadding(padding)
     }
 
-    const openOnboardingModal = () =>
-        modals.openModal({
-            size: 'auto',
-            centered: true,
-            transitionProps: { transition: 'fade', duration: 200 },
-            trapFocus: true,
-            withCloseButton: false,
-            closeOnClickOutside: false,
-            closeOnEscape: false,
-            onClose: () => {
-                settings.onboarded = true
-            },
-            children: (
-                <>
-                    <Onboarding />
-                </>
-            ),
-        })
     useEffect(() => {
         const fetchOnboarded = async () => {
             if ((await settings.onboarded) == false) {
-                openOnboardingModal()
+                await new Promise((r) => setTimeout(r, 1000))
+                modals.open({
+                    size: 'auto',
+                    centered: true,
+                    transitionProps: { transition: 'fade', duration: 200 },
+                    trapFocus: true,
+                    withCloseButton: false,
+                    closeOnClickOutside: false,
+                    closeOnEscape: false,
+                    onClose: () => {
+                        settings.onboarded = true
+                    },
+                    children: (
+                        <>
+                            <Onboarding />
+                        </>
+                    ),
+                })
             }
         }
         fetchOnboarded().catch(console.error)
