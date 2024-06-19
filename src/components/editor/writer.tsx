@@ -37,7 +37,9 @@ const Writer = forwardRef(({ filepath }: WriterProps, ref) => {
             value = editorRef.current?.getValue()
         }
         awaitingSaving = true
-        await project?.set_file_contents(filepath, encoder.encode(value))
+        await project
+            ?.set_file_contents(filepath, encoder.encode(value))
+            .catch(handleIPCError)
         awaitingSaving = false
     }
 

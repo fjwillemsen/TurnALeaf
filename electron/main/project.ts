@@ -129,6 +129,18 @@ const get_auth: AuthCallback = (url: string) => {
 }
 
 /**
+ * Get the Git author details from settings.
+ *
+ * @returns Object - the author object.
+ */
+function get_author() {
+    return {
+        name: '',
+        email: '',
+    }
+}
+
+/**
  * Function to clone a project locally, or return an existing project.
  *
  * @param string - the project URL as a string
@@ -263,14 +275,12 @@ export class Project extends AbstractProject {
      */
     async get_files_to_add(): Promise<string[]> {
         const dir = this.id.directory
-        const files = await git.listFiles({ fs, dir: dir })
-        const files_status = await Promise.all(
-            files.map((file) => git.status({ fs, dir: dir, filepath: file }))
-        )
-        const unstaged_files = files.filter((file, index) =>
-            ['*modified', '*deleted', '*added'].includes(files_status[index])
-        )
-        return unstaged_files
+        const FILE = 0,
+            WORKDIR = 2,
+            STAGE = 3
+        return (await git.statusMatrix({ fs, dir }))
+            .filter((row) => row[WORKDIR] !== row[STAGE])
+            .map((row) => row[FILE])
     }
 
     /**
@@ -332,7 +342,7 @@ export class Project extends AbstractProject {
     }
 
     async push_project_update(): Promise<string | void> {
-        const dir = this.id.directory
+        const dir = await this.id.directory
         const filesToAdd = await this.get_files_to_add()
         if (filesToAdd.length > 0) {
             git.add({
@@ -340,13 +350,29 @@ export class Project extends AbstractProject {
                 dir: dir,
                 filepath: filesToAdd,
             })
-            const sha = await git.commit({
+        }
+        const message = await this.get_generated_commit_message(false)
+        let sha = undefined
+        if (message.length > 0) {
+            sha = await git.commit({
                 fs,
                 dir: dir,
-                message: await this.get_generated_commit_message(false),
+                message: message,
+                author: await get_author(),
             })
             console.log('SHA: ', sha)
-            return sha
+        }
+        const push = await git.push({
+            fs,
+            http,
+            dir: dir,
+            remote: 'origin',
+            ref: 'master',
+            onAuth: get_auth,
+        })
+        console.log('push result: ', push)
+        if (sha !== undefined) {
+            return 'hi'
         }
     }
 
@@ -384,7 +410,7 @@ export class Project extends AbstractProject {
     ): Promise<void | string> {
         return fs.promises
             .writeFile(path.join(this.id.directory, filepath), contents)
-            .then(this.push_project_update)
+            .then(() => this.push_project_update())
     }
 }
 

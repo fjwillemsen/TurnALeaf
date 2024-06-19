@@ -17,16 +17,16 @@ The following roadmap outlines what will be released after which features are im
         - [x] Interface library (React)
         - [x] Styling language (PostCSS / Tailwind)
         - [x] Component library (Mantine)
-    - [ ] Base functionality <!-- 17/20 -->
+    - [ ] Base functionality <!-- 18/20 -->
         - [x] Modular interface
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
-        - [ ] Git integration <!-- 5/7 -->
+        - [ ] Git integration <!-- 6/7 -->
             - [x] Git client
             - [x] Overleaf authentication token support & storage
             - [x] Creating projects
             - [ ] Pulling updates
-            - [ ] Pushing updates
+            - [x] Pushing updates
             - [x] Removing projects
             - [x] Human-readable commit messages
         - [x] Projects overview
@@ -44,7 +44,7 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Downloadable
         - [ ] Installable
         - [ ] Updatable
-    - [x] Icon
+    - [ ] Icon
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
