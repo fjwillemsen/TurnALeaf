@@ -53,7 +53,7 @@ The following roadmap outlines what will be released after which features are im
         - [x] Double execution of IPC calls
         - [x] Working input files for TeX compilation
         - [x] Off-center modals
-2. Extra features & non-functional requirements (0.1.0 / beta release | 7%) <!-- 2/28 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 6%) <!-- 2/31 -->
     - [ ] Alpha release tested
     - [ ] File operations <!-- 0/5 -->
         - [ ] Creation
@@ -75,7 +75,11 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Sections panel
     - [ ] Polished layout
     - [ ] Landing page
-    - [ ] Settings menu
+    - [ ] Settings menu <!-- 0/4 -->
+        - [ ] Authentication token
+        - [ ] Commit author identification
+        - [ ] Auto-saving & updating settings
+        - [ ] Resetting local storage
     - [ ] Onboarding tutorial
     - [ ] Test coverage 60%
     - [ ] CI/CD pipeline <!-- 2/4 -->
