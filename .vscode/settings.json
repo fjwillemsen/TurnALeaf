@@ -27,4 +27,9 @@
     ],
     "jsdoc-generator.includeAsync": false,
     "jsdoc-generator.includeExport": false,
+    "markdown.extension.toc.omittedFromToc": {
+        "README.md": [
+            "## Contents"
+        ]
+    },
 }

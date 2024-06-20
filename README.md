@@ -6,11 +6,39 @@
   <i>It's time to turn over a new leaf.</i>
 </h3>
 
+## Contents
+
+-   [Motivation](#motivation)
+-   [Roadmap](#roadmap)
+-   [Installation](#installation)
+-   [Usage](#usage)
+    -   [Design Choices](#design-choices)
+    -   [Ideas, questions, contributions?](#ideas-questions-contributions)
+-   [Developer Info](#developer-info)
+    -   [Setting up the development environment](#setting-up-the-development-environment)
+    -   [Directory structure](#directory-structure)
+    -   [Debugging](#debugging)
+
+## Motivation
+
+Overleaf is a fantastic tool for writing LaTeX documents that is widely used among academics.
+The main reasons it's so great:
+
+-   user-friendly (i.e. has good defaults so you won't have to pick between a bazillion compilers and editors)
+-   accessible (i.e. does not require installing five gigabytes of compiler + dependencies)
+-   shareable (i.e. collaboration is easy with built-in review and chat)
+
+However, it has one big problem: **it relies on an internet connection** to do the heavy lifting of compiling on a server, and any minor internet disruption breaks the editing process.
+That is far from ideal when working on the plane on your way to a conference or on the train back home.
+
+With the success of [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf), which wrapped the website in a native app and added native OS integration, the most requested feature was to be able to work online.
+This requires a completely different approach that is a lot more involved than extending a website and wrapping it.
+
 ## Roadmap
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 86%) <!-- 31/36 -->
+1. Basic functionality (0.0.1 / alpha release | 80%) <!-- 32/40 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -49,11 +77,16 @@ The following roadmap outlines what will be released after which features are im
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
+    - [ ] Public GitHub repository <!-- 1/4 -->
+        - [x] Protected branches
+        - [ ] Pull request templates
+        - [ ] Issue templates
+        - [ ] Discussion boards
     - [x] Bug fixing: <!-- 3/3 -->
         - [x] Double execution of IPC calls
         - [x] Working input files for TeX compilation
         - [x] Off-center modals
-2. Extra features & non-functional requirements (0.1.0 / beta release | 6%) <!-- 2/31 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 7%) <!-- 2/29 -->
     - [ ] Alpha release tested
     - [ ] File operations <!-- 0/5 -->
         - [ ] Creation
@@ -88,10 +121,8 @@ The following roadmap outlines what will be released after which features are im
         - [x] Linting
         - [ ] Release
     - [ ] Auto-updates
-    - [ ] Issue templates
-    - [ ] GitHub discussion
     - [ ] Documentation
-3. Polishing (1.0.0 / stable release | 0%) <!-- 0/9 -->
+3. Polishing (1.0.0 / stable release | 0%) <!-- 0/10 -->
     - [ ] Beta release tested on a variety of systems
     - [ ] Project overview 'shelves' with previews
     - [ ] Auto-completion
@@ -102,6 +133,7 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Native look & feel
     - [ ] Test coverage 80%
     - [ ] Known issues have been resolved or marked
+    - [ ] Availability on HomeBrew / App Store
 4. Future
     - [ ] View of commit history with differences between files
     - [ ] Preloading of TeX files during installation
@@ -116,30 +148,15 @@ The following roadmap outlines what will be released after which features are im
 
 ## Installation
 
-Installation is as simple as `brew install turnaleaf` on Mac, or by [downloading the latest release](https://github.com/fjwillemsen/TurnALeaf/releases/latest) for Linux, Windows and Mac.
-It requires that `git` is installed on your system and you have access to Overleaf's git integration (premium feature).
+Installation is as simple as [downloading the latest release](https://github.com/fjwillemsen/TurnALeaf/releases/latest) for Mac, Linux, and Windows. HomeBrew and App Store releases are planned (see [Roadmap](#roadmap)).
+To use TurnALeaf with Overleaf, you need to have access to Overleaf's git integration (premium feature). If you don't have this, you can still use the app by for by hosting it on any Git platform (e.g. GitHub). Local file support is currently not planned, because Git is used to automatically backup your important work.
 For building from source, see [Setting up the development environment](#setting-up-the-development-environment).
-
-## Motivation
-
-Overleaf is a fantastic tool for writing LaTeX documents that is widely used among academics.
-The main reasons it's so great:
-
--   user-friendly (i.e. has good defaults so you won't have to pick between a bazillion compilers and editors)
--   accessible (i.e. does not require installing five gigabytes of compiler + dependencies)
--   shareable (i.e. collaboration is easy with built-in review and chat)
-
-However, it has one big problem: **it relies on an internet connection** to do the heavy lifting of compiling on a server, and any minor internet disruption breaks the editing process.
-That is far from ideal when working on the plane on your way to a conference or on the train back home.
-
-With the success of [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf), which wrapped the website in a native app and added native OS integration, the most requested feature was to be able to work online.
-This requires a completely different approach that is a lot more involved than extending a website and wrapping it.
 
 ## Usage
 
 TurnALeaf runs as a native web app, similar to Native Overleaf, but has a completely standalone editor and viewer built-in that functions as much like Overleaf as possible.
 The Git integration built into Overleaf allows for seamless switching between standard Overleaf and TurnALeaf's offline mode: when the "go offline" button is pressed, the latest changes are downloaded and the view is changed to the local editor and viewer.
-It uses the great [SwiftLaTeX](https://github.com/SwiftLaTeX/SwiftLaTeX) to compile LaTeX to PDF completely locally and very fast thanks to WebAssembly.
+It uses the great [SwiftLaTeX](https://github.com/SwiftLaTeX/SwiftLaTeX) to compile LaTeX to PDF locally and very fast thanks to WebAssembly. Note that an internet connection may still be required to download some files for compilation.
 When you're ready to go back online for collaborating, the "go online" button will push the changes made to Overleaf.
 
 ### Design Choices
