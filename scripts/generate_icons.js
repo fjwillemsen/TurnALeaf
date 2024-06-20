@@ -52,6 +52,18 @@ function get_radius_mask(size) {
     )
 }
 
+async function generate_icon_style(input_file, output_file, size = 1024) {
+    let i = sharp(input_file).resize(size, size)
+    i = i.composite([
+        {
+            input: get_radius_mask(size),
+            blend: 'dest-in',
+        },
+    ])
+    i.toFile(output_file)
+    return i
+}
+
 async function generate_png_sizes(
     input_file,
     output_folder,
@@ -84,8 +96,9 @@ async function generate_image_formats(input_folder, output_folder) {
 async function generate_icons(always_run = true) {
     // set the paths
     const __filename = fileURLToPath(import.meta.url)
+    const icon_src_basepath = resolve(join(__filename, '../../assets/logo'))
     const icon_src_path = resolve(
-        join(__filename, '../../assets/logo/current/logo_rounded.png')
+        join(icon_src_basepath, 'current/logo_rounded.png')
     )
     const icon_sizes_folder = resolve(
         join(__filename, '../../assets/logo/sized')
@@ -94,6 +107,12 @@ async function generate_icons(always_run = true) {
     const icon_out_path = resolve(join(__filename, '../../public/icon.png'))
     const favicon_out_path = resolve(
         join(__filename, '../../public/favicon.ico')
+    )
+
+    await generate_icon_style(
+        resolve(join(icon_src_basepath, 'current/logo_rounded_cut.png')),
+        resolve(join(icon_src_basepath, 'logo_cut_icon_gen.png')),
+        512
     )
 
     // check if the logo file has been modified after the last build
