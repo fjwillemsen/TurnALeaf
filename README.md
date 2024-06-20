@@ -10,7 +10,7 @@
 
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 83%) <!-- 30/36 -->
+1. Basic functionality (0.0.1 / alpha release | 86%) <!-- 31/36 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -45,7 +45,7 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Downloadable
         - [ ] Installable
         - [ ] Updatable
-    - [ ] Icon
+    - [x] Icon
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
