@@ -39,6 +39,8 @@
         "@tiptap/extension-link": "^2.4.0",
         "@tiptap/react": "^2.4.0",
         "@tiptap/starter-kit": "^2.4.0",
+        "@types/color-convert": "^2.0.3",
+        "color-convert": "^2.0.1",
         "electron-store": "^8.2.0",
         "electron-updater": "^6.2.1",
         "isomorphic-git": "^1.25.10",
