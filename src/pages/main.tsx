@@ -64,7 +64,7 @@ export default function MainPage() {
                         visibleFrom="sm"
                         size="sm"
                     />
-                    <Logo size={40} to={1} />
+                    <Logo size={40} type="mark" shadow={true} />
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p="md">
