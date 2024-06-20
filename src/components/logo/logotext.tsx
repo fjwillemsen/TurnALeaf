@@ -4,12 +4,13 @@ import { LogoRounded } from './logorounded'
 
 export function LogoText({ size, color, style, shadow, ...others }: LogoProps) {
     const colors = useLogoColors({ color, shadow })
+    const height = typeof size == 'number' ? size / 1.2 : size
 
     return (
         <Group>
             <LogoRounded
                 color={color}
-                size={size / 1.2}
+                size={height}
                 style={{ ...style }}
                 shadow={shadow}
                 {...others}
@@ -17,7 +18,7 @@ export function LogoText({ size, color, style, shadow, ...others }: LogoProps) {
             <p
                 style={{
                     color: colors.textcolor,
-                    height: rem(size / 1.2),
+                    height: rem(height),
                     marginLeft: '-20px',
                     fontFamily: 'fantasy',
                     ...style,
