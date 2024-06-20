@@ -29,13 +29,19 @@ The main reasons it's so great:
 -   shareable (i.e. collaboration is easy with built-in review and chat)
 
 However, it has one big problem: **it relies on an internet connection** to do the heavy lifting of compiling on a server, and any minor internet disruption breaks the editing process.
-That is far from ideal when working on the plane on your way to a conference or on the train back home.
+That is far from ideal when working on the plane on your way to a conference or on the train during your commute.
 
 With the success of [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf), which wrapped the website in a native app and added native OS integration, the most requested feature was to be able to work online.
 This requires a completely different approach that is a lot more involved than extending a website and wrapping it.
 
+Hence, introducing... TurnALeaf!
+A completely new app for writing and compiling LaTeX documents without any of the associated hurdles.
+As it runs on your own device, not only are you no longer dependent on an internet connection, you also get much tighter system integration than any website can bring.
+The best part? It's all free!
+
 ## Roadmap
 
+TurnALeaf is currently in develpment.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
 1. Basic functionality (0.0.1 / alpha release | 80%) <!-- 32/40 -->
@@ -88,6 +94,11 @@ The following roadmap outlines what will be released after which features are im
         - [x] Off-center modals
 2. Extra features & non-functional requirements (0.1.0 / beta release | 7%) <!-- 2/29 -->
     - [ ] Alpha release tested
+    - [ ] Settings menu <!-- 0/4 -->
+        - [ ] Authentication token
+        - [ ] Commit author identification
+        - [ ] Auto-saving & updating settings
+        - [ ] Resetting local storage
     - [ ] File operations <!-- 0/5 -->
         - [ ] Creation
         - [ ] Moving files
@@ -108,11 +119,6 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Sections panel
     - [ ] Polished layout
     - [ ] Landing page
-    - [ ] Settings menu <!-- 0/4 -->
-        - [ ] Authentication token
-        - [ ] Commit author identification
-        - [ ] Auto-saving & updating settings
-        - [ ] Resetting local storage
     - [ ] Onboarding tutorial
     - [ ] Test coverage 60%
     - [ ] CI/CD pipeline <!-- 2/4 -->
@@ -155,12 +161,13 @@ For building from source, see [Setting up the development environment](#setting-
 ## Usage
 
 TurnALeaf runs as a native web app, similar to Native Overleaf, but has a completely standalone editor and viewer built-in that functions as much like Overleaf as possible.
-The Git integration built into Overleaf allows for seamless switching between standard Overleaf and TurnALeaf's offline mode: when the "go offline" button is pressed, the latest changes are downloaded and the view is changed to the local editor and viewer.
-It uses the great [SwiftLaTeX](https://github.com/SwiftLaTeX/SwiftLaTeX) to compile LaTeX to PDF locally and very fast thanks to WebAssembly. Note that an internet connection may still be required to download some files for compilation.
-When you're ready to go back online for collaborating, the "go online" button will push the changes made to Overleaf.
+The Git integration built into Overleaf allows for seamless switching between TurnALeaf and Overleaf. <!--: when the "go offline" button is pressed, the latest changes are downloaded and the view is changed to the local editor and viewer.-->
+Under the hood, TurnALeaf uses [SwiftLaTeX](https://github.com/SwiftLaTeX/SwiftLaTeX) to compile LaTeX to PDF locally and very fast thanks to WebAssembly. Note that an internet connection may still be required to download some files for compilation.
+Edits are automatically saved to both your system and the remote server, meaning you won't have to worry about losing your work.
 
 ### Design Choices
 
+For those interested, this project involved a lot of design decisions.
 One of the most difficult choices was in picking between Electron and a more native approach, Tauri being the most popular.
 On the one hand, the small bundle size, performance, self-updater and tight embedding in the OS provided by Tauri was very appealing.
 On the other, Electron remains massively popular, well-documented and, most importantly, provides a consistent experience across platforms because of the bundled browser.
@@ -171,7 +178,7 @@ To provide a standalone, Node-compatible git implementation, [isomorphic git](ht
 ### Ideas, questions, contributions?
 
 Please use the [GitHub discussions page](https://github.com/fjwillemsen/TurnALeaf/issues) for this project. This allows others to read and chime in as well.
-If you'd like to contribute, great! Feel free to submit pull requests via forks.
+If you'd like to contribute, great! Feel free to submit pull requests via forks. Please note that pull requests on features in active development (see [Roadmap](#roadmap)) will likely not be accepted; to avoid duplicate work, first open an issue.
 
 ---
 
@@ -186,11 +193,12 @@ If you're looking to contribute, please make sure to check the issues and discus
 3. Run `npm install` to install the dependencies.
 4. Run `npm run dev` to run the development server.
 5. Make sure to run `npm test` and `npm run e2e` before submitting a pull request. Linting and formatting are automatically checked, pull requests not compliant are rejected. Make sure to provide and update documentation and docstrings where necessary. The TSDoc format is used.
+6. VSCode is the recommended editor; a workspace settings file and recommended extensions are included.
 
 ### Directory structure
 
 Common React application structure, just with an `electron` folder on top.  
-Files in this folder will be separated from your React application and built into `dist-electron`.
+Files in this folder will be separated from the React application and built into `dist-electron`.
 
 ```tree
 ├── electron                                 Electron-related code
@@ -203,7 +211,7 @@ Files in this folder will be separated from your React application and built int
 │       └── {app_name}_{version}.{ext}       Installer for the application
 │
 ├── public                                   Static assets
-└── src                                      Renderer source code, your React application
+└── src                                      Renderer source code, the React application
 ```
 
 ### Debugging
