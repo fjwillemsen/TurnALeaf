@@ -1,5 +1,5 @@
 import { AbstractSettings } from '../../shared/settings'
-import { safeStorage } from 'electron'
+import { app, safeStorage } from 'electron'
 import Store from 'electron-store'
 
 const secure_string_encoding = 'latin1'
@@ -33,9 +33,11 @@ const securesettingstore = new Store<SecureSettingStoreType>()
 export class Settings extends AbstractSettings {
     constructor() {
         super()
-        if (!safeStorage.isEncryptionAvailable()) {
-            throw new Error('Settings: encryption is not available')
-        }
+        app.whenReady().then(() => {
+            if (app.isReady() && !safeStorage.isEncryptionAvailable()) {
+                throw new Error('Settings: encryption is not available')
+            }
+        })
     }
 
     /**
