@@ -101,7 +101,7 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Resetting local storage
     - [ ] File operations <!-- 0/5 -->
         - [ ] Creation
-        - [ ] Moving files
+        - [ ] Moving & renaming files
         - [ ] Lazy recursive folder expansion
         - [ ] Deletion
         - [ ] Merging
