@@ -44,7 +44,7 @@ The best part? It's all free!
 TurnALeaf is currently in develpment.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 85%) <!-- 34/40 -->
+1. Basic functionality (0.0.1 / alpha release | 88%) <!-- 35/40 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -83,9 +83,9 @@ The following roadmap outlines what will be released after which features are im
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-    - [ ] Public GitHub repository <!-- 3/4 -->
+    - [x] Public GitHub repository <!-- 4/4 -->
         - [x] Protected branches
-        - [ ] Pull request templates
+        - [x] Pull request templates
         - [x] Issue templates
         - [x] Discussion boards
     - [x] Bug fixing: <!-- 3/3 -->
