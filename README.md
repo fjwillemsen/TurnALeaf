@@ -8,16 +8,16 @@
 
 ## Contents
 
--   [Motivation](#motivation)
--   [Roadmap](#roadmap)
--   [Installation](#installation)
--   [Usage](#usage)
-    -   [Design Choices](#design-choices)
-    -   [Ideas, questions, contributions?](#ideas-questions-contributions)
--   [Developer Info](#developer-info)
-    -   [Setting up the development environment](#setting-up-the-development-environment)
-    -   [Directory structure](#directory-structure)
-    -   [Debugging](#debugging)
+- [Motivation](#motivation)
+- [Roadmap](#roadmap)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Design Choices](#design-choices)
+  - [Ideas, questions, contributions?](#ideas-questions-contributions)
+- [Developer Info](#developer-info)
+  - [Setting up the development environment](#setting-up-the-development-environment)
+  - [Directory structure](#directory-structure)
+  - [Debugging](#debugging)
 
 ## Motivation
 
@@ -44,7 +44,7 @@ The best part? It's all free!
 TurnALeaf is currently in develpment.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 80%) <!-- 32/40 -->
+1. Basic functionality (0.0.1 / alpha release | 85%) <!-- 34/40 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -83,11 +83,11 @@ The following roadmap outlines what will be released after which features are im
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-    - [ ] Public GitHub repository <!-- 1/4 -->
+    - [ ] Public GitHub repository <!-- 3/4 -->
         - [x] Protected branches
         - [ ] Pull request templates
-        - [ ] Issue templates
-        - [ ] Discussion boards
+        - [x] Issue templates
+        - [x] Discussion boards
     - [x] Bug fixing: <!-- 3/3 -->
         - [x] Double execution of IPC calls
         - [x] Working input files for TeX compilation
@@ -116,6 +116,7 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Selecting main file
         - [ ] Only overwrite changed files
         - [ ] Log with warnings and errors
+    - [ ] Editor top-bar navigation between sections and subsections as in VSCode
     - [ ] Sections panel
     - [ ] Polished layout
     - [ ] Landing page
@@ -145,6 +146,7 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Preloading of TeX files during installation
     - [ ] TeX Distribution selection
     - [ ] Import files from URL (Zotero)
+    - [ ] Moving between editor and PDF location
     - [ ] Help pages
     - [ ] Browser extension support
     - [ ] Plugin support

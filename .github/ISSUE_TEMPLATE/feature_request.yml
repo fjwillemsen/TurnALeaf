@@ -1,0 +1,33 @@
+name: Feature
+description: Request a feature
+title: '[Feature]: '
+labels: ['enhancement', 'needs triage']
+body:
+    - type: checkboxes
+      attributes:
+          label: Is there an existing issue or discussion for this?
+          description: Please search to see if an issue or discussion already exists for the feature you're requesting.
+          options:
+              - label: I have searched the existing issues and discussions
+                required: true
+    - type: textarea
+      attributes:
+          label: Current Behavior
+          description: A concise description of what you're experiencing.
+      validations:
+          required: false
+    - type: textarea
+      attributes:
+          label: Desired Behavior
+          description: A description of what you would like to happen.
+      validations:
+          required: true
+    - type: textarea
+      attributes:
+          label: Anything else?
+          description: |
+              Screenshots? Links? References? Anything that can help clarify your idea.  
+
+              Tip: You can attach images or other files by clicking this area to highlight it and then dragging files in.
+      validations:
+          required: false
