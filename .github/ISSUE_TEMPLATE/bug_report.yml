@@ -40,9 +40,11 @@ body:
               examples:
                 - **OS**: Ubuntu
                 - **Version**: 20.04
+                - **App version**: 1.0.3
           value: |
               - OS:
               - Version:
+              - App version:
           render: markdown
       validations:
           required: true

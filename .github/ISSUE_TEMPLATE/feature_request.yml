@@ -26,7 +26,7 @@ body:
       attributes:
           label: Anything else?
           description: |
-              Screenshots? Links? References? Anything that can help clarify your idea.  
+              Mockups? Links? References? Anything that can help clarify your idea.  
 
               Tip: You can attach images or other files by clicking this area to highlight it and then dragging files in.
       validations:
