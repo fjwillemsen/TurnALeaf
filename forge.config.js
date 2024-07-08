@@ -4,6 +4,8 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses'
 export default {
     packagerConfig: {
         asar: true,
+        icon: 'build/icon',
+        extraResource: ['./src/assets/logo_nobg.png'],
     },
     rebuildConfig: {},
     makers: [
@@ -17,7 +19,11 @@ export default {
         },
         {
             name: '@electron-forge/maker-deb',
-            config: {},
+            config: {
+                options: {
+                    icon: 'build/icon.png',
+                },
+            },
         },
         {
             name: '@electron-forge/maker-rpm',

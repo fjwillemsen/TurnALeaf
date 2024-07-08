@@ -1,6 +1,9 @@
+import { join } from 'path'
 import { rem } from '@mantine/core'
 import { LogoProps, useLogoColors } from './use-logo-colors'
-import logo from '../../assets/logo_nobg.png'
+// const logo = await import(join(process.resourcesPath, 'logo_nobg.png'))
+// import logo from '../../assets/logo_nobg.png'
+import logo from 'logo_nobg.png'
 
 export function LogoRounded({
     size,
