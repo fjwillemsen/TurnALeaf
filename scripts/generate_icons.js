@@ -3,14 +3,7 @@
 import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-import {
-    existsSync,
-    mkdirSync,
-    rmSync,
-    statSync,
-    renameSync,
-    copyFileSync,
-} from 'fs'
+import { existsSync, mkdirSync, rmSync, statSync, renameSync, copyFileSync } from 'fs'
 import icongen from 'icon-gen'
 import { Buffer } from 'buffer'
 
@@ -38,18 +31,16 @@ const sizes = Array.from(
         Array.from(icongen_options['ico']['sizes']).concat(
             icongen_options['icns']['sizes']
                 .concat(icongen_options['favicon']['pngSizes'])
-                .concat(icongen_options['favicon']['icoSizes'])
-        )
-    )
+                .concat(icongen_options['favicon']['icoSizes']),
+        ),
+    ),
 )
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function get_radius_mask(size) {
     const radius = Math.round(size / 6.4) // 1:6.4 for Apple as per https://stackoverflow.com/a/3813969
-    return Buffer.from(
-        `<svg><rect x="0" y="0" width="${size}" height="${size}" rx="${radius}" ry="${radius}" /></svg>`
-    )
+    return Buffer.from(`<svg><rect x="0" y="0" width="${size}" height="${size}" rx="${radius}" ry="${radius}" /></svg>`)
 }
 
 async function generate_icon_style(input_file, output_file, size = 1024) {
@@ -64,11 +55,7 @@ async function generate_icon_style(input_file, output_file, size = 1024) {
     return i
 }
 
-async function generate_png_sizes(
-    input_file,
-    output_folder,
-    apply_radius = false
-) {
+async function generate_png_sizes(input_file, output_folder, apply_radius = false) {
     await sizes.forEach((size) => {
         let i = sharp(input_file).resize(size, size)
         if (apply_radius) {
@@ -97,34 +84,25 @@ async function generate_icons(always_run = true) {
     // set the paths
     const __filename = fileURLToPath(import.meta.url)
     const icon_src_basepath = resolve(join(__filename, '../../assets/logo'))
-    const icon_src_path = resolve(
-        join(icon_src_basepath, 'current/logo_rounded.png')
-    )
-    const icon_sizes_folder = resolve(
-        join(__filename, '../../assets/logo/sized')
-    )
+    const icon_src_path = resolve(join(icon_src_basepath, 'current/logo_rounded.png'))
+    const icon_sizes_folder = resolve(join(__filename, '../../assets/logo/sized'))
     const build_out_path = resolve(join(__filename, '../../build'))
     const icon_out_path = resolve(join(__filename, '../../public/icon.png'))
-    const favicon_out_path = resolve(
-        join(__filename, '../../public/favicon.ico')
-    )
+    const favicon_out_path = resolve(join(__filename, '../../public/favicon.ico'))
 
     await generate_icon_style(
         resolve(join(icon_src_basepath, 'current/logo_rounded_cut.png')),
         resolve(join(icon_src_basepath, 'logo_cut_icon_gen.png')),
-        512
+        512,
     )
 
     // check if the logo file has been modified after the last build
     if (
         always_run == false &&
         existsSync(favicon_out_path) &&
-        new Date(statSync(icon_src_path).mtime) <
-            new Date(statSync(favicon_out_path).mtime)
+        new Date(statSync(icon_src_path).mtime) < new Date(statSync(favicon_out_path).mtime)
     ) {
-        console.warn(
-            'Logo file not modified since last build, skipping regeneration of icons'
-        )
+        console.warn('Logo file not modified since last build, skipping regeneration of icons')
         return
     }
 
@@ -143,18 +121,9 @@ async function generate_icons(always_run = true) {
     await generate_image_formats(icon_sizes_folder, icon_sizes_folder)
 
     // move the icons to their destination
-    renameSync(
-        join(icon_sizes_folder, 'icon.icns'),
-        join(build_out_path, 'icon.icns')
-    )
-    renameSync(
-        join(icon_sizes_folder, 'icon.ico'),
-        join(build_out_path, 'icon.ico')
-    )
-    renameSync(
-        join(icon_sizes_folder, '256.png'),
-        join(build_out_path, 'icon.png')
-    )
+    renameSync(join(icon_sizes_folder, 'icon.icns'), join(build_out_path, 'icon.icns'))
+    renameSync(join(icon_sizes_folder, 'icon.ico'), join(build_out_path, 'icon.ico'))
+    renameSync(join(icon_sizes_folder, '256.png'), join(build_out_path, 'icon.png'))
     renameSync(join(icon_sizes_folder, 'favicon.ico'), favicon_out_path)
     copyFileSync(icon_src_path, icon_out_path)
 }

@@ -3,10 +3,7 @@
     "typescript.tsc.autoDetect": "off",
     "json.schemas": [
         {
-            "fileMatch": [
-                "/*electron-builder.json5",
-                "/*electron-builder.json"
-            ],
+            "fileMatch": ["/*electron-builder.json5", "/*electron-builder.json"],
             "url": "https://json.schemastore.org/electron-builder"
         }
     ],
@@ -22,14 +19,10 @@
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "editor.codeActionsOnSave": [
-        "source.fixAll"
-    ],
+    "editor.codeActionsOnSave": ["source.fixAll"],
     "jsdoc-generator.includeAsync": false,
     "jsdoc-generator.includeExport": false,
     "markdown.extension.toc.omittedFromToc": {
-        "README.md": [
-            "## Contents"
-        ]
-    },
+        "README.md": ["## Contents"]
+    }
 }

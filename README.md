@@ -14,10 +14,6 @@
 - [Usage](#usage)
   - [Design Choices](#design-choices)
   - [Ideas, questions, contributions?](#ideas-questions-contributions)
-- [Developer Info](#developer-info)
-  - [Setting up the development environment](#setting-up-the-development-environment)
-  - [Directory structure](#directory-structure)
-  - [Debugging](#debugging)
 
 ## Motivation
 
@@ -41,10 +37,10 @@ The best part? It's all free!
 
 ## Roadmap
 
-TurnALeaf is currently in develpment.
+TurnALeaf is currently in development.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 88%) <!-- 35/40 -->
+1. Basic functionality (0.0.1 / alpha release | 86%) <!-- 36/42 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -75,7 +71,8 @@ The following roadmap outlines what will be released after which features are im
             - [x] Retrieval from frontend on PDF render
         - [x] User settings storage
         - [x] Onboarding
-    - [ ] Distribution <!-- 0/3 -->
+    - [ ] Distribution <!-- 1/4 -->
+        - [x] Electron-Forge implementation
         - [ ] Downloadable
         - [ ] Installable
         - [ ] Updatable
@@ -88,10 +85,11 @@ The following roadmap outlines what will be released after which features are im
         - [x] Pull request templates
         - [x] Issue templates
         - [x] Discussion boards
-    - [x] Bug fixing: <!-- 3/3 -->
+    - [x] Bug fixing: <!-- 3/4 -->
         - [x] Double execution of IPC calls
         - [x] Working input files for TeX compilation
         - [x] Off-center modals
+        - [ ] Reconfigure ESLint & TSDoc
 2. Extra features & non-functional requirements (0.1.0 / beta release | 7%) <!-- 2/29 -->
     - [ ] Alpha release tested
     - [ ] Settings menu <!-- 0/4 -->
@@ -173,49 +171,12 @@ For those interested, this project involved a lot of design decisions.
 One of the most difficult choices was in picking between Electron and a more native approach, Tauri being the most popular.
 On the one hand, the small bundle size, performance, self-updater and tight embedding in the OS provided by Tauri was very appealing.
 On the other, Electron remains massively popular, well-documented and, most importantly, provides a consistent experience across platforms because of the bundled browser.
-As this is one of the reasons the previous project [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf) was hard to maintain, Electron was chosen. Vite is used as a bundler (for hot-reload speed), React as the interface library, and PostCSS / Tailwind as the styling language (for convenience), based on the [electron-vite-react template](https://github.com/electron-vite/electron-vite-react).
+As this is one of the reasons the previous project [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf) was hard to maintain, Electron was chosen. Vite is used as a bundler (for hot-reload speed), React as the interface library, and PostCSS / Tailwind as the styling language (for convenience), based on a [electron-forge-react-vite boilerplate](https://github.com/flaviodelgrosso/electron-forge-react-vite-boilerplate).
 [Mantine](https://mantine.dev/) is used as the UI component library.
 To provide a standalone, Node-compatible git implementation, [isomorphic git](https://www.npmjs.com/package/isomorphic-git) is used.
 
 ### Ideas, questions, contributions?
 
-Please use the [GitHub discussions page](https://github.com/fjwillemsen/TurnALeaf/issues) for this project. This allows others to read and chime in as well.
+Please use the [GitHub discussions page](https://github.com/fjwillemsen/TurnALeaf/discussions) for this project. This allows others to read and chime in as well.
 If you'd like to contribute, great! Feel free to submit pull requests via forks. Please note that pull requests on features in active development (see [Roadmap](#roadmap)) will likely not be accepted; to avoid duplicate work, first open an issue.
-
----
-
-## Developer Info
-
-If you're looking to contribute, please make sure to check the issues and discussions to avoid duplicates, and make sure the tests are passed before submitting a pull request.
-
-### Setting up the development environment
-
-1. Open your terminal and `cd` to wherever you want to build TurnALeaf.
-2. Recursively clone this repository (to include the submodules) with `git clone --recurse-submodules https://github.com/fjwillemsen/TurnALeaf.git`.
-3. Run `npm install` to install the dependencies.
-4. Run `npm run dev` to run the development server.
-5. Make sure to run `npm test` and `npm run e2e` before submitting a pull request. Linting and formatting are automatically checked, pull requests not compliant are rejected. Make sure to provide and update documentation and docstrings where necessary. The TSDoc format is used.
-6. VSCode is the recommended editor; a workspace settings file and recommended extensions are included.
-
-### Directory structure
-
-Common React application structure, just with an `electron` folder on top.  
-Files in this folder will be separated from the React application and built into `dist-electron`.
-
-```tree
-├── electron                                 Electron-related code
-│   ├── main                                 Main-process source code
-│   └── preload                              Preload-scripts source code
-│
-├── release                                  Generated after production build, contains executables
-│   └── {version}
-│       ├── {os}-{os_arch}                   Contains unpacked application executable
-│       └── {app_name}_{version}.{ext}       Installer for the application
-│
-├── public                                   Static assets
-└── src                                      Renderer source code, the React application
-```
-
-### Debugging
-
-![electron-vite-react-debug.gif](/electron-vite-react-debug.gif)
+Be sure to check the [contributing guidelines](./CONTRIBUTING.md) for more practical information.
