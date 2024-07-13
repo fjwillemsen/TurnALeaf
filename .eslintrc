@@ -9,7 +9,8 @@
         "dist/",
         "build/",
         "coverage/",
-        "/config"
+        "/config",
+        "public/"
     ],
     "plugins": [
         "prettier"
