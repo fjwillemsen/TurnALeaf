@@ -174,6 +174,7 @@ On the other, Electron remains massively popular, well-documented and, most impo
 As this is one of the reasons the previous project [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf) was hard to maintain, Electron was chosen. Vite is used as a bundler (for hot-reload speed), React as the interface library, and PostCSS / Tailwind as the styling language (for convenience), based on a [electron-forge-react-vite boilerplate](https://github.com/flaviodelgrosso/electron-forge-react-vite-boilerplate).
 [Mantine](https://mantine.dev/) is used as the UI component library.
 To provide a standalone, Node-compatible git implementation, [isomorphic git](https://www.npmjs.com/package/isomorphic-git) is used.
+Between [Electron-Forge](https://www.electronforge.io) and [Electron-Builder](https://www.electron.build), `electron-forge` is used, the reasons for which are well summarized [here](https://stackoverflow.com/a/43024627).
 
 ### Ideas, questions, contributions?
 
