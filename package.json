@@ -48,7 +48,7 @@
         "@mantine/form": "^7.11.1",
         "@mantine/hooks": "^7.11.1",
         "@mantine/modals": "^7.11.1",
-        "@mantine/notifications": "^7.11.1",
+        "@mantine/notifications": "^7.11.2",
         "@monaco-editor/react": "^4.6.0",
         "@tabler/icons-react": "^3.10.0",
         "@types/color-convert": "^2.0.3",
