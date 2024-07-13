@@ -63,8 +63,8 @@ const MenuItems: Electron.MenuItemConstructorOptions[] = [
         submenu: [
             {
                 id: MenuChannels.OPEN_GITHUB_PROFILE,
-                label: 'flaviodelgrosso',
-                click: emitEvent(MenuChannels.OPEN_GITHUB_PROFILE, 'flaviodelgrosso'),
+                label: 'fjwillemsen',
+                click: emitEvent(MenuChannels.OPEN_GITHUB_PROFILE, 'fjwillemsen'),
             },
         ],
     },

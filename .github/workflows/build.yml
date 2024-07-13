@@ -1,18 +1,18 @@
-name: Build
+name: Test Package
 
 on:
     push:
         branches: [main]
         paths-ignore:
-            - "**.md"
-            - "**.spec.js"
-            - ".idea"
-            - ".vscode"
-            - ".dockerignore"
-            - "Dockerfile"
-            - ".gitignore"
-            - ".github/**"
-            - "!.github/workflows/build.yml"
+            - 'scripts/*'
+            - 'concept_files/*'
+            - '**.md'
+            - '.vscode'
+            - '.vite'
+            - 'Dockerfile'
+            - '.gitignore'
+            - '.github/**'
+            - '!.github/workflows/build.yml'
 
 jobs:
     build:
@@ -34,14 +34,7 @@ jobs:
             - name: Install Dependencies
               run: npm install
 
-            - name: Build Release Files
-              run: npm run build
+            - name: Test App
+              run: npm run make
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Upload Artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: release_on_${{ matrix. os }}
-                  path: release/
-                  retention-days: 5
