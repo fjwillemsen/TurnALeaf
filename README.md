@@ -1,19 +1,19 @@
 # TurnALeaf: a fully offline, native Overleaf with seamless switching
 
 <h3 align="center">
-  <img style="width: 200px" src="assets/logo/logo_cut_icon_gen.png" />
+  <img style="width: 200px" src="concept_files/logo/logo_cut_icon_gen.png" />
   </br>
   <i>It's time to turn over a new leaf.</i>
 </h3>
 
 ## Contents
 
-- [Motivation](#motivation)
-- [Roadmap](#roadmap)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Design Choices](#design-choices)
-  - [Ideas, questions, contributions?](#ideas-questions-contributions)
+-   [Motivation](#motivation)
+-   [Roadmap](#roadmap)
+-   [Installation](#installation)
+-   [Usage](#usage)
+    -   [Design Choices](#design-choices)
+    -   [Ideas, questions, contributions?](#ideas-questions-contributions)
 
 ## Motivation
 
