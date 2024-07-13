@@ -8,12 +8,12 @@
 
 ## Contents
 
--   [Motivation](#motivation)
--   [Roadmap](#roadmap)
--   [Installation](#installation)
--   [Usage](#usage)
-    -   [Design Choices](#design-choices)
-    -   [Ideas, questions, contributions?](#ideas-questions-contributions)
+- [Motivation](#motivation)
+- [Roadmap](#roadmap)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Design Choices](#design-choices)
+  - [Ideas, questions, contributions?](#ideas-questions-contributions)
 
 ## Motivation
 
@@ -40,7 +40,7 @@ The best part? It's all free!
 TurnALeaf is currently in development.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 86%) <!-- 36/42 -->
+1. Basic functionality (0.0.1 / alpha release | 90%) <!-- 38/42 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -71,10 +71,10 @@ The following roadmap outlines what will be released after which features are im
             - [x] Retrieval from frontend on PDF render
         - [x] User settings storage
         - [x] Onboarding
-    - [ ] Distribution <!-- 1/4 -->
+    - [ ] Distribution <!-- 3/4 -->
         - [x] Electron-Forge implementation
-        - [ ] Downloadable
-        - [ ] Installable
+        - [x] Downloadable
+        - [x] Installable
         - [ ] Updatable
     - [x] Icon
     - [x] Formatting

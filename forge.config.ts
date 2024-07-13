@@ -65,6 +65,18 @@ const config: ForgeConfig = {
             [FuseV1Options.OnlyLoadAppFromAsar]: true,
         }),
     ],
+    publishers: [
+        {
+            name: '@electron-forge/publisher-github',
+            config: {
+                repository: {
+                    owner: 'fjwillemsen',
+                    name: 'TurnALeaf',
+                },
+                prerelease: true,
+            },
+        },
+    ],
 }
 
 export default config
