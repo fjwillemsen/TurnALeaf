@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
+import { updateElectronApp } from 'update-electron-app'
 
 import { createAppWindow } from './appWindow'
 
@@ -15,6 +16,9 @@ app.whenReady().then(() => {
     installExtension(REACT_DEVELOPER_TOOLS)
         .then((name) => console.info(`Added Extension:  ${name}`))
         .catch((err) => console.info('An error occurred: ', err))
+    updateElectronApp({
+        updateInterval: '1 hour',
+    })
 })
 
 /**

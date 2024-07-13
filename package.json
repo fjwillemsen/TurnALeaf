@@ -63,7 +63,8 @@
     "react-resizable-panels": "^2.0.20",
     "react-router-dom": "^6.24.1",
     "swiftlatex": "https://github.com/ducaale/SwiftLaTeX/releases/download/v1.0.0-experimental-9902734/swiftlatex-1.0.0-experimental-9902734.tgz",
-    "tailwindcss": "^3.4.4"
+    "tailwindcss": "^3.4.4",
+    "update-electron-app": "^3.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.4.0",
