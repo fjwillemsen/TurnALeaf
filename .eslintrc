@@ -2,7 +2,7 @@
     "env": {
         "browser": true,
         "es6": true,
-        "node": true,
+        "node": true
     },
     "ignorePatterns": [
         "node_modules/",
@@ -13,7 +13,9 @@
         "public/"
     ],
     "plugins": [
-        "prettier"
+        "prettier",
+        "@typescript-eslint/eslint-plugin",
+        "eslint-plugin-tsdoc"
     ],
     "extends": [
         "eslint:recommended",
@@ -26,10 +28,14 @@
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:react/recommended",
-        "plugin:jsx-a11y/recommended",
+        "plugin:jsx-a11y/recommended"
     ],
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
     "rules": {
+        "tsdoc/syntax": "error",
         "no-console": [
             "off",
             {
@@ -58,9 +64,9 @@
                 "newlines-between": "always",
                 "alphabetize": {
                     "order": "asc",
-                    "caseInsensitive": true,
-                },
-            },
+                    "caseInsensitive": true
+                }
+            }
         ],
         "jsx-a11y/no-noninteractive-element-interactions": [
             "error",
@@ -72,8 +78,8 @@
                     "onKeyPress",
                     "onKeyDown",
                     "onKeyUp"
-                ],
-            },
+                ]
+            }
         ],
         "import/default": "off",
         "import/no-named-as-default-member": "off",
@@ -85,26 +91,20 @@
             {
                 "argsIgnorePattern": "^_",
                 "varsIgnorePattern": "^_",
-                "caughtErrorsIgnorePattern": "^_",
-            },
+                "caughtErrorsIgnorePattern": "^_"
+            }
         ],
         "@typescript-eslint/ban-types": [
             "error",
             {
                 "types": {
-                    "Function": false,
-                },
-            },
+                    "Function": false
+                }
+            }
         ],
-        "@typescript-eslint/explicit-function-return-type": [
-            "off"
-        ],
-        "@typescript-eslint/explicit-module-boundary-types": [
-            "off"
-        ],
-        "@typescript-eslint/no-empty-function": [
-            "off"
-        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-empty-function": "warn",
         "@typescript-eslint/no-explicit-any": [
             "warn",
             {
@@ -115,16 +115,16 @@
             "error",
             {},
             {
-                "usePrettierrc": true,
-            },
-        ],
+                "usePrettierrc": true
+            }
+        ]
     },
     "settings": {
         "import/resolver": {
-            "typescript": {},
+            "typescript": {}
         },
         "react": {
-            "version": "detect",
-        },
-    },
+            "version": "detect"
+        }
+    }
 }
