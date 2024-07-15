@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
 
-import { SettingsChannels } from './channels/settingsChannels'
+import { ProjectIDChannels, ProjectChannels } from '@channels/projectChannels'
+import { SettingsChannels } from '@channels/settingsChannels'
 
 const versions: Record<string, unknown> = {}
 
@@ -86,24 +87,24 @@ contextBridge.exposeInMainWorld('settings', {
 
 // --------- Expose ProjectID API to the Renderer process ---------
 contextBridge.exposeInMainWorld('projectID', {
-    makeHash: (url: string) => ipcRenderer.invoke('projectid:make_hash', url),
-    existsLocally: (url: string) => ipcRenderer.invoke('projectid:exists_locally', url),
-    getProjectDir: (url: string) => ipcRenderer.invoke('projectid:get_project_dir', url),
+    makeHash: (url: string) => ipcRenderer.invoke(ProjectIDChannels.MAKE_HASH, url),
+    existsLocally: (url: string) => ipcRenderer.invoke(ProjectIDChannels.EXISTS_LOCALLY, url),
+    getProjectDir: (url: string) => ipcRenderer.invoke(ProjectIDChannels.GET_PROJECT_DIR, url),
 })
 
 // --------- Expose Project API to the Renderer process ---------
 contextBridge.exposeInMainWorld('project', {
-    hashToURL: (hash: string) => ipcRenderer.invoke('project:hash_to_url', hash),
-    create: (url: string, overwrite: boolean) => ipcRenderer.invoke('project:create', url, overwrite),
-    getNames: () => ipcRenderer.invoke('project:get_names'),
-    getName: (hash: string) => ipcRenderer.invoke('project:get_name', hash),
-    setName: (hash: string, name: string) => ipcRenderer.invoke('project:set_name', hash, name),
-    get_update: (hash: string) => ipcRenderer.invoke('project:get_update', hash),
+    hashToURL: (hash: string) => ipcRenderer.invoke(ProjectChannels.HASH_TO_URL, hash),
+    create: (url: string, overwrite: boolean) => ipcRenderer.invoke(ProjectChannels.CREATE, url, overwrite),
+    getNames: () => ipcRenderer.invoke(ProjectChannels.GET_NAMES),
+    getName: (hash: string) => ipcRenderer.invoke(ProjectChannels.GET_NAME, hash),
+    setName: (hash: string, name: string) => ipcRenderer.invoke(ProjectChannels.SET_NAME, hash, name),
+    get_update: (hash: string) => ipcRenderer.invoke(ProjectChannels.GET_UPDATE, hash),
     push_update: (hash: string) => ipcRenderer.invoke('project:push_name', hash),
-    delete: (hash: string) => ipcRenderer.invoke('project:delete', hash),
-    getFiles: (hash: string) => ipcRenderer.invoke('project:get_files', hash),
+    delete: (hash: string) => ipcRenderer.invoke(ProjectChannels.DELETE, hash),
+    getFiles: (hash: string) => ipcRenderer.invoke(ProjectChannels.GET_FILES, hash),
     getFileContents: (hash: string, filepath: string) =>
-        ipcRenderer.invoke('project:get_file_contents', hash, filepath),
+        ipcRenderer.invoke(ProjectChannels.GET_FILE_CONTENTS, hash, filepath),
     setFileContents: (hash: string, filepath: string, contents: Uint8Array) =>
-        ipcRenderer.invoke('project:set_file_contents', hash, filepath, contents),
+        ipcRenderer.invoke(ProjectChannels.SET_FILE_CONTENTS, hash, filepath, contents),
 })

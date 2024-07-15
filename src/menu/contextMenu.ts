@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 
-import { ClickHandler } from 'src/webContents'
+import { ClickHandler } from '@/webContents'
 
 export interface IMenuItem {
     readonly id?: string

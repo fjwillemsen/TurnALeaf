@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron'
 
-import { SettingsChannels } from '../channels/settingsChannels'
-import { settings } from '../settings'
+import { SettingsChannels } from '@channels/settingsChannels'
+import { settings } from '@/settings'
 
 export const registerSettingsIpc = () => {
     ipcMain.handle(SettingsChannels.GET_ONBOARDED, () => {

@@ -7,8 +7,8 @@ import Store from 'electron-store'
 import git, { AuthCallback } from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
 
-import { settings } from './settings'
-import { AbstractProject, AbstractProjectID } from './shared/project'
+import { settings } from '@/settings'
+import { AbstractProject, AbstractProjectID } from '@shared/project'
 
 // import type { Dirent } from 'fs'
 

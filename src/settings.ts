@@ -2,7 +2,7 @@ import { safeStorage } from 'electron'
 
 import Store from 'electron-store'
 
-import { AbstractSettings } from './shared/settings'
+import { AbstractSettings } from '@shared/settings'
 
 const secure_string_encoding = 'latin1'
 
