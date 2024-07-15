@@ -4,11 +4,11 @@ import path from 'path'
 import Store from 'electron-store'
 import windowStateKeeper from 'electron-window-state'
 
+import appMenu from '@/menu/appMenu'
+import { registerWindowStateChangedEvents } from '@/windowState'
 import { registerMenuIpc } from '@ipc/menuIPC'
 import { registerProjectIpc } from '@ipc/projectIPC'
 import { registerSettingsIpc } from '@ipc/settingsIPC'
-import appMenu from '@/menu/appMenu'
-import { registerWindowStateChangedEvents } from '@/windowState'
 
 Store.initRenderer()
 

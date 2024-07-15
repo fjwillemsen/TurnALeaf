@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron'
 
-import { ProjectIDChannels, ProjectChannels } from '@channels/projectChannels'
 import { get_project, get_project_names, create_project, ProjectID } from '@/project'
+import { ProjectIDChannels, ProjectChannels } from '@channels/projectChannels'
 
 export const registerProjectIpc = () => {
     // ProjectID API

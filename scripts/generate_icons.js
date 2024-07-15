@@ -1,11 +1,12 @@
 // Pre-build script to generate the icons and place them in the correct directories
 // const icongen = require('icon-gen')
+import { Buffer } from 'buffer'
+import { existsSync, mkdirSync, rmSync, statSync, renameSync, copyFileSync } from 'fs'
 import { join, resolve } from 'path'
 import { fileURLToPath } from 'url'
-import sharp from 'sharp'
-import { existsSync, mkdirSync, rmSync, statSync, renameSync, copyFileSync } from 'fs'
+
 import icongen from 'icon-gen'
-import { Buffer } from 'buffer'
+import sharp from 'sharp'
 
 // input options
 const icongen_options = {

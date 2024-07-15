@@ -1,5 +1,5 @@
-import { MenuChannels } from '@channels/menuChannels'
 import { emitEvent } from '@/webContents'
+import { MenuChannels } from '@channels/menuChannels'
 
 const MenuItems: Electron.MenuItemConstructorOptions[] = [
     {
