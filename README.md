@@ -40,7 +40,7 @@ The best part? It's all free!
 TurnALeaf is currently in development.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 93%) <!-- 41/44 -->
+1. Basic functionality (0.0.1 / alpha release | 95%) <!-- 41/43 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -85,13 +85,12 @@ The following roadmap outlines what will be released after which features are im
         - [x] Pull request templates
         - [x] Issue templates
         - [x] Discussion boards
-    - [x] Bug fixing: <!-- 5/6 -->
+    - [x] Bug fixing: <!-- 5/5 -->
         - [x] Double execution of IPC calls
         - [x] Working input files for TeX compilation
         - [x] Off-center modals
         - [x] Reconfigure ESLint & TSDoc
-        - [ ] Debug: Fix breakpoint issue
-        - [x] Implement project channels
+        - [x] Fix useMediaQuery issue
 2. Extra features & non-functional requirements (0.1.0 / beta release | 7%) <!-- 2/29 -->
     - [ ] Alpha release tested
     - [ ] Settings menu <!-- 0/4 -->

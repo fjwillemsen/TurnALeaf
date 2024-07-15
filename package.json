@@ -17,7 +17,7 @@
     "validate-and-build": "npm-run-all --parallel check-types check-format lint build",
     "validate": "npm-run-all --parallel check-types && lint-staged",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
-    "format": "npm run prettier -- --write",
+    "format": "eslint . --fix",
     "lint": "eslint .",
     "clean": "rimraf node_modules .vite package-lock.json yarn.lock",
     "postinstall": "husky init && cp node_modules/swiftlatex/dist/swift*.js node_modules/swiftlatex/dist/*.wasm public",
@@ -42,8 +42,8 @@
     "url": "https://github.com/fjwillemsen/TurnALeaf"
   },
   "dependencies": {
-    "@aperturerobotics/chonky": "^0.3.0",
-    "@aperturerobotics/chonky-icon-fontawesome": "^0.3.0",
+    "@aperturerobotics/chonky": "^0.2.8",
+    "@aperturerobotics/chonky-icon-fontawesome": "^0.2.8",
     "@mantine/core": "^7.11.2",
     "@mantine/form": "^7.11.2",
     "@mantine/hooks": "^7.11.2",
