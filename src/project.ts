@@ -375,6 +375,7 @@ export class Project extends AbstractProject {
         }
 
         // compare the last local and remote commit hashes
+        // console.warn(`remote: ${res.fetchHead}, local: ${last_hash}`)
         return res.fetchHead != last_hash
     }
 

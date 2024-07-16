@@ -80,7 +80,7 @@ export default function ProjectPage() {
         get_project(hash!)
             .then((p) => {
                 setProject(p)
-                console.log(p.get_project_update())
+                console.warn(p.get_project_update())
             })
             .catch(handleIPCError)
     }, [])

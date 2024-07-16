@@ -1,6 +1,7 @@
-import { AppShell, Burger, Group, NavLink, Skeleton } from '@mantine/core'
+import { AppShell, Burger, Group, NavLink, Skeleton, ActionIcon, Tooltip, Space } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { openContextModal } from '@mantine/modals'
+import { IconArrowNarrowDown, IconArrowMergeBoth } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 
 import { Logo } from '@components/logo/logo'
@@ -43,7 +44,7 @@ export default function MainPage() {
 
     return (
         <AppShell
-            header={{ height: 60 }}
+            header={{ height: 40 }}
             navbar={{
                 width: 300,
                 breakpoint: 'sm',
@@ -52,10 +53,45 @@ export default function MainPage() {
             padding={appPadding}
         >
             <AppShell.Header>
-                <Group h='100%' px='md'>
-                    <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom='sm' size='sm' />
-                    <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom='sm' size='sm' />
-                    <Logo size={40} type='mark' shadow={true} />
+                {/* <Grid justify='space-between' align='stretch'>
+                    <Grid.Col span={2}>
+                        <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom='sm' size='sm' />
+                        <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom='sm' size='sm' />
+                        <Logo size={40} type='mark' shadow={true} />
+                    </Grid.Col>
+                    <Grid.Col span={2}>
+                        <Tooltip label='Apply changes from online'>
+                            <ActionIcon>
+                                <IconArrowNarrowDown />
+                            </ActionIcon>
+                        </Tooltip>
+                        <Tooltip label='Merge changes with online'>
+                            <ActionIcon>
+                                <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
+                            </ActionIcon>
+                        </Tooltip>
+                    </Grid.Col>
+                </Grid> */}
+
+                <Group gap='xl' grow>
+                    <Group px='md'>
+                        <Space w='xl' />
+                        <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom='sm' />
+                        <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom='sm' />
+                        <Logo size={30} type='mark' shadow={true} />
+                    </Group>
+                    <Group px='md' justify='flex-end'>
+                        <Tooltip label='Apply changes from online'>
+                            <ActionIcon>
+                                <IconArrowNarrowDown />
+                            </ActionIcon>
+                        </Tooltip>
+                        <Tooltip label='Merge changes with online'>
+                            <ActionIcon>
+                                <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
+                            </ActionIcon>
+                        </Tooltip>
+                    </Group>
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p='md'>
