@@ -2,11 +2,13 @@ import { AppShell, Burger, Group, NavLink, Skeleton, ActionIcon, Tooltip, Space 
 import { useDisclosure } from '@mantine/hooks'
 import { openContextModal } from '@mantine/modals'
 import { IconArrowNarrowDown, IconArrowMergeBoth } from '@tabler/icons-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createContext } from 'react'
 
 import { Logo } from '@components/logo/logo'
 import AppRouter from '@ui/router'
 import { Settings } from '@ui/settingshandler'
+
+export const StatusbarContext = createContext({ statusButtonUpdateApply: [], statusButtonUpdateMerge: [] })
 
 export default function MainPage() {
     const settings = new Settings()
@@ -14,9 +16,17 @@ export default function MainPage() {
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false)
     const [appPadding, setAppPadding] = useState('md')
 
+    // statusbar
+    const [buttonUpdateApply, setButtonUpdateApply] = useState({ display: false, loading: false, callback: null })
+    const [buttonUpdateMerge, setButtonUpdateMerge] = useState({ display: false, loading: false, callback: null })
+
     window.padding = (padding = 'md') => {
         setAppPadding(padding)
     }
+
+    useEffect(() => {
+        console.error(`buttonUpdateApply to ${buttonUpdateApply.display}, loading: ${buttonUpdateApply.loading}`)
+    }, [buttonUpdateApply])
 
     useEffect(() => {
         const fetchOnboarded = async () => {
@@ -53,26 +63,6 @@ export default function MainPage() {
             padding={appPadding}
         >
             <AppShell.Header>
-                {/* <Grid justify='space-between' align='stretch'>
-                    <Grid.Col span={2}>
-                        <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom='sm' size='sm' />
-                        <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom='sm' size='sm' />
-                        <Logo size={40} type='mark' shadow={true} />
-                    </Grid.Col>
-                    <Grid.Col span={2}>
-                        <Tooltip label='Apply changes from online'>
-                            <ActionIcon>
-                                <IconArrowNarrowDown />
-                            </ActionIcon>
-                        </Tooltip>
-                        <Tooltip label='Merge changes with online'>
-                            <ActionIcon>
-                                <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
-                            </ActionIcon>
-                        </Tooltip>
-                    </Grid.Col>
-                </Grid> */}
-
                 <Group gap='xl' grow>
                     <Group px='md'>
                         <Space w='xl' />
@@ -81,16 +71,28 @@ export default function MainPage() {
                         <Logo size={30} type='mark' shadow={true} />
                     </Group>
                     <Group px='md' justify='flex-end'>
-                        <Tooltip label='Apply changes from online'>
-                            <ActionIcon>
-                                <IconArrowNarrowDown />
-                            </ActionIcon>
-                        </Tooltip>
-                        <Tooltip label='Merge changes with online'>
-                            <ActionIcon>
-                                <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
-                            </ActionIcon>
-                        </Tooltip>
+                        {buttonUpdateApply.display && (
+                            <Tooltip label='Apply changes from online'>
+                                <ActionIcon
+                                    loading={buttonUpdateApply.loading}
+                                    disabled={buttonUpdateApply.loading}
+                                    onClick={buttonUpdateApply.callback}
+                                >
+                                    <IconArrowNarrowDown />
+                                </ActionIcon>
+                            </Tooltip>
+                        )}
+                        {buttonUpdateMerge.display && (
+                            <Tooltip label='Merge changes with online'>
+                                <ActionIcon
+                                    loading={buttonUpdateMerge.loading}
+                                    disabled={buttonUpdateMerge.loading}
+                                    onClick={buttonUpdateMerge.callback}
+                                >
+                                    <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
+                                </ActionIcon>
+                            </Tooltip>
+                        )}
                     </Group>
                 </Group>
             </AppShell.Header>
@@ -105,7 +107,14 @@ export default function MainPage() {
                     ))}
             </AppShell.Navbar>
             <AppShell.Main>
-                <AppRouter></AppRouter>
+                <StatusbarContext.Provider
+                    value={{
+                        statusButtonUpdateApply: [buttonUpdateApply, setButtonUpdateApply],
+                        statusButtonUpdateMerge: [buttonUpdateMerge, setButtonUpdateMerge],
+                    }}
+                >
+                    <AppRouter></AppRouter>
+                </StatusbarContext.Provider>
             </AppShell.Main>
         </AppShell>
     )

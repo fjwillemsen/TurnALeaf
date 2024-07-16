@@ -1,4 +1,4 @@
-import { useState, createRef, useRef, RefObject, useEffect, createContext } from 'react'
+import { useState, createRef, useRef, RefObject, useEffect, createContext, useContext } from 'react'
 import { ImperativePanelHandle, Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 import { useParams } from 'react-router-dom'
 
@@ -9,6 +9,7 @@ import { handleIPCError } from '@components/general/errorhandler'
 import { Project, get_project } from '@ui/projecthandler'
 
 import styles from './project.module.css'
+import { StatusbarContext } from './main'
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3).fill(null).map(() => createRef())
 
@@ -65,6 +66,9 @@ export const ProjectOpenedFileContext = createContext<
 >(['main.tex', undefined])
 
 export default function ProjectPage() {
+    const { statusButtonUpdateApply } = useContext(StatusbarContext)
+    const [, setButtonUpdateApply] = statusButtonUpdateApply
+    // const [buttonUpdateMerge, setButtonUpdateMerge] = statusButtonUpdateMerge
     const { hash } = useParams()
     const [project, setProject] = useState<Project>()
     const [openFiles, setOpenFiles] = useState<Set<string>>(new Set())
@@ -78,9 +82,19 @@ export default function ProjectPage() {
     useEffect(() => {
         window.padding('0')
         get_project(hash!)
-            .then((p) => {
+            .then(async (p) => {
                 setProject(p)
-                console.warn(p.get_project_update())
+                setButtonUpdateApply({
+                    display: await p.get_project_update(),
+                    loading: false,
+                    callback: async () => {
+                        setButtonUpdateApply({ display: true, loading: true, callback: null })
+                        // await p.apply_project_update()
+                        await setTimeout(() => {
+                            setButtonUpdateApply({ display: false, loading: false, callback: null })
+                        }, 1500)
+                    },
+                })
             })
             .catch(handleIPCError)
     }, [])
