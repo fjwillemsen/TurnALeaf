@@ -104,7 +104,7 @@ export class Project extends AbstractProject {
         return new ProjectID(new URL(this._id_url_string))
     }
 
-    async get_project_update(): Promise<void> {
+    async get_project_update(): Promise<boolean> {
         return await window.project.getUpdate(await this.id.hash)
     }
 

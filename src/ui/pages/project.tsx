@@ -78,7 +78,10 @@ export default function ProjectPage() {
     useEffect(() => {
         window.padding('0')
         get_project(hash!)
-            .then((p) => setProject(p))
+            .then((p) => {
+                setProject(p)
+                console.log(p.get_project_update())
+            })
             .catch(handleIPCError)
     }, [])
 

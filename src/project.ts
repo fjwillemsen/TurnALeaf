@@ -321,8 +321,41 @@ export class Project extends AbstractProject {
         })
     }
 
-    async get_project_update(): Promise<void> {
-        // git.fetch({ fs, http })
+    /**
+     * Function to get the last commit in the local log.
+     *
+     * @returns Promise<string> - the hash as a string.
+     */
+    async get_last_hash(): Promise<string> {
+        const dir = await this.id.directory
+        const log = await git.log({ fs, dir: dir, depth: 1 })
+        if (log.length == 0) {
+            return undefined
+        }
+        return log[0].oid
+    }
+
+    async get_project_update(): Promise<boolean> {
+        const dir = await this.id.directory
+        const res = await git.fetch({
+            fs,
+            http,
+            dir: dir,
+            depth: 1,
+            singleBranch: true,
+            tags: false,
+            onAuth: get_auth,
+        })
+        console.warn(res)
+        if (res.fetchHead == undefined) {
+            return false
+        }
+        const last_hash = await this.get_last_hash()
+        if (last_hash == undefined) {
+            return true
+        }
+        console.warn(`res.fetchHead: ${res.fetchHead}, last_hash: ${last_hash}`)
+        return res.fetchHead != last_hash
     }
 
     async push_project_update(): Promise<string | void> {
@@ -356,7 +389,7 @@ export class Project extends AbstractProject {
         })
         console.log('push result: ', push)
         if (sha !== undefined) {
-            return 'hi'
+            return sha
         }
     }
 

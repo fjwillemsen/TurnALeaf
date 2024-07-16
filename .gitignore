@@ -21,6 +21,8 @@ pids
 *.seed
 *.pid.lock
 .DS_Store
+Icon?
+![iI]con[_a-zA-Z0-9]
 
 # Editor directories and files
 .vscode/.debug.env

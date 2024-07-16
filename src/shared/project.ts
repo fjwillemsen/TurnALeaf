@@ -137,7 +137,7 @@ export abstract class AbstractProject {
      * Fetch updates to the project from remote.
      *
      */
-    abstract get_project_update(): Promise<void>
+    abstract get_project_update(): Promise<boolean>
 
     /**
      * Push updates of the project to remote.
