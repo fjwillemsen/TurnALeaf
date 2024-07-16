@@ -9,7 +9,7 @@ import { handleIPCError } from '@components/general/errorhandler'
 import { Project, get_project } from '@ui/projecthandler'
 
 import styles from './project.module.css'
-import { StatusbarContext } from './main'
+import { StatusbarContext, StatusbarButtonState } from './main'
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3).fill(null).map(() => createRef())
 
@@ -84,17 +84,16 @@ export default function ProjectPage() {
         get_project(hash!)
             .then(async (p) => {
                 setProject(p)
-                setButtonUpdateApply({
-                    display: await p.get_project_update(),
-                    loading: false,
-                    callback: async () => {
-                        setButtonUpdateApply({ display: true, loading: true, callback: null })
+
+                setButtonUpdateApply(
+                    new StatusbarButtonState(await p.get_project_update(), false, async () => {
+                        setButtonUpdateApply(new StatusbarButtonState(true, true, () => {}))
                         // await p.apply_project_update()
                         await setTimeout(() => {
-                            setButtonUpdateApply({ display: false, loading: false, callback: null })
+                            setButtonUpdateApply(new StatusbarButtonState(false, false, () => {}))
                         }, 1500)
-                    },
-                })
+                    }),
+                )
             })
             .catch(handleIPCError)
     }, [])

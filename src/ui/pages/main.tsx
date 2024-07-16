@@ -8,6 +8,18 @@ import { Logo } from '@components/logo/logo'
 import AppRouter from '@ui/router'
 import { Settings } from '@ui/settingshandler'
 
+export class StatusbarButtonState {
+    display: boolean
+    loading: boolean
+    callback: () => void
+
+    constructor(display = false, loading = false, callback = () => {}) {
+        this.display = display
+        this.loading = loading
+        this.callback = callback
+    }
+}
+
 export const StatusbarContext = createContext({ statusButtonUpdateApply: [], statusButtonUpdateMerge: [] })
 
 export default function MainPage() {
@@ -17,8 +29,8 @@ export default function MainPage() {
     const [appPadding, setAppPadding] = useState('md')
 
     // statusbar
-    const [buttonUpdateApply, setButtonUpdateApply] = useState({ display: false, loading: false, callback: null })
-    const [buttonUpdateMerge, setButtonUpdateMerge] = useState({ display: false, loading: false, callback: null })
+    const [buttonUpdateApply, setButtonUpdateApply] = useState(new StatusbarButtonState())
+    const [buttonUpdateMerge, setButtonUpdateMerge] = useState(new StatusbarButtonState())
 
     window.padding = (padding = 'md') => {
         setAppPadding(padding)
