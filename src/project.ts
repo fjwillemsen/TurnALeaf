@@ -1,6 +1,7 @@
 import { createHash } from 'crypto'
 import fs from 'fs'
 import path from 'path'
+import { setTimeout } from 'timers/promises'
 
 import { FileArray } from '@aperturerobotics/chonky'
 import Store from 'electron-store'
@@ -225,6 +226,9 @@ export class ProjectID extends AbstractProjectID {
  * The Project class, exposing functions relating to the handling of locally existing projects.
  */
 export class Project extends AbstractProject {
+    executing_commit = false
+    executing_push = false
+
     constructor(id: ProjectID) {
         super(id)
     }
@@ -327,6 +331,10 @@ export class Project extends AbstractProject {
      * @returns Promise<string> - the hash as a string.
      */
     async get_last_hash(): Promise<string> {
+        // if we're concurrently executing a commit, wait until it is resolved
+        if (this.executing_commit == true) {
+            await setTimeout(100)
+        }
         const dir = await this.id.directory
         const log = await git.log({ fs, dir: dir, depth: 1 })
         if (log.length == 0) {
@@ -336,6 +344,22 @@ export class Project extends AbstractProject {
     }
 
     async get_project_update(): Promise<boolean> {
+        // if we're concurrently executing a push, wait until it is resolved
+        if (this.executing_push == true) {
+            await setTimeout(500)
+        }
+        // if the push is still not resolved, return false
+        if (this.executing_push == true) {
+            return false
+        }
+
+        // get the hash of the last local commit
+        const last_hash = await this.get_last_hash()
+        if (last_hash == undefined) {
+            return true
+        }
+
+        // get the hash of the last remote commit
         const dir = await this.id.directory
         const res = await git.fetch({
             fs,
@@ -346,19 +370,17 @@ export class Project extends AbstractProject {
             tags: false,
             onAuth: get_auth,
         })
-        console.warn(res)
-        if (res.fetchHead == undefined) {
+        if (res == undefined || res.fetchHead == undefined) {
             return false
         }
-        const last_hash = await this.get_last_hash()
-        if (last_hash == undefined) {
-            return true
-        }
-        console.warn(`res.fetchHead: ${res.fetchHead}, last_hash: ${last_hash}`)
+
+        // compare the last local and remote commit hashes
         return res.fetchHead != last_hash
     }
 
     async push_project_update(): Promise<string | void> {
+        this.executing_push = true
+        this.executing_commit = true
         const dir = await this.id.directory
         const filesToAdd = await this.get_files_to_add()
         if (filesToAdd.length > 0) {
@@ -379,6 +401,7 @@ export class Project extends AbstractProject {
             })
             console.log('SHA: ', sha)
         }
+        this.executing_commit = false
         const push = await git.push({
             fs,
             http,
@@ -388,6 +411,7 @@ export class Project extends AbstractProject {
             onAuth: get_auth,
         })
         console.log('push result: ', push)
+        this.executing_push = false
         if (sha !== undefined) {
             return sha
         }

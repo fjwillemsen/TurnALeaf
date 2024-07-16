@@ -8,12 +8,12 @@
 
 ## Contents
 
-- [Motivation](#motivation)
-- [Roadmap](#roadmap)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Design Choices](#design-choices)
-  - [Ideas, questions, contributions?](#ideas-questions-contributions)
+-   [Motivation](#motivation)
+-   [Roadmap](#roadmap)
+-   [Installation](#installation)
+-   [Usage](#usage)
+    -   [Design Choices](#design-choices)
+    -   [Ideas, questions, contributions?](#ideas-questions-contributions)
 
 ## Motivation
 
@@ -40,14 +40,14 @@ The best part? It's all free!
 TurnALeaf is currently in development.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 95%) <!-- 41/43 -->
+1. Basic functionality (0.0.1 / alpha release | 98%) <!-- 42/43 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
         - [x] Interface library (React)
         - [x] Styling language (PostCSS / Tailwind)
         - [x] Component library (Mantine)
-    - [ ] Base functionality <!-- 19/21 -->
+    - [ ] Base functionality <!-- 20/21 -->
         - [x] Modular interface
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
@@ -55,7 +55,7 @@ The following roadmap outlines what will be released after which features are im
             - [x] Git client
             - [x] Overleaf authentication token support & storage
             - [x] Creating projects
-            - [ ] Fetching updates
+            - [x] Fetching updates
             - [ ] Pulling updates
             - [x] Pushing updates
             - [x] Removing projects
@@ -110,7 +110,7 @@ The following roadmap outlines what will be released after which features are im
         - [ ] View non-editable files (e.g. images)
         - [ ] Temporary file viewing on single click
     - [ ] PDF rendering <!-- 0/5 -->
-        - [ ] Use new rendering backend
+        - [ ] Use new rendering backend (Tectonic)
         - [ ] One-off TeX resource download
         - [ ] Selecting main file
         - [ ] Only overwrite changed files
@@ -122,12 +122,12 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Onboarding tutorial
     - [ ] Test coverage 60%
     - [ ] CI/CD pipeline <!-- 2/4 -->
-        - [ ] Tests
+        - [ ] Integration tests
         - [x] Build
         - [x] Linting
         - [ ] Release
     - [ ] Auto-updates
-    - [ ] Documentation
+    - [ ] Documentation (GH wiki using [typedoc-plugin-markdown](https://typedoc-plugin-markdown.org/docs))
 3. Polishing (1.0.0 / stable release | 0%) <!-- 0/10 -->
     - [ ] Beta release tested on a variety of systems
     - [ ] Project overview 'shelves' with previews
