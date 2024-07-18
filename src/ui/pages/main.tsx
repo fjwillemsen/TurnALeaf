@@ -11,16 +11,29 @@ import { Settings } from '@ui/settingshandler'
 export class StatusbarButtonState {
     display: boolean
     loading: boolean
+    icon: string
     callback: () => void
 
-    constructor(display = false, loading = false, callback = () => {}) {
+    constructor(display = false, loading = false, icon = 'down', callback = () => {}) {
         this.display = display
         this.loading = loading
+        this.icon = icon.toLowerCase()
         this.callback = callback
+    }
+
+    get_label_tooltip(): string {
+        switch (this.icon) {
+            case 'down':
+                return 'Apply changes from online'
+            case '':
+                return 'Merge changes with online'
+            default:
+                throw new Error('Invalid icon value')
+        }
     }
 }
 
-export const StatusbarContext = createContext({ statusButtonUpdateApply: [], statusButtonUpdateMerge: [] })
+export const StatusbarContext = createContext({ statusButtonUpdateApply: [] })
 
 export default function MainPage() {
     const settings = new Settings()
@@ -28,9 +41,8 @@ export default function MainPage() {
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false)
     const [appPadding, setAppPadding] = useState('md')
 
-    // statusbar
+    // statusbar buttons
     const [buttonUpdateApply, setButtonUpdateApply] = useState(new StatusbarButtonState())
-    const [buttonUpdateMerge, setButtonUpdateMerge] = useState(new StatusbarButtonState())
 
     window.padding = (padding = 'md') => {
         setAppPadding(padding)
@@ -84,24 +96,16 @@ export default function MainPage() {
                     </Group>
                     <Group px='md' justify='flex-end'>
                         {buttonUpdateApply.display && (
-                            <Tooltip label='Apply changes from online'>
+                            <Tooltip label={buttonUpdateApply.get_label_tooltip()}>
                                 <ActionIcon
                                     loading={buttonUpdateApply.loading}
                                     disabled={buttonUpdateApply.loading}
                                     onClick={buttonUpdateApply.callback}
                                 >
-                                    <IconArrowNarrowDown />
-                                </ActionIcon>
-                            </Tooltip>
-                        )}
-                        {buttonUpdateMerge.display && (
-                            <Tooltip label='Merge changes with online'>
-                                <ActionIcon
-                                    loading={buttonUpdateMerge.loading}
-                                    disabled={buttonUpdateMerge.loading}
-                                    onClick={buttonUpdateMerge.callback}
-                                >
-                                    <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
+                                    {buttonUpdateApply.icon == 'down' && <IconArrowNarrowDown />}
+                                    {buttonUpdateApply.icon == 'merge' && (
+                                        <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
+                                    )}
                                 </ActionIcon>
                             </Tooltip>
                         )}
@@ -122,7 +126,6 @@ export default function MainPage() {
                 <StatusbarContext.Provider
                     value={{
                         statusButtonUpdateApply: [buttonUpdateApply, setButtonUpdateApply],
-                        statusButtonUpdateMerge: [buttonUpdateMerge, setButtonUpdateMerge],
                     }}
                 >
                     <AppRouter></AppRouter>

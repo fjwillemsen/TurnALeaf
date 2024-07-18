@@ -68,7 +68,6 @@ export const ProjectOpenedFileContext = createContext<
 export default function ProjectPage() {
     const { statusButtonUpdateApply } = useContext(StatusbarContext)
     const [, setButtonUpdateApply] = statusButtonUpdateApply
-    // const [buttonUpdateMerge, setButtonUpdateMerge] = statusButtonUpdateMerge
     const { hash } = useParams()
     const [project, setProject] = useState<Project>()
     const [openFiles, setOpenFiles] = useState<Set<string>>(new Set())
@@ -86,11 +85,12 @@ export default function ProjectPage() {
                 setProject(p)
 
                 setButtonUpdateApply(
-                    new StatusbarButtonState(await p.get_project_update(), false, async () => {
-                        setButtonUpdateApply(new StatusbarButtonState(true, true, () => {}))
+                    new StatusbarButtonState(await p.get_project_update(), false, 'down', async () => {
+                        setButtonUpdateApply(new StatusbarButtonState(true, true))
+
                         // await p.apply_project_update()
                         await setTimeout(() => {
-                            setButtonUpdateApply(new StatusbarButtonState(false, false, () => {}))
+                            setButtonUpdateApply(new StatusbarButtonState())
                         }, 1500)
                     }),
                 )
