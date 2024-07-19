@@ -2,11 +2,11 @@ import { AppShell, Burger, Group, NavLink, Skeleton, ActionIcon, Tooltip, Space 
 import { useDisclosure } from '@mantine/hooks'
 import { openContextModal } from '@mantine/modals'
 import { IconArrowNarrowDown, IconArrowMergeBoth } from '@tabler/icons-react'
-import { useEffect, useState, createContext } from 'react'
+import { useEffect, useState, createContext, useContext } from 'react'
 
 import { Logo } from '@components/logo/logo'
+import { SettingsContext } from '@ui/App'
 import AppRouter from '@ui/router'
-import { Settings } from '@ui/settingshandler'
 
 export class StatusbarButtonState {
     display: boolean
@@ -25,7 +25,7 @@ export class StatusbarButtonState {
         switch (this.icon) {
             case 'down':
                 return 'Apply changes from online'
-            case '':
+            case 'merge':
                 return 'Merge changes with online'
             default:
                 throw new Error('Invalid icon value')
@@ -36,7 +36,7 @@ export class StatusbarButtonState {
 export const StatusbarContext = createContext({ statusButtonUpdate: [] })
 
 export default function MainPage() {
-    const settings = new Settings()
+    const [settings] = useContext(SettingsContext)
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure()
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false)
     const [appPadding, setAppPadding] = useState('md')

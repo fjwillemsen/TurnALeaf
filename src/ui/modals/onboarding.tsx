@@ -1,7 +1,7 @@
 import { Stepper, Button, Group } from '@mantine/core'
 import { hasLength, isEmail } from '@mantine/form'
 import { ContextModalProps } from '@mantine/modals'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 
 import {
     GitAuthorDetailsFormProvider,
@@ -10,9 +10,7 @@ import {
     useGitTokenOverleafForm,
 } from '@components/settings/formcontext'
 import { GitTokenOverleaf, GitAuthorDetails } from '@components/settings/settings'
-import { Settings } from '@ui/settingshandler'
-
-const settings = new Settings()
+import { SettingsContext } from '@ui/App'
 
 export const OnboardingModal = ({
     context,
@@ -21,6 +19,7 @@ export const OnboardingModal = ({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     innerProps,
 }: ContextModalProps<{ modalBody: string }>) => {
+    const [settings] = useContext(SettingsContext)
     const [active, setActive] = useState(0)
     const [currentFormValid, setCurrentFormValid] = useState(false)
     const [highestStepVisited, setHighestStepVisited] = useState(active)

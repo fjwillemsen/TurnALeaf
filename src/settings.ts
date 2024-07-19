@@ -121,4 +121,5 @@ export class Settings extends AbstractSettings {
     }
 }
 
+// single Settings instance for Electron backend
 export const settings = new Settings()

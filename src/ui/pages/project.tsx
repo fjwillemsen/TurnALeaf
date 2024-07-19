@@ -8,8 +8,8 @@ import FileBrowser from '@components/filebrowser/filebrowser'
 import { handleIPCError } from '@components/general/errorhandler'
 import { Project, get_project } from '@ui/projecthandler'
 
-import styles from './project.module.css'
 import { StatusbarContext, StatusbarButtonState } from './main'
+import styles from './project.module.css'
 
 const panelRefs: RefObject<ImperativePanelHandle>[] = new Array(3).fill(null).map(() => createRef())
 
