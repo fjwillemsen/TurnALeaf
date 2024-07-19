@@ -33,7 +33,7 @@ export class StatusbarButtonState {
     }
 }
 
-export const StatusbarContext = createContext({ statusButtonUpdateApply: [] })
+export const StatusbarContext = createContext({ statusButtonUpdate: [] })
 
 export default function MainPage() {
     const settings = new Settings()
@@ -42,15 +42,11 @@ export default function MainPage() {
     const [appPadding, setAppPadding] = useState('md')
 
     // statusbar buttons
-    const [buttonUpdateApply, setButtonUpdateApply] = useState(new StatusbarButtonState())
+    const [buttonUpdate, setButtonUpdate] = useState(new StatusbarButtonState())
 
     window.padding = (padding = 'md') => {
         setAppPadding(padding)
     }
-
-    useEffect(() => {
-        console.error(`buttonUpdateApply to ${buttonUpdateApply.display}, loading: ${buttonUpdateApply.loading}`)
-    }, [buttonUpdateApply])
 
     useEffect(() => {
         const fetchOnboarded = async () => {
@@ -95,15 +91,15 @@ export default function MainPage() {
                         <Logo size={30} type='mark' shadow={true} />
                     </Group>
                     <Group px='md' justify='flex-end'>
-                        {buttonUpdateApply.display && (
-                            <Tooltip label={buttonUpdateApply.get_label_tooltip()}>
+                        {buttonUpdate.display && (
+                            <Tooltip label={buttonUpdate.get_label_tooltip()}>
                                 <ActionIcon
-                                    loading={buttonUpdateApply.loading}
-                                    disabled={buttonUpdateApply.loading}
-                                    onClick={buttonUpdateApply.callback}
+                                    loading={buttonUpdate.loading}
+                                    disabled={buttonUpdate.loading}
+                                    onClick={buttonUpdate.callback}
                                 >
-                                    {buttonUpdateApply.icon == 'down' && <IconArrowNarrowDown />}
-                                    {buttonUpdateApply.icon == 'merge' && (
+                                    {buttonUpdate.icon == 'down' && <IconArrowNarrowDown />}
+                                    {buttonUpdate.icon == 'merge' && (
                                         <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
                                     )}
                                 </ActionIcon>
@@ -125,7 +121,7 @@ export default function MainPage() {
             <AppShell.Main>
                 <StatusbarContext.Provider
                     value={{
-                        statusButtonUpdateApply: [buttonUpdateApply, setButtonUpdateApply],
+                        statusButtonUpdate: [buttonUpdate, setButtonUpdate],
                     }}
                 >
                     <AppRouter></AppRouter>

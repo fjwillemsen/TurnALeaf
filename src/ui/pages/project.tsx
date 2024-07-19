@@ -66,8 +66,8 @@ export const ProjectOpenedFileContext = createContext<
 >(['main.tex', undefined])
 
 export default function ProjectPage() {
-    const { statusButtonUpdateApply } = useContext(StatusbarContext)
-    const [, setButtonUpdateApply] = statusButtonUpdateApply
+    const { statusButtonUpdate } = useContext(StatusbarContext)
+    const [, setButtonUpdate] = statusButtonUpdate
     const { hash } = useParams()
     const [project, setProject] = useState<Project>()
     const [openFiles, setOpenFiles] = useState<Set<string>>(new Set())
@@ -87,14 +87,14 @@ export default function ProjectPage() {
             setTimeout(checkUpdate, delay, p)
         } else {
             // if an update is available, set the status bar button
-            setButtonUpdateApply(
+            setButtonUpdate(
                 new StatusbarButtonState(true, false, 'down', async () => {
                     // set the button to loading
-                    setButtonUpdateApply(new StatusbarButtonState(true, true))
+                    setButtonUpdate(new StatusbarButtonState(true, true))
 
                     // await p.apply_project_update()
                     await setTimeout(() => {
-                        setButtonUpdateApply(new StatusbarButtonState())
+                        setButtonUpdate(new StatusbarButtonState())
                     }, 1500)
 
                     // after the update is applied, restart the recursive check for updates
