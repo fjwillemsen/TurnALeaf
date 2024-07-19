@@ -92,8 +92,9 @@ The following roadmap outlines what will be released after which features are im
         - [x] Reconfigure ESLint & TSDoc
         - [x] Fix useMediaQuery issue
 2. Extra features & non-functional requirements (0.1.0 / beta release | 7%) <!-- 2/29 -->
-    - [ ] Alpha release tested
+    - [ ] Redesigned layout
     - [ ] Settings menu <!-- 0/4 -->
+        - [ ] Rerender on settings change when necessary
         - [ ] Authentication token
         - [ ] Commit author identification
         - [ ] Auto-saving & updating settings
@@ -117,7 +118,6 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Log with warnings and errors
     - [ ] Editor top-bar navigation between sections and subsections as in VSCode
     - [ ] Sections panel
-    - [ ] Polished layout
     - [ ] Landing page
     - [ ] Onboarding tutorial
     - [ ] Test coverage 60%
@@ -128,6 +128,7 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Release
     - [ ] Auto-updates
     - [ ] Documentation (GH wiki using [typedoc-plugin-markdown](https://typedoc-plugin-markdown.org/docs))
+    - [ ] Alpha release feedback processed
 3. Polishing (1.0.0 / stable release | 0%) <!-- 0/10 -->
     - [ ] Beta release tested on a variety of systems
     - [ ] Project overview 'shelves' with previews
@@ -138,7 +139,7 @@ The following roadmap outlines what will be released after which features are im
         - [ ] Themes
         - [ ] Native look & feel
     - [ ] Test coverage 80%
-    - [ ] Known issues have been resolved or marked
+    - [ ] Known issues have been processed
     - [ ] Availability on HomeBrew / App Store
 4. Future
     - [ ] View of commit history with differences between files
