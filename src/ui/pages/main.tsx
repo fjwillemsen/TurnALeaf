@@ -33,7 +33,11 @@ export class StatusbarButtonState {
     }
 }
 
-export const StatusbarContext = createContext({ statusButtonUpdate: [] })
+type StatusbarButtons = {
+    statusButtonUpdate: [StatusbarButtonState, React.Dispatch<React.SetStateAction<StatusbarButtonState>>]
+}
+
+export const StatusbarContext = createContext<StatusbarButtons>({ statusButtonUpdate: [undefined, undefined] })
 
 export default function MainPage() {
     const [settings] = useContext(SettingsContext)
