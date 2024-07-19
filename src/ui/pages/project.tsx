@@ -78,22 +78,38 @@ export default function ProjectPage() {
         return fileviewerRef.current!.saveFiles()
     }
 
+    /** Function to check if an update is available at an interval. If so, it notifies the user. */
+    const checkUpdate = async (p: Project) => {
+        const delay = 10 * 60 * 1000 // TODO make the delay configurable in settings
+        const updateAvailable = await p.get_project_update().catch(handleIPCError)
+        if (updateAvailable == false) {
+            // set a timer for the next check
+            setTimeout(checkUpdate, delay, p)
+        } else {
+            // if an update is available, set the status bar button
+            setButtonUpdateApply(
+                new StatusbarButtonState(true, false, 'down', async () => {
+                    // set the button to loading
+                    setButtonUpdateApply(new StatusbarButtonState(true, true))
+
+                    // await p.apply_project_update()
+                    await setTimeout(() => {
+                        setButtonUpdateApply(new StatusbarButtonState())
+                    }, 1500)
+
+                    // after the update is applied, restart the recursive check for updates
+                    setTimeout(checkUpdate, delay, p)
+                }),
+            )
+        }
+    }
+
     useEffect(() => {
         window.padding('0')
         get_project(hash!)
             .then(async (p) => {
                 setProject(p)
-
-                setButtonUpdateApply(
-                    new StatusbarButtonState(await p.get_project_update(), false, 'down', async () => {
-                        setButtonUpdateApply(new StatusbarButtonState(true, true))
-
-                        // await p.apply_project_update()
-                        await setTimeout(() => {
-                            setButtonUpdateApply(new StatusbarButtonState())
-                        }, 1500)
-                    }),
-                )
+                checkUpdate(p)
             })
             .catch(handleIPCError)
     }, [])

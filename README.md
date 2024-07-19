@@ -8,12 +8,12 @@
 
 ## Contents
 
--   [Motivation](#motivation)
--   [Roadmap](#roadmap)
--   [Installation](#installation)
--   [Usage](#usage)
-    -   [Design Choices](#design-choices)
-    -   [Ideas, questions, contributions?](#ideas-questions-contributions)
+- [Motivation](#motivation)
+- [Roadmap](#roadmap)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Design Choices](#design-choices)
+  - [Ideas, questions, contributions?](#ideas-questions-contributions)
 
 ## Motivation
 
@@ -51,7 +51,7 @@ The following roadmap outlines what will be released after which features are im
         - [x] Modular interface
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
-        - [ ] Git integration <!-- 6/8 -->
+        - [ ] Git integration <!-- 7/8 -->
             - [x] Git client
             - [x] Overleaf authentication token support & storage
             - [x] Creating projects
