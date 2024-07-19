@@ -228,6 +228,7 @@ export class ProjectID extends AbstractProjectID {
 export class Project extends AbstractProject {
     executing_commit = false
     executing_push = false
+    executing_pull = false
 
     constructor(id: ProjectID) {
         super(id)
@@ -382,7 +383,7 @@ export class Project extends AbstractProject {
     async apply_project_update(): Promise<void> {
         // if there is a concurrent push, use incremental backoff to wait
         let backoff_counter = 0
-        while (this.executing_push) {
+        while (this.executing_push == true) {
             backoff_counter++
             const delay_ms = backoff_counter ** 2 * 500
             console.warn(
@@ -390,6 +391,8 @@ export class Project extends AbstractProject {
             )
             await setTimeout(delay_ms)
         }
+
+        this.executing_pull = true
 
         // use git pull to apply the update
         const dir = await this.id.directory
@@ -400,10 +403,23 @@ export class Project extends AbstractProject {
             singleBranch: true,
             onAuth: get_auth,
         })
+
+        this.executing_pull = false
         throw new Error('Method not implemented.')
     }
 
     async push_project_update(): Promise<string | void> {
+        // if there is a concurrent pull, use incremental backoff to wait
+        let backoff_counter = 0
+        while (this.executing_pull == true) {
+            backoff_counter++
+            const delay_ms = backoff_counter ** 2 * 500
+            console.warn(
+                `Pushing project update not possible while executing pull. Waiting ${delay_ms / 1000} seconds.`,
+            )
+            await setTimeout(delay_ms)
+        }
+
         this.executing_push = true
         this.executing_commit = true
         const dir = await this.id.directory
