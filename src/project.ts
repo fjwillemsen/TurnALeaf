@@ -379,6 +379,10 @@ export class Project extends AbstractProject {
         return res.fetchHead != last_hash
     }
 
+    async apply_project_update(): Promise<void> {
+        throw new Error('Method not implemented.')
+    }
+
     async push_project_update(): Promise<string | void> {
         this.executing_push = true
         this.executing_commit = true

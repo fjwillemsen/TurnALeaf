@@ -27,13 +27,14 @@ The main reasons it's so great:
 However, it has one big problem: **it relies on an internet connection** to do the heavy lifting of compiling on a server, and any minor internet disruption breaks the editing process.
 That is far from ideal when working on the plane on your way to a conference or on the train during your commute.
 
-With the success of [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf), which wrapped the website in a native app and added native OS integration, the most requested feature was to be able to work online.
+With the success of [Native Overleaf](https://github.com/fjwillemsen/NativeOverleaf), which wrapped Overleaf in a native app and added native OS integration, the most requested feature was to be able to work offline.
 This requires a completely different approach that is a lot more involved than extending a website and wrapping it.
 
 Hence, introducing... TurnALeaf!
 A completely new app for writing and compiling LaTeX documents without any of the associated hurdles.
 As it runs on your own device, not only are you no longer dependent on an internet connection, you also get much tighter system integration than any website can bring.
-The best part? It's all free!
+The best part? It's all free, and anyone can contribute ideas.
+TurnALeaf is for academics, by academics.
 
 ## Roadmap
 

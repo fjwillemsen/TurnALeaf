@@ -141,6 +141,13 @@ export abstract class AbstractProject {
     abstract get_project_update(): Promise<boolean>
 
     /**
+     * Apply an available update
+     *
+     * @returns void
+     */
+    abstract apply_project_update(): Promise<void>
+
+    /**
      * Push updates of the project to remote.
      *
      * @returns string | void - the SHA of the commit.

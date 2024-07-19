@@ -92,13 +92,12 @@ export default function ProjectPage() {
                     // set the button to loading
                     setButtonUpdate(new StatusbarButtonState(true, true))
 
-                    // await p.apply_project_update()
-                    await setTimeout(() => {
+                    // apply the update
+                    p.apply_project_update().then(() => {
+                        // after the update is applied, hide the button and restart the recursive check for updates
                         setButtonUpdate(new StatusbarButtonState())
-                    }, 1500)
-
-                    // after the update is applied, restart the recursive check for updates
-                    setTimeout(checkUpdate, delay, p)
+                        setTimeout(checkUpdate, delay, p)
+                    })
                 }),
             )
         }

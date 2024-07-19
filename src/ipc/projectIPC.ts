@@ -35,6 +35,9 @@ export const registerProjectIpc = () => {
     ipcMain.handle(ProjectChannels.GET_UPDATE, (_, hash: string) => {
         return get_project(hash)?.get_project_update()
     })
+    ipcMain.handle(ProjectChannels.APPLY_UPDATE, (_, hash: string) => {
+        return get_project(hash)?.apply_project_update()
+    })
     ipcMain.handle(ProjectChannels.PUSH_UPDATE, (_, hash: string) => {
         return get_project(hash)?.push_project_update()
     })

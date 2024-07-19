@@ -11,6 +11,7 @@ export enum ProjectChannels {
     GET_NAME = 'get_name',
     SET_NAME = 'set_name',
     GET_UPDATE = 'get_update',
+    APPLY_UPDATE = 'apply_update',
     PUSH_UPDATE = 'push_update',
     DELETE = 'delete',
     GET_FILES = 'get_files',
