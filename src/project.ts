@@ -380,6 +380,26 @@ export class Project extends AbstractProject {
     }
 
     async apply_project_update(): Promise<void> {
+        // if there is a concurrent push, use incremental backoff to wait
+        let backoff_counter = 0
+        while (this.executing_push) {
+            backoff_counter++
+            const delay_ms = backoff_counter ** 2 * 500
+            console.warn(
+                `Applpying project update not possible while executing push. Waiting ${delay_ms / 1000} seconds.`,
+            )
+            await setTimeout(delay_ms)
+        }
+
+        // use git pull to apply the update
+        const dir = await this.id.directory
+        const res = await git.pull({
+            fs,
+            http,
+            dir: dir,
+            singleBranch: true,
+            onAuth: get_auth,
+        })
         throw new Error('Method not implemented.')
     }
 
