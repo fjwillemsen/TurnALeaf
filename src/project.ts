@@ -387,7 +387,7 @@ export class Project extends AbstractProject {
             backoff_counter++
             const delay_ms = backoff_counter ** 2 * 500
             console.warn(
-                `Applpying project update not possible while executing push. Waiting ${delay_ms / 1000} seconds.`,
+                `Applying project update not possible while executing push. Waiting ${delay_ms / 1000} seconds.`,
             )
             await setTimeout(delay_ms)
         }
@@ -405,7 +405,6 @@ export class Project extends AbstractProject {
         })
 
         this.executing_pull = false
-        throw new Error('Method not implemented.')
     }
 
     async push_project_update(): Promise<string | void> {

@@ -11,6 +11,7 @@ interface WriterProps {
 
 export type SaveFileHandle = {
     saveFile: () => Promise<void>
+    refreshFile: () => Promise<void>
 }
 
 const Writer = forwardRef<SaveFileHandle, WriterProps>(({ filepath }: WriterProps, ref) => {
@@ -20,13 +21,18 @@ const Writer = forwardRef<SaveFileHandle, WriterProps>(({ filepath }: WriterProp
     const editorRef = useRef(null) as React.MutableRefObject<null | monaco.editor.IStandaloneCodeEditor>
     const autosaveDelaySeconds = 30 // TODO make setting | the time to wait between automatically saving the new contents in seconds
     let lastSaveTime: Date | undefined
-    let awaitingSaving = false
+    let executing_save = false
+    let executing_refresh = false
 
     // Manages calls by outside references.
     useImperativeHandle(ref, () => ({
         async saveFile() {
             console.log('saving ', filepath)
             await saveContents()
+        },
+        async refreshFile() {
+            console.log('refreshing ', filepath)
+            await refreshContents()
         },
     }))
 
@@ -39,9 +45,25 @@ const Writer = forwardRef<SaveFileHandle, WriterProps>(({ filepath }: WriterProp
         if (value == undefined) {
             value = editorRef.current?.getValue()
         }
-        awaitingSaving = true
+        executing_save = true
         await project?.set_file_contents(filepath, encoder.encode(value)).catch(handleIPCError)
-        awaitingSaving = false
+        executing_save = false
+    }
+
+    /**
+     * Refreshes the editor with the contents on disk.
+     *
+     * @returns void
+     */
+    async function refreshContents() {
+        executing_refresh = true
+        project!
+            .get_file_contents(filepath)
+            .then((c) => {
+                editorRef.current.getModel()?.setValue(decoder.decode(c))
+                executing_refresh = false
+            })
+            .catch(handleIPCError)
     }
 
     /**
@@ -51,12 +73,7 @@ const Writer = forwardRef<SaveFileHandle, WriterProps>(({ filepath }: WriterProp
      */
     function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor) {
         editorRef.current = editor
-        project!
-            .get_file_contents(filepath)
-            .then((c) => {
-                editor.getModel()?.setValue(decoder.decode(c))
-            })
-            .catch(handleIPCError)
+        refreshContents()
     }
 
     /**
@@ -67,7 +84,8 @@ const Writer = forwardRef<SaveFileHandle, WriterProps>(({ filepath }: WriterProp
     function handleEditorChange(value: string | undefined) {
         const currentTime = new Date()
         if (
-            awaitingSaving == false &&
+            executing_save == false &&
+            executing_refresh == false &&
             (lastSaveTime == undefined ||
                 (currentTime.getTime() - lastSaveTime.getTime()) / 1000 > autosaveDelaySeconds)
         ) {

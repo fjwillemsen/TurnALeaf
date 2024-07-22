@@ -7,6 +7,7 @@ import { ProjectFilesContext, ProjectOpenedFileContext } from '@ui/pages/project
 
 export type SaveFilesHandle = {
     saveFiles: () => Promise<void>
+    refreshFiles: () => Promise<void>
 }
 
 const FileViewer = forwardRef<SaveFilesHandle>((_: unknown, ref) => {
@@ -21,6 +22,13 @@ const FileViewer = forwardRef<SaveFilesHandle>((_: unknown, ref) => {
             await Promise.all(
                 Array.from(openFiles).map((filepath) => {
                     return writersRef.current.get(filepath)?.saveFile()
+                }),
+            )
+        },
+        async refreshFiles() {
+            await Promise.all(
+                Array.from(openFiles).map((filepath) => {
+                    return writersRef.current.get(filepath)?.refreshFile()
                 }),
             )
         },

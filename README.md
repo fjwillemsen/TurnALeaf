@@ -92,7 +92,7 @@ The following roadmap outlines what will be released after which features are im
         - [x] Off-center modals
         - [x] Reconfigure ESLint & TSDoc
         - [x] Fix useMediaQuery issue
-2. Extra features & non-functional requirements (0.1.0 / beta release | 7%) <!-- 2/29 -->
+2. Extra features & non-functional requirements (0.1.0 / beta release | 6%) <!-- 2/30 -->
     - [ ] Redesigned layout
     - [ ] Settings menu <!-- 0/4 -->
         - [ ] Rerender on settings change when necessary
@@ -120,6 +120,7 @@ The following roadmap outlines what will be released after which features are im
     - [ ] Editor top-bar navigation between sections and subsections as in VSCode
     - [ ] Sections panel
     - [ ] Landing page
+    - [ ] Overview of which files will be updated or merged before applying update
     - [ ] Onboarding tutorial
     - [ ] Test coverage 60%
     - [ ] CI/CD pipeline <!-- 2/4 -->

@@ -93,8 +93,11 @@ export default function ProjectPage() {
                     setButtonUpdate(new StatusbarButtonState(true, true))
 
                     // apply the update
-                    p.apply_project_update().then(() => {
-                        // after the update is applied, hide the button and restart the recursive check for updates
+                    p.apply_project_update().then(async () => {
+                        // after the update is applied, get the new file contents
+                        await fileviewerRef.current!.refreshFiles()
+
+                        // hide the button and restart the recursive check for updates
                         setButtonUpdate(new StatusbarButtonState())
                         setTimeout(checkUpdate, delay, p)
                     })

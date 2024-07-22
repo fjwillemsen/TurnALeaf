@@ -100,7 +100,8 @@ contextBridge.exposeInMainWorld('project', {
     getName: (hash: string) => ipcRenderer.invoke(ProjectChannels.GET_NAME, hash),
     setName: (hash: string, name: string) => ipcRenderer.invoke(ProjectChannels.SET_NAME, hash, name),
     getUpdate: (hash: string) => ipcRenderer.invoke(ProjectChannels.GET_UPDATE, hash),
-    pushUpdate: (hash: string) => ipcRenderer.invoke('project:push_name', hash),
+    applyUpdate: (hash: string) => ipcRenderer.invoke(ProjectChannels.APPLY_UPDATE, hash),
+    pushUpdate: (hash: string) => ipcRenderer.invoke(ProjectChannels.PUSH_UPDATE, hash),
     delete: (hash: string) => ipcRenderer.invoke(ProjectChannels.DELETE, hash),
     getFiles: (hash: string) => ipcRenderer.invoke(ProjectChannels.GET_FILES, hash),
     getFileContents: (hash: string, filepath: string) =>
