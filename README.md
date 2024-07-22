@@ -41,23 +41,23 @@ TurnALeaf is for academics, by academics.
 TurnALeaf is currently in development.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 98%) <!-- 42/43 -->
+1. Basic functionality (0.0.1 / alpha release | 100%) <!-- 43/43 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
         - [x] Interface library (React)
         - [x] Styling language (PostCSS / Tailwind)
         - [x] Component library (Mantine)
-    - [ ] Base functionality <!-- 20/21 -->
+    - [x] Base functionality <!-- 21/21 -->
         - [x] Modular interface
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
-        - [ ] Git integration <!-- 7/8 -->
+        - [x] Git integration <!-- 8/8 -->
             - [x] Git client
             - [x] Overleaf authentication token support & storage
             - [x] Creating projects
             - [x] Fetching updates
-            - [ ] Pulling updates
+            - [x] Pulling updates
             - [x] Pushing updates
             - [x] Removing projects
             - [x] Human-readable commit messages

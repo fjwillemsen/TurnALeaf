@@ -133,7 +133,7 @@ const get_auth: AuthCallback = (url: string) => {
 function get_author() {
     return {
         name: settings.git_author_name,
-        email: settings.git_author_name,
+        email: settings.git_author_email,
     }
 }
 
@@ -392,18 +392,17 @@ export class Project extends AbstractProject {
             await setTimeout(delay_ms)
         }
 
-        this.executing_pull = true
-
         // use git pull to apply the update
+        this.executing_pull = true
         const dir = await this.id.directory
-        const res = await git.pull({
+        await git.pull({
             fs,
             http,
             dir: dir,
             singleBranch: true,
             onAuth: get_auth,
+            author: get_author(),
         })
-
         this.executing_pull = false
     }
 
@@ -437,7 +436,7 @@ export class Project extends AbstractProject {
                 fs,
                 dir: dir,
                 message: message,
-                author: await get_author(),
+                author: get_author(),
             })
             console.log('SHA: ', sha)
         }
