@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@aperturerobotics/chonky": "^0.2.8",
-    "@aperturerobotics/chonky-icon-fontawesome": "^0.2.8",
+    "@aperturerobotics/chonky-icon-fontawesome": "^0.3.0",
     "@mantine/core": "^7.11.2",
     "@mantine/form": "^7.11.2",
     "@mantine/hooks": "^7.11.2",
