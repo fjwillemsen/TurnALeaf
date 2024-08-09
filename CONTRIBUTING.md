@@ -77,6 +77,8 @@ A concrete overview of the code is as follows:
 
 The app is built and published via Electron Forge, with the build files hosted on GitHub.
 This allows for automatic updates and has been 'blessed' by the Electron project, so will be the standard for the forseeable future.
+To build locally, run `npm run make`. To publish, run `npm run publish`.
+To update dependencies, use `npx npm-check-updates`.
 
 ## Legal
 

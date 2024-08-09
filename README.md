@@ -41,7 +41,7 @@ TurnALeaf is for academics, by academics.
 TurnALeaf is currently in development.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 100%) <!-- 43/43 -->
+1. Basic functionality (0.0.1 / alpha release | 98%) <!-- 44/45 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
@@ -72,20 +72,22 @@ The following roadmap outlines what will be released after which features are im
             - [x] Retrieval from frontend on PDF render
         - [x] User settings storage
         - [x] Onboarding
-    - [x] Distribution <!-- 4/4 -->
+    - [x] Distribution <!-- 4/5 -->
         - [x] Electron-Forge implementation
         - [x] Downloadable
         - [x] Installable
         - [x] Updatable
+        - [ ] Releases via GitHub
     - [x] Icon
     - [x] Formatting
     - [x] Code annotation & docstrings
     - [x] Documentation for early testers / contributers
-    - [x] Public GitHub repository <!-- 4/4 -->
+    - [x] Public GitHub repository <!-- 5/5 -->
         - [x] Protected branches
         - [x] Pull request templates
         - [x] Issue templates
         - [x] Discussion boards
+        - [x] Contribution guidelines & Code of Conduct
     - [x] Bug fixing: <!-- 5/5 -->
         - [x] Double execution of IPC calls
         - [x] Working input files for TeX compilation
