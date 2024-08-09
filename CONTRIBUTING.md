@@ -7,6 +7,7 @@ Contents:
 
 - [How to contribute](#how-to-contribute)
 - [App \& Directory structure](#app--directory-structure)
+- [Publishing](#publishing)
 - [Legal](#legal)
   - [Code of Conduct](#code-of-conduct)
   - [License](#license)
@@ -59,6 +60,8 @@ A concrete overview of the code is as follows:
 │   ├── appWindow.ts                        - The Electron app
 │   ├── main.ts                             - The Electron main entry point
 │   └── preload.ts                          - The Electron preload scripts
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
 ├── eslint.config.mjs                       The ESLint configuration file
@@ -70,11 +73,16 @@ A concrete overview of the code is as follows:
 └── tsconfig.json                           The TypeScript configuration file
 ```
 
+## Publishing
+
+The app is built and published via Electron Forge, with the build files hosted on GitHub.
+This allows for automatic updates and has been 'blessed' by the Electron project, so will be the standard for the forseeable future.
+
 ## Legal
 
 ### Code of Conduct
 
-Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](./CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ### License
 
