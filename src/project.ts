@@ -5,8 +5,8 @@ import { setTimeout } from 'timers/promises'
 
 import { FileArray } from '@aperturerobotics/chonky'
 import Store from 'electron-store'
-import git, { AuthCallback } from 'isomorphic-git'
-import http from 'isomorphic-git/http/node'
+import git, { AuthCallback, Errors } from 'isomorphic-git'
+import http, { request } from 'isomorphic-git/http/node'
 
 import { settings } from '@/settings'
 import { AbstractProject, AbstractProjectID } from '@shared/project'
@@ -361,23 +361,29 @@ export class Project extends AbstractProject {
         }
 
         // get the hash of the last remote commit
-        const dir = await this.id.directory
-        const res = await git.fetch({
-            fs,
-            http,
-            dir: dir,
-            depth: 1,
-            singleBranch: true,
-            tags: false,
-            onAuth: get_auth,
-        })
-        if (res == undefined || res.fetchHead == undefined) {
-            return false
-        }
+        try {
+            const dir = await this.id.directory
+            const res = await git.fetch({
+                fs,
+                http,
+                dir: dir,
+                depth: 1,
+                singleBranch: true,
+                tags: false,
+                onAuth: get_auth,
+            })
+            if (res == undefined || res.fetchHead == undefined) {
+                return false
+            }
 
-        // compare the last local and remote commit hashes
-        // console.warn(`remote: ${res.fetchHead}, local: ${last_hash}`)
-        return res.fetchHead != last_hash
+            // compare the last local and remote commit hashes
+            // console.warn(`remote: ${res.fetchHead}, local: ${last_hash}`)
+            return res.fetchHead != last_hash
+        } catch (error) {
+            // TODO if it is a timeout set to offline mode, else throw
+            console.warn(error)
+            throw error
+        }
     }
 
     async apply_project_update(): Promise<void> {
@@ -441,18 +447,25 @@ export class Project extends AbstractProject {
             console.log('SHA: ', sha)
         }
         this.executing_commit = false
-        const push = await git.push({
-            fs,
-            http,
-            dir: dir,
-            remote: 'origin',
-            ref: 'master',
-            onAuth: get_auth,
-        })
-        console.log('push result: ', push)
-        this.executing_push = false
-        if (sha !== undefined) {
-            return sha
+        try {
+            const push = await git.push({
+                fs,
+                http,
+                dir: dir,
+                remote: 'origin',
+                ref: 'master',
+                onAuth: get_auth,
+            })
+            console.log('push result: ', push)
+            this.executing_push = false
+            if (sha !== undefined) {
+                return sha
+            }
+        } catch (error) {
+            // TODO if it is a timeout set to offline mode, else throw
+            this.executing_push = false
+            console.warn(error)
+            throw error
         }
     }
 
