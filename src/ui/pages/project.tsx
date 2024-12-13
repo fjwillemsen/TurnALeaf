@@ -82,7 +82,10 @@ export default function ProjectPage() {
     /** Function to check if an update is available at an interval. If so, it notifies the user. */
     const checkUpdate = async (p: Project) => {
         const delay = 10 * 60 * 1000 // TODO make the delay configurable in settings
+        // set the button to loading and get the current status
+        setButtonUpdate(new StatusbarButtonState(true, true))
         const updateAvailable = await p.get_project_update().catch(handleIPCError)
+        // set the button according to the status
         if (updateAvailable == RequestStatus.OFFLINE) {
             setButtonUpdate(new StatusbarButtonState(true, false, 'offline'))
         } else if (updateAvailable == false) {
