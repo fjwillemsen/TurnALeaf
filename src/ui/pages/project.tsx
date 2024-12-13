@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import FileViewer, { SaveFilesHandle } from '@components/editor/fileviewer'
 import Preview from '@components/editor/preview'
 import FileBrowser from '@components/filebrowser/filebrowser'
-import { handleIPCError } from '@components/general/errorhandler'
+import { handleIPCError, showWarning } from '@components/general/errorhandler'
 import { RequestStatus } from '@shared/project'
 import { Project, get_project } from '@ui/projecthandler'
 
@@ -87,6 +87,7 @@ export default function ProjectPage() {
         const updateAvailable = await p.get_project_update().catch(handleIPCError)
         // set the button according to the status
         if (updateAvailable == RequestStatus.OFFLINE) {
+            showWarning('No network connection', 'It looks like you are offline')
             setButtonUpdate(new StatusbarButtonState(true, false, 'offline'))
         } else if (updateAvailable == false) {
             // set a timer for the next check
@@ -108,6 +109,7 @@ export default function ProjectPage() {
                             setButtonUpdate(new StatusbarButtonState())
                             setTimeout(checkUpdate, delay, p)
                         } else if (rs == RequestStatus.OFFLINE) {
+                            showWarning('No network connection', 'It looks like you are offline')
                             setButtonUpdate(new StatusbarButtonState(true, false, 'offline'))
                         } else {
                             throw new Error('Invalid return value ' + rs)

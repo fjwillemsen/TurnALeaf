@@ -1,11 +1,21 @@
 import { notifications } from '@mantine/notifications'
 
-function showError(title: string, message: string) {
+export function showError(title: string, message: string) {
     notifications.show({
         title: title,
         message: message,
         color: 'red',
         autoClose: false,
+        withBorder: true,
+    })
+}
+
+export function showWarning(title: string, message: string) {
+    notifications.show({
+        title: title,
+        message: message,
+        color: 'orange',
+        autoClose: true,
         withBorder: true,
     })
 }
