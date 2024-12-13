@@ -400,16 +400,22 @@ export class Project extends AbstractProject {
 
         // use git pull to apply the update
         this.executing_pull = true
-        const dir = await this.id.directory
-        await git.pull({
-            fs,
-            http,
-            dir: dir,
-            singleBranch: true,
-            onAuth: get_auth,
-            author: get_author(),
-        })
-        this.executing_pull = false
+        try {
+            const dir = await this.id.directory
+            await git.pull({
+                fs,
+                http,
+                dir: dir,
+                singleBranch: true,
+                onAuth: get_auth,
+                author: get_author(),
+            })
+            this.executing_pull = false
+        } catch (error) {
+            // TODO if it is a timeout set to offline mode, else throw
+            console.warn(error)
+            throw error
+        }
     }
 
     async push_project_update(): Promise<string | void> {
