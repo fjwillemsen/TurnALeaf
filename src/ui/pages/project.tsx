@@ -96,13 +96,19 @@ export default function ProjectPage() {
                     setButtonUpdate(new StatusbarButtonState(true, true))
 
                     // apply the update
-                    p.apply_project_update().then(async () => {
-                        // after the update is applied, get the new file contents
-                        await fileviewerRef.current!.refreshFiles()
+                    p.apply_project_update().then(async (rs) => {
+                        if (rs == RequestStatus.SUCCES) {
+                            // after the update is applied, get the new file contents
+                            await fileviewerRef.current!.refreshFiles()
 
-                        // hide the button and restart the recursive check for updates
-                        setButtonUpdate(new StatusbarButtonState())
-                        setTimeout(checkUpdate, delay, p)
+                            // hide the button and restart the recursive check for updates
+                            setButtonUpdate(new StatusbarButtonState())
+                            setTimeout(checkUpdate, delay, p)
+                        } else if (rs == RequestStatus.OFFLINE) {
+                            setButtonUpdate(new StatusbarButtonState(true, false, 'offline'))
+                        } else {
+                            throw new Error('Invalid return value ' + rs)
+                        }
                     })
                 }),
             )

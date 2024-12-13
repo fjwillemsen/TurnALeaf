@@ -386,7 +386,7 @@ export class Project extends AbstractProject {
         }
     }
 
-    async apply_project_update(): Promise<void | RequestStatus> {
+    async apply_project_update(): Promise<RequestStatus> {
         // if there is a concurrent push, use incremental backoff to wait
         let backoff_counter = 0
         while (this.executing_push == true) {
@@ -411,6 +411,7 @@ export class Project extends AbstractProject {
                 author: get_author(),
             })
             this.executing_pull = false
+            return RequestStatus.SUCCES
         } catch (error) {
             // TODO if it is a timeout set to offline mode, else throw
             this.executing_pull = false
@@ -419,7 +420,7 @@ export class Project extends AbstractProject {
         }
     }
 
-    async push_project_update(): Promise<string | void> {
+    async push_project_update(): Promise<string | RequestStatus> {
         // if there is a concurrent pull, use incremental backoff to wait
         let backoff_counter = 0
         while (this.executing_pull == true) {
@@ -467,12 +468,14 @@ export class Project extends AbstractProject {
             this.executing_push = false
             if (sha !== undefined) {
                 return sha
+            } else {
+                return RequestStatus.SUCCES
             }
         } catch (error) {
             // TODO if it is a timeout set to offline mode, else throw
             this.executing_push = false
             console.warn(error)
-            throw error
+            return RequestStatus.OFFLINE
         }
     }
 

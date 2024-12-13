@@ -108,7 +108,7 @@ export class Project extends AbstractProject {
         return await window.project.getUpdate(await this.id.hash)
     }
 
-    async apply_project_update(): Promise<void | RequestStatus> {
+    async apply_project_update(): Promise<RequestStatus> {
         return await window.project.applyUpdate(await this.id.hash)
     }
 

@@ -136,23 +136,23 @@ export abstract class AbstractProject {
     /**
      * Fetch updates to the project from remote.
      *
-     * @returns boolean - true if an update is available, false otherwise.
+     * @returns boolean | RequestStatus - true if an update is available, false otherwise.
      */
     abstract get_project_update(): Promise<boolean | RequestStatus>
 
     /**
      * Apply an available update
      *
-     * @returns void
+     * @returns RequestStatus
      */
-    abstract apply_project_update(): Promise<void | RequestStatus>
+    abstract apply_project_update(): Promise<RequestStatus>
 
     /**
      * Push updates of the project to remote.
      *
-     * @returns string | void - the SHA of the commit.
+     * @returns string | RequestStatus - the SHA of the commit.
      */
-    abstract push_project_update(): Promise<string | void | RequestStatus>
+    abstract push_project_update(): Promise<string | RequestStatus>
 
     /**
      * Delete the project locally.
