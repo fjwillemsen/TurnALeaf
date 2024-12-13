@@ -1,7 +1,7 @@
 import { AppShell, Burger, Group, NavLink, Skeleton, ActionIcon, Tooltip, Space } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { openContextModal } from '@mantine/modals'
-import { IconArrowNarrowDown, IconArrowMergeBoth } from '@tabler/icons-react'
+import { IconArrowNarrowDown, IconArrowMergeBoth, IconNetworkOff } from '@tabler/icons-react'
 import { useEffect, useState, createContext, useContext } from 'react'
 
 import { Logo } from '@components/logo/logo'
@@ -27,6 +27,8 @@ export class StatusbarButtonState {
                 return 'Apply changes from online'
             case 'merge':
                 return 'Merge changes with online'
+            case 'offline':
+                return 'No network connection to Git server'
             default:
                 throw new Error('Invalid icon value')
         }
@@ -106,6 +108,7 @@ export default function MainPage() {
                                     {buttonUpdate.icon == 'merge' && (
                                         <IconArrowMergeBoth style={{ transform: 'rotate(180deg)' }} />
                                     )}
+                                    {buttonUpdate.icon == 'offline' && <IconNetworkOff />}
                                 </ActionIcon>
                             </Tooltip>
                         )}

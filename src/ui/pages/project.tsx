@@ -6,6 +6,7 @@ import FileViewer, { SaveFilesHandle } from '@components/editor/fileviewer'
 import Preview from '@components/editor/preview'
 import FileBrowser from '@components/filebrowser/filebrowser'
 import { handleIPCError } from '@components/general/errorhandler'
+import { RequestStatus } from '@shared/project'
 import { Project, get_project } from '@ui/projecthandler'
 
 import { StatusbarContext, StatusbarButtonState } from './main'
@@ -82,10 +83,12 @@ export default function ProjectPage() {
     const checkUpdate = async (p: Project) => {
         const delay = 10 * 60 * 1000 // TODO make the delay configurable in settings
         const updateAvailable = await p.get_project_update().catch(handleIPCError)
-        if (updateAvailable == false) {
+        if (updateAvailable == RequestStatus.OFFLINE) {
+            setButtonUpdate(new StatusbarButtonState(true, false, 'offline'))
+        } else if (updateAvailable == false) {
             // set a timer for the next check
             setTimeout(checkUpdate, delay, p)
-        } else {
+        } else if (updateAvailable == true) {
             // if an update is available, set the status bar button
             setButtonUpdate(
                 new StatusbarButtonState(true, false, 'down', async () => {
@@ -103,6 +106,8 @@ export default function ProjectPage() {
                     })
                 }),
             )
+        } else {
+            throw new Error('Unrecognized value of updateAvailable: ' + updateAvailable)
         }
     }
 

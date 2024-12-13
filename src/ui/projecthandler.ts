@@ -1,6 +1,6 @@
 import { FileArray } from '@aperturerobotics/chonky'
 
-import { AbstractProject, AbstractProjectID } from '../shared/project'
+import { AbstractProject, AbstractProjectID, RequestStatus } from '../shared/project'
 
 /**
  * Function to get the names and hashes of the projects.
@@ -104,15 +104,15 @@ export class Project extends AbstractProject {
         return new ProjectID(new URL(this._id_url_string))
     }
 
-    async get_project_update(): Promise<boolean> {
+    async get_project_update(): Promise<boolean | RequestStatus> {
         return await window.project.getUpdate(await this.id.hash)
     }
 
-    async apply_project_update(): Promise<void> {
+    async apply_project_update(): Promise<void | RequestStatus> {
         return await window.project.applyUpdate(await this.id.hash)
     }
 
-    async push_project_update(): Promise<string> {
+    async push_project_update(): Promise<string | RequestStatus> {
         return await window.project.pushUpdate(await this.id.hash)
     }
 

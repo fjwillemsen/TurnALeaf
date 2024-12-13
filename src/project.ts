@@ -5,11 +5,11 @@ import { setTimeout } from 'timers/promises'
 
 import { FileArray } from '@aperturerobotics/chonky'
 import Store from 'electron-store'
-import git, { AuthCallback, Errors } from 'isomorphic-git'
-import http, { request } from 'isomorphic-git/http/node'
+import git, { AuthCallback } from 'isomorphic-git'
+import http from 'isomorphic-git/http/node'
 
 import { settings } from '@/settings'
-import { AbstractProject, AbstractProjectID } from '@shared/project'
+import { AbstractProject, AbstractProjectID, RequestStatus } from '@shared/project'
 
 // import type { Dirent } from 'fs'
 
@@ -344,7 +344,7 @@ export class Project extends AbstractProject {
         return log[0].oid
     }
 
-    async get_project_update(): Promise<boolean> {
+    async get_project_update(): Promise<boolean | RequestStatus> {
         // if we're concurrently executing a push, wait until it is resolved
         if (this.executing_push == true) {
             await setTimeout(500)
@@ -382,11 +382,11 @@ export class Project extends AbstractProject {
         } catch (error) {
             // TODO if it is a timeout set to offline mode, else throw
             console.warn(error)
-            throw error
+            return RequestStatus.OFFLINE
         }
     }
 
-    async apply_project_update(): Promise<void> {
+    async apply_project_update(): Promise<void | RequestStatus> {
         // if there is a concurrent push, use incremental backoff to wait
         let backoff_counter = 0
         while (this.executing_push == true) {
@@ -413,8 +413,9 @@ export class Project extends AbstractProject {
             this.executing_pull = false
         } catch (error) {
             // TODO if it is a timeout set to offline mode, else throw
+            this.executing_pull = false
             console.warn(error)
-            throw error
+            return RequestStatus.OFFLINE
         }
     }
 

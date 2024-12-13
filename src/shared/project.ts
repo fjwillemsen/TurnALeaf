@@ -138,21 +138,21 @@ export abstract class AbstractProject {
      *
      * @returns boolean - true if an update is available, false otherwise.
      */
-    abstract get_project_update(): Promise<boolean>
+    abstract get_project_update(): Promise<boolean | RequestStatus>
 
     /**
      * Apply an available update
      *
      * @returns void
      */
-    abstract apply_project_update(): Promise<void>
+    abstract apply_project_update(): Promise<void | RequestStatus>
 
     /**
      * Push updates of the project to remote.
      *
      * @returns string | void - the SHA of the commit.
      */
-    abstract push_project_update(): Promise<string | void>
+    abstract push_project_update(): Promise<string | void | RequestStatus>
 
     /**
      * Delete the project locally.
@@ -181,4 +181,9 @@ export abstract class AbstractProject {
      * @param Uint8Array - the byte array of the file contents.
      */
     abstract set_file_contents(filepath: string, contents: Uint8Array): Promise<void | string>
+}
+
+export enum RequestStatus {
+    SUCCES = 'success',
+    OFFLINE = 'offline',
 }
