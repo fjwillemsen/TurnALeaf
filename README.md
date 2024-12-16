@@ -41,14 +41,14 @@ TurnALeaf is for academics, by academics.
 TurnALeaf is currently in development.
 The following roadmap outlines what will be released after which features are implemented. This contains moving targets; items can be added / changed.
 
-1. Basic functionality (0.0.1 / alpha release | 96%) <!-- 44/46 -->
+1. Basic functionality (0.0.1 / alpha release | 98%) <!-- 45/46 -->
     - [x] Base system <!-- 5/5 -->
         - [x] Framework (Electron)
         - [x] Bundling (Vite)
         - [x] Interface library (React)
         - [x] Styling language (PostCSS / Tailwind)
         - [x] Component library (Mantine)
-    - [x] Base functionality <!-- 21/22 -->
+    - [x] Base functionality <!-- 22/22 -->
         - [x] Modular interface
         - [x] Safe inter-process communication via API
         - [x] PDF rendering
@@ -70,7 +70,7 @@ The following roadmap outlines what will be released after which features are im
             - [x] Tab-based editor
             - [x] Auto-saving to backend
             - [x] Retrieval from frontend on PDF render
-        - [ ] Offline mode
+        - [x] Offline mode
         - [x] User settings storage
         - [x] Onboarding
     - [x] Distribution <!-- 4/5 -->

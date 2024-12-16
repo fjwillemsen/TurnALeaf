@@ -380,9 +380,13 @@ export class Project extends AbstractProject {
             // console.warn(`remote: ${res.fetchHead}, local: ${last_hash}`)
             return res.fetchHead != last_hash
         } catch (error) {
-            // TODO if it is a timeout set to offline mode, else throw
-            console.warn(error)
-            return RequestStatus.OFFLINE
+            // if it is a timeout set to offline mode, else throw
+            if (error instanceof Error && error.message.includes('Request timed out')) {
+                console.warn(error)
+                return RequestStatus.OFFLINE
+            } else {
+                throw error
+            }
         }
     }
 
@@ -413,10 +417,14 @@ export class Project extends AbstractProject {
             this.executing_pull = false
             return RequestStatus.SUCCES
         } catch (error) {
-            // TODO if it is a timeout set to offline mode, else throw
             this.executing_pull = false
-            console.warn(error)
-            return RequestStatus.OFFLINE
+            // if it is a timeout set to offline mode, else throw
+            if (error instanceof Error && error.message.includes('Request timed out')) {
+                console.warn(error)
+                return RequestStatus.OFFLINE
+            } else {
+                throw error
+            }
         }
     }
 
@@ -472,10 +480,14 @@ export class Project extends AbstractProject {
                 return RequestStatus.SUCCES
             }
         } catch (error) {
-            // TODO if it is a timeout set to offline mode, else throw
             this.executing_push = false
-            console.warn(error)
-            return RequestStatus.OFFLINE
+            // if it is a timeout set to offline mode, else throw
+            if (error instanceof Error && error.message.includes('Request timed out')) {
+                console.warn(error)
+                return RequestStatus.OFFLINE
+            } else {
+                throw error
+            }
         }
     }
 
